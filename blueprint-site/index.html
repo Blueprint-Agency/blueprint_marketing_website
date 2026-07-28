@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blueprint — Your revenue, engineered.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#080B14; --ink2:#0B0F1B; --panel:#111A2B; --line:#28374F;
+    --blue:#3B78FF; --cyan:#38DBF0; --amber:#FFB020; --green:#3ED88A;
+    --text:#F0F4FC; --muted:#B2C1D8; --faint:#8494B0;
+    --radius:11px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink); color:var(--text);
+    font-family:"Inter",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    min-height:100vh;
+  }
+  .mono{font-family:"JetBrains Mono",monospace}
+  .disp{font-family:"Space Grotesk",sans-serif}
+
+  /* ---- loading screen + tunnel zoom (CSS-driven, autoplay) ---- */
+  #loader{position:fixed; inset:0; z-index:1000; background:var(--ink); display:grid; place-items:center; overflow:hidden; animation:loaderFade .9s ease 2s forwards}
+  .loader-core{display:flex; flex-direction:column; align-items:center; gap:26px}
+  .b-mask{font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:clamp(150px,26vw,230px); line-height:.9;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-repeat:no-repeat; background-position:center; background-size:cover;
+    background-image:linear-gradient(135deg,#3B78FF,#22D3EE);
+    transform-origin:center; will-change:transform,opacity;
+    filter:drop-shadow(0 0 34px rgba(59,120,255,.4));
+    animation:bpulse 1.6s ease-in-out infinite, bzoom 1.25s cubic-bezier(.6,0,.26,1) 1.7s forwards}
+  .loader-word{font-family:"Space Grotesk"; font-weight:600; font-size:22px; letter-spacing:.02em; color:var(--text)}
+  .loader-bar{width:190px; height:3px; background:rgba(255,255,255,.09); border-radius:3px; overflow:hidden}
+  .loader-bar span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--blue),var(--cyan)); animation:load 1.5s ease forwards}
+  .loader-tag{font-size:11.5px; color:var(--faint); letter-spacing:.05em}
+  @keyframes load{to{width:100%}}
+  @keyframes bpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+  @keyframes bzoom{0%{transform:scale(1);opacity:1}55%{opacity:1}100%{transform:scale(30);opacity:0}}
+  @keyframes loaderFade{to{opacity:0;visibility:hidden}}
+
+  /* ---- blueprint canvas ---- */
+  .stage{position:relative; min-height:100vh; isolation:isolate; overflow:hidden}
+  .grid{position:absolute; inset:0; z-index:-3;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:56px 56px; opacity:.35;
+    mask-image:radial-gradient(120% 90% at 50% 42%, #000 30%, transparent 78%);
+    -webkit-mask-image:radial-gradient(120% 90% at 50% 42%, #000 30%, transparent 78%);
+    animation:gridin 1.2s ease both;
+  }
+  .glow{position:absolute; z-index:-2; left:50%; top:44%; width:760px; height:760px;
+    transform:translate(-50%,-50%);
+    background:
+      radial-gradient(closest-side, rgba(255,176,32,.16), transparent 70%),
+      radial-gradient(closest-side, rgba(46,107,255,.14), transparent 72%);
+    filter:blur(6px); pointer-events:none;
+  }
+  .vignette{position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background:radial-gradient(130% 100% at 50% 40%, transparent 55%, rgba(4,6,12,.85) 100%);
+  }
+  /* corner coordinate ticks — blueprint vernacular */
+  .tick{position:absolute; color:var(--faint); font-size:11px; letter-spacing:.05em; z-index:2; opacity:.7}
+  .tick.tl{top:96px; left:26px} .tick.tr{top:96px; right:26px; text-align:right}
+  .tick.bl{bottom:22px; left:26px} .tick.br{bottom:22px; right:26px; text-align:right}
+
+  /* ---- ambient hero animation (behind content) ---- */
+  .aurora{position:absolute; inset:0; z-index:-2; overflow:hidden; pointer-events:none;
+    -webkit-mask-image:radial-gradient(135% 92% at 50% 24%, #000 50%, transparent 88%);
+    mask-image:radial-gradient(135% 92% at 50% 24%, #000 50%, transparent 88%)}
+  .aurora .blob{position:absolute; border-radius:50%; filter:blur(64px); opacity:.55; mix-blend-mode:screen; will-change:transform}
+  .aurora .b1{width:62vw;height:62vw;max-width:740px;max-height:740px;top:-14%;left:6%;background:radial-gradient(circle,#0f8f8c,transparent 66%);animation:drift1 19s ease-in-out infinite}
+  .aurora .b2{width:54vw;height:54vw;max-width:660px;max-height:660px;top:2%;right:0;background:radial-gradient(circle,#1f5cff,transparent 64%);animation:drift2 23s ease-in-out infinite}
+  .aurora .b3{width:48vw;height:48vw;max-width:580px;max-height:580px;bottom:-16%;left:32%;background:radial-gradient(circle,#22d3ee,transparent 62%);animation:drift3 27s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(7%,9%) scale(1.14)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-9%,6%) scale(1.1)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(5%,-8%) scale(1.16)}}
+  .hero{min-height:86vh; justify-content:center}
+  .frag.f1{top:14%; left:3%}
+  .frag.f2{top:18%; right:3%}
+  .frag.f3{bottom:23%; left:4%}
+  .frag.f4{bottom:18%; right:4%}
+  .ticker{top:7%; right:3%}
+
+  /* ---- nav ---- */
+  nav{position:relative; z-index:5; display:flex; align-items:center; justify-content:space-between;
+    padding:20px 34px; max-width:1240px; margin:0 auto}
+  .brand{display:flex; align-items:center; gap:10px; font-family:"Space Grotesk"; font-weight:600; font-size:19px; letter-spacing:-.01em}
+  .brand .mark{width:24px; height:24px; border-radius:7px; background:var(--blue);
+    display:grid; place-items:center; box-shadow:0 0 18px rgba(59,120,255,.5)}
+  .brand .mark::after, .fbrand .mark::after{content:"B"; font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:15px; line-height:1; color:#fff}
+  .links{display:flex; align-items:center; gap:26px}
+  .links a{color:var(--muted); text-decoration:none; font-size:14px; transition:color .2s}
+  .links a:hover, .links a:focus-visible{color:var(--text)}
+  .btn{font-family:"Space Grotesk"; font-weight:600; font-size:14px; cursor:pointer;
+    border:none; border-radius:9px; padding:10px 18px; text-decoration:none; display:inline-block; transition:transform .15s, box-shadow .2s}
+  .btn-amber{background:var(--amber); color:#1A1200; box-shadow:0 0 0 rgba(255,176,32,0)}
+  .btn-amber:hover{transform:translateY(-1px); box-shadow:0 8px 26px rgba(255,176,32,.35)}
+  .btn-ghost{background:transparent; color:var(--text); border:1px solid var(--blue)}
+  .btn-ghost:hover{background:rgba(46,107,255,.12)}
+  :focus-visible{outline:2px solid var(--cyan); outline-offset:3px}
+
+  /* ---- hero core ---- */
+  .hero{position:relative; z-index:4; max-width:1240px; margin:0 auto; padding:30px 34px 60px;
+    display:flex; flex-direction:column; align-items:center; text-align:center}
+  .eyebrow{color:var(--cyan); font-size:13px; letter-spacing:.14em; margin-bottom:24px;
+    animation:rise .7s .1s ease both}
+
+  /* the main character */
+  .engine{position:relative; width:min(560px,92vw); aspect-ratio:1; margin:2px auto 6px}
+  .engine svg{width:100%; height:100%; overflow:visible}
+  .ring-out{transform-box:fill-box; transform-origin:center; animation:spin 46s linear infinite}
+  .hub{transform-box:fill-box; transform-origin:center; animation:spinr 64s linear infinite}
+  .flow{stroke-dasharray:5 9; animation:flow 1.1s linear infinite}
+  .flow-out{stroke-dasharray:5 9; animation:flowout 1.1s linear infinite}
+  .core-glow{animation:pulse 2.6s ease-in-out infinite}
+  .draw{stroke-dasharray:1200; stroke-dashoffset:1200; animation:draw 1.6s .2s ease forwards}
+
+  .io{position:absolute; top:50%; transform:translateY(-50%); font-size:12px; color:var(--faint); line-height:2}
+  .io.in{left:-4px; text-align:left} .io.out{right:-4px; text-align:right}
+  .io b{color:var(--muted); font-weight:400}
+  @media(max-width:720px){.io{display:none}}
+
+  /* floating fragments — the deliverables */
+  .frag{position:absolute; z-index:6; display:flex; align-items:center; gap:8px;
+    background:rgba(14,20,34,.82); border:1px solid var(--line); border-radius:10px;
+    padding:8px 12px; font-size:12.5px; color:var(--text); backdrop-filter:blur(6px);
+    box-shadow:0 10px 30px rgba(0,0,0,.4); white-space:nowrap; animation:pop .6s ease both, float 7s ease-in-out infinite}
+  .frag .dot{width:7px; height:7px; border-radius:50%; flex:none}
+  .frag.f1{top:8%; left:-2%; animation-delay:.9s,0s}
+  .frag.f2{top:20%; right:-3%; animation-delay:1.1s,1.4s}
+  .frag.f3{bottom:22%; left:-4%; animation-delay:1.3s,2.2s}
+  .frag.f4{bottom:9%; right:-1%; animation-delay:1.5s,3.1s}
+  .frag .spark{width:36px; height:16px}
+  @media(max-width:860px){.frag.f1,.frag.f3{left:2%} .frag.f2,.frag.f4{right:2%}}
+  @media(max-width:560px){.frag{font-size:11.5px; padding:6px 9px} .frag.f2,.frag.f4{display:none}}
+
+  /* live ticker */
+  .ticker{position:absolute; z-index:6; top:2%; right:1%; text-align:right;
+    background:rgba(14,20,34,.82); border:1px solid var(--line); border-radius:11px; padding:11px 15px;
+    backdrop-filter:blur(6px); animation:pop .6s 1.7s ease both}
+  .ticker .lab{font-size:11px; color:var(--muted); display:flex; align-items:center; gap:6px; justify-content:flex-end}
+  .ticker .lab .dot{width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 10px var(--green)}
+  .ticker .num{font-family:"Space Grotesk"; font-weight:600; font-size:22px; color:var(--cyan); margin-top:3px; letter-spacing:-.01em}
+  .ticker .sub{font-size:11px; color:var(--muted)}
+  @media(max-width:860px){.ticker{position:static; margin:0 auto 10px; display:inline-block; text-align:center}
+    .ticker .lab{justify-content:center}}
+
+  /* headline */
+  h1{font-family:"Space Grotesk"; font-weight:600; font-size:clamp(38px,6.4vw,74px); line-height:1.02;
+    letter-spacing:-.025em; margin-top:10px; animation:rise .8s .2s ease both}
+  h1 .accent{color:var(--amber)}
+  .sub{max-width:560px; color:var(--muted); font-size:clamp(15px,1.6vw,18px); line-height:1.6;
+    margin:20px auto 0; animation:rise .8s .32s ease both}
+  .cta{display:flex; gap:12px; margin-top:30px; flex-wrap:wrap; justify-content:center; animation:rise .8s .44s ease both}
+  .cta .btn{padding:13px 24px; font-size:15px}
+
+  /* proof bar */
+  .proof{position:relative; z-index:4; border-top:1px solid var(--line); margin-top:20px;
+    max-width:1240px; margin-left:auto; margin-right:auto;
+    display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+    padding:20px 34px; animation:rise .8s .6s ease both}
+  .logos{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  .logos .lbl{font-size:11px; color:var(--faint); letter-spacing:.08em}
+  .chip{font-size:12px; color:#7788A6; background:#0F1626; border:1px solid #1E2A42; border-radius:7px; padding:6px 15px}
+  .stat{display:flex; align-items:baseline; gap:8px}
+  .stat b{font-family:"Space Grotesk"; font-weight:600; font-size:24px; color:var(--cyan)}
+  .stat span{font-size:13px; color:var(--muted)}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes spinr{to{transform:rotate(-360deg)}}
+  @keyframes flow{to{stroke-dashoffset:-28}}
+  @keyframes flowout{to{stroke-dashoffset:-28}}
+  @keyframes pulse{0%,100%{opacity:.55; transform:scale(1)}50%{opacity:1; transform:scale(1.08)}}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes gridin{from{opacity:0}to{opacity:.35}}
+  @keyframes rise{from{opacity:0; transform:translateY(16px)}to{opacity:1; transform:none}}
+  @keyframes pop{from{opacity:0; transform:translateY(10px) scale(.96)}to{opacity:1; transform:none}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+  /* ---- section: what we build ---- */
+  .build{position:relative; z-index:2; max-width:1240px; margin:0 auto; padding:96px 34px 96px}
+  .b-header{max-width:760px; opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease}
+  .b-header.in{opacity:1; transform:none}
+  .b-eyebrow{color:var(--cyan); font-size:13px; letter-spacing:.14em; margin-bottom:16px}
+  .b-head{font-family:"Space Grotesk"; font-weight:600; font-size:clamp(30px,4.6vw,52px); line-height:1.04; letter-spacing:-.025em}
+  .b-sub{color:var(--muted); font-size:16px; line-height:1.6; margin-top:18px; max-width:62ch}
+  .b-sub b{color:var(--text); font-weight:500}
+  .mods{display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:16px; margin-top:46px}
+  .mods .mod{position:relative; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px 20px 20px;
+    opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease, border-color .25s, box-shadow .25s}
+  .mods.in .mod{opacity:1; transform:none}
+  .mods.in .mod:nth-child(2){transition-delay:.06s}
+  .mods.in .mod:nth-child(3){transition-delay:.12s}
+  .mods.in .mod:nth-child(4){transition-delay:.18s}
+  .mods.in .mod:nth-child(5){transition-delay:.24s}
+  .mods.in .mod:nth-child(6){transition-delay:.30s}
+  .mod:hover{transform:translateY(-4px); border-color:#2C4A80; box-shadow:0 16px 40px rgba(0,0,0,.45)}
+  .mod .pn{font-family:"JetBrains Mono"; font-size:11px; color:var(--faint); letter-spacing:.08em}
+  .mod .glyph{width:42px; height:42px; border-radius:11px; background:rgba(46,107,255,.1); border:1px solid #24406E;
+    display:flex; align-items:center; justify-content:center; color:var(--cyan); margin:16px 0 15px; transition:transform .25s}
+  .mod:hover .glyph{transform:scale(1.06)}
+  .mod h3{font-family:"Space Grotesk"; font-weight:600; font-size:19px; letter-spacing:-.01em; margin-bottom:9px}
+  .mod p{color:var(--muted); font-size:14px; line-height:1.55}
+  .mod .conn{font-family:"JetBrains Mono"; font-size:11px; color:var(--faint); margin-top:15px; display:flex; align-items:center; gap:7px}
+  .mod .conn i{width:5px; height:5px; border-radius:50%; background:var(--amber); display:inline-block}
+  .mod.feat{border-color:#3E5EA0}
+  .mod.feat::after{content:"expansion focus"; position:absolute; top:15px; right:15px; font-family:"JetBrains Mono";
+    font-size:10px; letter-spacing:.04em; color:#1A1200; background:var(--amber); padding:3px 8px; border-radius:6px}
+  .fuel{margin-top:38px; border-top:1px solid var(--line); padding-top:28px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    opacity:0; transform:translateY(16px); transition:opacity .6s ease .1s, transform .6s ease .1s}
+  .fuel.in{opacity:1; transform:none}
+  .fuel .flabel{font-family:"JetBrains Mono"; font-size:12px; color:var(--faint); letter-spacing:.05em; margin-right:4px}
+  .fuel .fchip{font-size:13px; color:var(--muted); background:#0F1626; border:1px solid #1E2A42; border-radius:20px; padding:7px 15px; transition:color .2s, border-color .2s}
+  .fuel .fchip:hover{color:var(--text); border-color:#2C4A80}
+
+  /* ---- reveal util ---- */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1; transform:none}
+  html:not(.js) .reveal, html:not(.js) .b-header, html:not(.js) .mods .mod, html:not(.js) .fuel{opacity:1 !important; transform:none !important}
+
+  /* ---- case study ---- */
+  .cs{position:relative; z-index:2; max-width:1240px; margin:0 auto; padding:30px 34px 90px}
+  .cs-card{background:linear-gradient(180deg,#0D1526,#0A1120); border:1px solid var(--line); border-radius:20px; padding:38px 34px; position:relative; overflow:hidden}
+  .cs-card::before{content:""; position:absolute; top:-40%; right:-10%; width:340px; height:340px; background:radial-gradient(closest-side,rgba(46,107,255,.14),transparent 70%); pointer-events:none}
+  .cs-top{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .cs-logo{font-family:"Space Grotesk"; font-weight:700; font-size:23px; color:var(--text)}
+  .cs-tag{font-family:"JetBrains Mono"; font-size:12px; color:var(--cyan); background:rgba(34,211,238,.08); border:1px solid #1D3F4A; padding:5px 11px; border-radius:20px}
+  .cs-head{font-family:"Space Grotesk"; font-weight:600; font-size:clamp(24px,3.3vw,36px); line-height:1.12; letter-spacing:-.02em; margin:16px 0 14px; max-width:24ch; position:relative}
+  .cs-body{color:var(--muted); font-size:15.5px; line-height:1.65; max-width:72ch; position:relative}
+  .cs-body b{color:var(--text); font-weight:500}
+  .cs-metrics{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-top:30px; position:relative}
+  .metric{background:#0A0F1B; border:1px solid var(--line); border-radius:13px; padding:18px}
+  .metric .mv{font-family:"Space Grotesk"; font-weight:700; font-size:30px; color:var(--cyan); letter-spacing:-.02em}
+  .metric .ml{color:var(--muted); font-size:13px; margin-top:5px; line-height:1.4}
+  .cs-built{margin-top:26px; display:flex; gap:8px; flex-wrap:wrap; position:relative}
+  .cs-built span{font-size:12px; color:var(--muted); background:#0F1626; border:1px solid #1E2A42; border-radius:7px; padding:6px 12px}
+
+  /* ---- testimonials ---- */
+  .tst{max-width:1240px; margin:0 auto; padding:0 34px 90px}
+  .tst-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:16px; margin-top:34px}
+  .quote{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:24px 22px}
+  .quote .stars{color:var(--amber); font-size:14px; letter-spacing:3px}
+  .quote p{color:var(--text); font-size:15px; line-height:1.6; margin:13px 0 15px}
+  .quote .who{font-family:"JetBrains Mono"; font-size:11.5px; color:var(--faint)}
+
+  /* ---- method ---- */
+  .method{max-width:1240px; margin:0 auto; padding:0 34px 90px}
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(216px,1fr)); gap:16px; margin-top:38px}
+  .step{border-top:2px solid var(--blue); background:var(--panel); border-radius:0 0 12px 12px; padding:22px 20px}
+  .step .n{font-family:"JetBrains Mono"; font-size:12px; color:var(--amber)}
+  .step h4{font-family:"Space Grotesk"; font-weight:600; font-size:18px; margin:10px 0 8px}
+  .step p{color:var(--muted); font-size:14px; line-height:1.55}
+
+  /* ---- final cta + footer ---- */
+  .final{max-width:1240px; margin:0 auto; padding:10px 34px 80px; text-align:center}
+  .final-inner{background:linear-gradient(180deg,#0E1728,#0A0F1B); border:1px solid var(--line); border-radius:22px; padding:64px 30px; position:relative; overflow:hidden}
+  .final-inner::before{content:""; position:absolute; inset:0; background:radial-gradient(closest-side,rgba(255,176,32,.1),transparent 70%); pointer-events:none}
+  .final h2{font-family:"Space Grotesk"; font-weight:600; font-size:clamp(30px,5vw,54px); letter-spacing:-.025em; line-height:1.05; position:relative}
+  .final p{color:var(--muted); font-size:17px; margin:16px auto 30px; max-width:52ch; position:relative}
+  .final .btn{padding:15px 30px; font-size:16px; position:relative}
+  footer{border-top:1px solid var(--line); padding:40px 34px; max-width:1240px; margin:0 auto; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center}
+  footer .fbrand{display:flex; align-items:center; gap:10px; font-family:"Space Grotesk"; font-weight:600; font-size:18px; margin-bottom:10px}
+  footer .fmeta{color:var(--faint); font-size:13px; line-height:1.7}
+  footer .flinks{display:flex; gap:22px; flex-wrap:wrap}
+  footer .flinks a{color:var(--muted); text-decoration:none; font-size:14px}
+  footer .flinks a:hover{color:var(--text)}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none !important}
+    .draw{stroke-dashoffset:0}
+    .grid{opacity:.35}
+    #loader{animation:loaderFade .9s ease 2s forwards !important}
+    .b-mask{animation:bzoom 1.25s cubic-bezier(.6,0,.26,1) 1.7s forwards !important}
+  }
+</style>
+<script>document.documentElement.className='js';</script>
+</head>
+<body>
+<div id="loader">
+  <div class="loader-core">
+    <div class="b-mask">B</div>
+    <div class="loader-word disp">Blueprint</div>
+    <div class="loader-bar"><span></span></div>
+    <div class="loader-tag mono">engineering your revenue system…</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="grid"></div>
+  <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+  <div class="glow"></div>
+  <div class="vignette"></div>
+
+  <span class="tick tl mono">SYS.01 / GROWTH-ENGINE</span>
+  <span class="tick tr mono">REV.OUT ↗</span>
+  <span class="tick bl mono">x:00 y:00</span>
+  <span class="tick br mono">scale 1:1</span>
+
+  <nav>
+    <div class="brand"><span class="mark"></span>Blueprint</div>
+    <div class="links">
+      <a href="#">Systems</a>
+      <a href="#">Work</a>
+      <a href="#">Method</a>
+      <a href="#">About</a>
+      <a class="btn btn-amber" href="#">Book a call</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="eyebrow mono">// ai growth systems</div>
+
+    <div class="ticker">
+      <div class="lab"><span class="dot"></span>live</div>
+      <div class="num" id="tick">$0</div>
+      <div class="sub">generated for clients</div>
+    </div>
+    <div class="frag f1"><span class="dot" style="background:var(--green);box-shadow:0 0 8px var(--green)"></span>Booking confirmed</div>
+    <div class="frag f2"><span class="dot" style="background:var(--cyan);box-shadow:0 0 8px var(--cyan)"></span>WhatsApp · auto-replied</div>
+    <div class="frag f3"><span class="dot" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></span>New lead · Acme&nbsp;Co</div>
+    <div class="frag f4">
+      <svg class="spark" viewBox="0 0 36 16"><polyline points="1,13 9,9 16,11 24,5 35,2" fill="none" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Revenue&nbsp;<b style="color:var(--green);font-weight:500">+$12,480</b>
+    </div>
+
+    <h1 class="disp">Your revenue,<br><span class="accent">engineered.</span></h1>
+    <p class="sub">We build the AI systems, automations, and growth marketing that turn attention into revenue — assembled as one machine, not scattered services.</p>
+    <div class="cta">
+      <a class="btn btn-amber" href="#">Book a growth audit</a>
+      <a class="btn btn-ghost" href="#">See the work</a>
+    </div>
+  </div>
+
+  <div class="proof">
+    <div class="logos">
+      <span class="lbl mono">TRUSTED BY</span>
+      <span class="chip" style="color:#C9D6EC">Five Clinic®</span>
+      <span class="chip">your logo</span>
+      <span class="chip">your logo</span>
+      <span class="chip">your logo</span>
+      <span class="chip">your logo</span>
+    </div>
+    <div class="stat"><b id="lift">+0%</b><span>avg. client revenue lift</span></div>
+  </div>
+</div>
+
+<section class="build">
+  <div class="b-header">
+    <div class="b-eyebrow mono">// sys.02 · what we build</div>
+    <h2 class="b-head disp">Systems that snap onto the engine.</h2>
+    <p class="b-sub"><b>AI systems are our sharpest edge</b> — and the core of where we're taking clients next. Each one plugs into the same revenue engine, so the tools you run and the marketing that feeds them all pull in one direction.</p>
+  </div>
+
+  <div class="mods">
+    <div class="mod feat">
+      <div class="pn">SYS-01</div>
+      <div class="glyph"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="5" cy="6" r="2"/><circle cx="15" cy="5" r="2"/><circle cx="10" cy="14.5" r="2.3"/><path d="M6.7 7.2 8.4 12.4M13.5 6.4 11.4 12.6M6.9 5.8 13 5.1"/></svg></div>
+      <h3>AI systems &amp; agents</h3>
+      <p>Custom AI agents and workflows that qualify leads, answer around the clock, and act on your data — not just chat.</p>
+      <div class="conn mono"><i></i>connects: revenue</div>
+    </div>
+    <div class="mod">
+      <div class="pn">SYS-02</div>
+      <div class="glyph"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="6" y="2.5" width="8" height="15" rx="1.8"/><path d="M8.6 15h2.8"/></svg></div>
+      <h3>Web &amp; mobile apps</h3>
+      <p>Fast, branded web and mobile apps built to convert and scale as the business grows.</p>
+      <div class="conn mono"><i></i>connects: bookings</div>
+    </div>
+    <div class="mod">
+      <div class="pn">SYS-03</div>
+      <div class="glyph"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3.5" y="4.5" width="13" height="12" rx="1.6"/><path d="M3.5 8h13M7 3v3M13 3v3"/><rect x="6" y="10.4" width="2.4" height="2.4" rx=".4" fill="currentColor" stroke="none"/></svg></div>
+      <h3>Booking systems</h3>
+      <p>Frictionless scheduling that fills the calendar and syncs everywhere, automatically.</p>
+      <div class="conn mono"><i></i>connects: bookings</div>
+    </div>
+    <div class="mod">
+      <div class="pn">SYS-04</div>
+      <div class="glyph"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><rect x="3.5" y="4" width="13" height="3.2" rx="1"/><rect x="3.5" y="8.4" width="9.5" height="3.2" rx="1"/><rect x="3.5" y="12.8" width="6" height="3.2" rx="1"/></svg></div>
+      <h3>CRM &amp; pipelines</h3>
+      <p>One source of truth for every lead, with automations that keep deals moving forward.</p>
+      <div class="conn mono"><i></i>connects: pipeline</div>
+    </div>
+    <div class="mod">
+      <div class="pn">SYS-05</div>
+      <div class="glyph"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l1-2.8A6 6 0 1 1 7.4 15.4L4 16Z"/></svg></div>
+      <h3>WhatsApp automation</h3>
+      <p>Instant replies, follow-ups, and reminders on the channel your customers actually use.</p>
+      <div class="conn mono"><i></i>connects: leads</div>
+    </div>
+    <div class="mod">
+      <div class="pn">SYS-06</div>
+      <div class="glyph"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 6.5 4 10l3.5 3.5M12.5 6.5 16 10l-3.5 3.5M11 4.5 9 15.5"/></svg></div>
+      <h3>Custom software</h3>
+      <p>Internal tools and integrations that remove manual work and connect your whole stack.</p>
+      <div class="conn mono"><i></i>connects: efficiency</div>
+    </div>
+  </div>
+
+  <div class="fuel">
+    <span class="flabel">// the fuel that feeds it —</span>
+    <span class="fchip">Google SEO</span>
+    <span class="fchip">Google SEM</span>
+    <span class="fchip">Funnel building</span>
+    <span class="fchip">Meta ads</span>
+    <span class="fchip">Video production</span>
+    <span class="fchip">Branding</span>
+  </div>
+</section>
+
+<section class="cs">
+  <div class="b-header reveal" style="max-width:820px;margin-bottom:32px">
+    <div class="b-eyebrow mono">// sys.03 · client results</div>
+    <h2 class="b-head disp">Engineered growth for Five Clinic.</h2>
+    <p class="b-sub">A leading Malaysian aesthetic clinic — doctor-led, two branches, hundreds of patients. Here's the revenue system we built around it.</p>
+  </div>
+  <div class="cs-card reveal">
+    <div class="cs-top">
+      <span class="cs-logo">Five Clinic®</span>
+      <span class="cs-tag">aesthetic clinic · bangsar + puchong, kl</span>
+    </div>
+    <h3 class="cs-head disp">From treatment pages to booked consultations — on autopilot.</h3>
+    <p class="cs-body">Five Clinic, led by MOH-certified aesthetic doctor Dr Calvin Choo, offers everything from Rejuran and HIFU to slimming and laser across its Bangsar and Puchong branches. <b>Blueprint built the growth engine around it:</b> SEO-optimised landing pages for every treatment, a friction-free free-consultation funnel, and WhatsApp automation that replies and books the moment a patient reaches out.</p>
+    <div class="cs-metrics">
+      <div class="metric"><div class="mv">2</div><div class="ml">clinics scaled — Bangsar &amp; Puchong</div></div>
+      <div class="metric"><div class="mv">40+</div><div class="ml">treatment pages built to rank on Google</div></div>
+      <div class="metric"><div class="mv">5.0★</div><div class="ml">doctor-led, patient-first reputation</div></div>
+    </div>
+    <div class="cs-built">
+      <span>SEO landing pages</span><span>Free-consult funnel</span><span>WhatsApp automation</span><span>Booking system</span><span>Google SEM</span>
+    </div>
+  </div>
+</section>
+
+<section class="tst">
+  <div class="b-header reveal"><div class="b-eyebrow mono">// what their patients say</div><h2 class="b-head disp">Real reviews. Real results.</h2></div>
+  <div class="tst-grid">
+    <div class="quote reveal"><div class="stars">★★★★★</div><p>Expected Rejuran to hurt from what friends said — Dr Calvin's treatment was the opposite. The welts were nearly gone within a day.</p><div class="who mono">— Rejuran patient · Google review</div></div>
+    <div class="quote reveal"><div class="stars">★★★★★</div><p>Years of exercise couldn't shift my arms. The slimming treatment was painless and finally gave me the result I wanted.</p><div class="who mono">— Slimming patient · Google review</div></div>
+    <div class="quote reveal"><div class="stars">★★★★★</div><p>Skilful, experienced and honest — he explains the best option before anything else. The most comfortable clinic I've been to.</p><div class="who mono">— Verified patient · Google review</div></div>
+  </div>
+</section>
+
+<section class="method">
+  <div class="b-header reveal"><div class="b-eyebrow mono">// how we work</div><h2 class="b-head disp">The Blueprint Method.</h2><p class="b-sub">One repeatable system, from first audit to compounding growth.</p></div>
+  <div class="steps">
+    <div class="step reveal"><div class="n mono">01</div><h4>Audit</h4><p>We map where revenue leaks — traffic, funnel, follow-up — and where the biggest wins are hiding.</p></div>
+    <div class="step reveal"><div class="n mono">02</div><h4>Architect</h4><p>We design the system: the AI, automations and marketing that fit your business — on paper first.</p></div>
+    <div class="step reveal"><div class="n mono">03</div><h4>Build</h4><p>We ship it — pages, apps, CRM, WhatsApp flows — all wired into one revenue engine.</p></div>
+    <div class="step reveal"><div class="n mono">04</div><h4>Scale</h4><p>We measure, tune and pour more fuel into whatever is already converting.</p></div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="final-inner reveal">
+    <h2 class="disp">Ready to engineer your revenue?</h2>
+    <p>Book a free growth audit and we'll show you exactly where your next revenue is hiding — and the system to capture it.</p>
+    <a class="btn btn-amber" href="#">Book a growth audit</a>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="fbrand"><span class="mark" style="width:22px;height:22px;border-radius:6px;background:var(--blue);display:grid;place-items:center"></span>Blueprint</div>
+    <div class="fmeta">AI growth systems that increase revenue.<br>© 2026 Blueprint Agency. All rights reserved.</div>
+  </div>
+  <div class="flinks">
+    <a href="#">Systems</a><a href="#">Work</a><a href="#">Method</a><a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // revenue ticker count-up
+  const tick = document.getElementById('tick');
+  const target = 1284920;
+  if(rm){ tick.textContent = '$' + target.toLocaleString(); }
+  else{
+    let v = 0; const step = target/90;
+    const id = setInterval(()=>{ v += step; if(v>=target){v=target; clearInterval(id);}
+      tick.textContent = '$' + Math.round(v).toLocaleString(); }, 22);
+  }
+  // lift stat count-up
+  const lift = document.getElementById('lift');
+  if(rm){ lift.textContent = '+38%'; }
+  else{
+    let l = 0; const idl = setInterval(()=>{ l++; lift.textContent = '+'+l+'%'; if(l>=38) clearInterval(idl); }, 34);
+  }
+
+  // scroll reveal for the build section
+  const reveals = document.querySelectorAll('.b-header, .mods, .fuel, .reveal');
+  if(rm){ reveals.forEach(el=>el.classList.add('in')); }
+  else{
+    const io = new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.16});
+    reveals.forEach(el=>io.observe(el));
+  }
+
+  // stop-motion image frames inside the B (swap gradients for 'url("photo.jpg")' to use real images)
+  (function(){
+    const b = document.querySelector('.b-mask');
+    if(!b) return;
+    const frames = [
+      'linear-gradient(135deg,#3B78FF,#22D3EE)',
+      'radial-gradient(circle at 30% 25%,#7C3AED,#3B78FF 70%)',
+      'linear-gradient(135deg,#FFB020,#FF6B9A)',
+      'linear-gradient(135deg,#35D07F,#22D3EE)',
+      'conic-gradient(from 120deg,#22D3EE,#3B78FF,#7C3AED,#22D3EE)'
+    ];
+    let i = 0;
+    const id = setInterval(()=>{ i=(i+1)%frames.length; b.style.backgroundImage=frames[i]; }, 400);
+    document.documentElement.style.overflow = 'hidden';
+    setTimeout(()=>{ clearInterval(id); }, 1700);
+    setTimeout(()=>{ document.documentElement.style.overflow=''; const l=document.getElementById('loader'); if(l) l.style.display='none'; }, 3000);
+  })();
+</script>
+</body>
+</html>

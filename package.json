@@ -1,0 +1,27 @@
+{
+  "name": "blueprint-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@paper-design/shaders-react": "^0.0.78",
+    "lucide-react": "^1.27.0",
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.23",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
+  }
+}

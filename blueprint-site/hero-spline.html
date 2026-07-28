@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blueprint — Grow beyond.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#07070B; --text:#F0F1F6; --muted:#A7ADBE; --faint:#6C7284;
+    --blue:#3B78FF; --amber:#FFB020; --violet:#7C4CE0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{background:var(--ink); color:var(--text); font-family:"Inter",system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+  .disp{font-family:"Space Grotesk",sans-serif}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+  a{text-decoration:none}
+  :focus-visible{outline:2px solid var(--amber); outline-offset:3px}
+
+  .hero{position:relative; height:100vh; min-height:600px; background:var(--ink); overflow:hidden}
+
+  /* the Spline scene, full-bleed and interactive */
+  .scene{position:absolute; inset:0; width:100%; height:100%; border:0; z-index:1}
+  .scene-loading{position:absolute; inset:0; z-index:0; display:grid; place-items:center; color:var(--faint); font-size:13px; letter-spacing:.05em}
+
+  /* legibility vignettes (don't block dragging the spheres) */
+  .fade{position:absolute; left:0; right:0; z-index:2; pointer-events:none}
+  .fade.top{top:0; height:180px; background:linear-gradient(180deg, rgba(7,7,11,.85), transparent)}
+  .fade.bottom{bottom:0; height:300px; background:linear-gradient(0deg, rgba(7,7,11,.92) 8%, transparent)}
+
+  /* overlay UI — transparent to clicks except its own controls */
+  .overlay{position:absolute; inset:0; z-index:3; pointer-events:none; display:flex; flex-direction:column; justify-content:space-between}
+  nav{display:flex; align-items:center; justify-content:space-between; padding:24px 34px; max-width:1280px; margin:0 auto; width:100%}
+  .brand{display:flex; align-items:center; gap:10px; font-family:"Space Grotesk"; font-weight:600; font-size:19px; color:var(--text); pointer-events:auto}
+  .brand .mark{width:24px; height:24px; border-radius:7px; background:var(--blue); display:grid; place-items:center; box-shadow:0 0 18px rgba(59,120,255,.55)}
+  .brand .mark::after{content:"B"; font-family:"Space Grotesk"; font-weight:700; font-size:15px; color:#fff; line-height:1}
+  .links{display:flex; align-items:center; gap:22px}
+  .links a{color:var(--muted); font-size:14px; pointer-events:auto; transition:color .2s}
+  .links a:hover{color:var(--text)}
+  .navcta{font-family:"Space Grotesk"; font-weight:600; font-size:14px; color:#1A1200; background:var(--amber); padding:9px 16px; border-radius:8px; pointer-events:auto; transition:transform .2s, box-shadow .2s}
+  .navcta:hover{transform:translateY(-1px); box-shadow:0 8px 22px rgba(255,176,32,.3)}
+
+  .foot{max-width:1280px; margin:0 auto; width:100%; padding:0 34px 40px; display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap}
+  .foot .lead{max-width:520px}
+  .eyebrow{font-family:"Space Grotesk"; font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--amber); margin-bottom:14px}
+  .subline{font-size:clamp(16px,1.9vw,20px); line-height:1.5; color:var(--text); font-weight:500}
+  .subline span{color:var(--muted)}
+  .cta{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+  .btn{font-family:"Space Grotesk"; font-weight:600; font-size:15px; border-radius:9px; padding:12px 22px; pointer-events:auto; transition:transform .2s, box-shadow .2s; display:inline-flex; align-items:center; gap:8px}
+  .btn-fill{background:var(--amber); color:#1A1200}
+  .btn-fill:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(255,176,32,.32)}
+  .btn-ghost{border:1px solid rgba(255,255,255,.28); color:var(--text)}
+  .btn-ghost:hover{border-color:#fff; background:rgba(255,255,255,.06)}
+
+  .cue{display:flex; align-items:center; gap:10px; color:var(--faint); font-size:12px; letter-spacing:.05em; pointer-events:none; padding-bottom:6px}
+  .cue .drag{pointer-events:auto}
+  .cue .arrow{width:1px; height:34px; background:linear-gradient(var(--faint), transparent); animation:cuepulse 2s ease-in-out infinite}
+
+  @keyframes cuepulse{0%,100%{opacity:.4; transform:scaleY(.7)}50%{opacity:1; transform:scaleY(1)}}
+
+  @media(max-width:760px){
+    .links a:not(.navcta){display:none}
+    .foot{flex-direction:column; align-items:flex-start}
+    .cue{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){ .cue .arrow{animation:none} }
+</style>
+</head>
+<body>
+<section class="hero">
+  <!-- real headline for SEO + screen readers (the visible one lives inside the 3D scene) -->
+  <h1 class="sr-only">Blueprint — bold strategy and AI systems that grow your revenue beyond the ordinary.</h1>
+
+  <div class="scene-loading">loading 3D scene…</div>
+  <iframe class="scene" src="https://my.spline.design/distortingtypography-rt9Ssj2kQZdErcCbEdy1NODB/" frameborder="0" title="Blueprint 3D hero" allow="autoplay; fullscreen"></iframe>
+
+  <div class="fade top"></div>
+  <div class="fade bottom"></div>
+
+  <div class="overlay">
+    <nav>
+      <div class="brand"><span class="mark"></span>Blueprint</div>
+      <div class="links">
+        <a href="#">Systems</a>
+        <a href="#">Work</a>
+        <a href="#">Method</a>
+        <a href="#">About</a>
+        <a class="navcta" href="#">Book a call</a>
+      </div>
+    </nav>
+
+    <div class="foot">
+      <div class="lead">
+        <div class="eyebrow">The wild blueprint</div>
+        <p class="subline">Bold strategy and AI systems for brands that refuse to blend in. <span>We engineer the growth others only pitch.</span></p>
+        <div class="cta">
+          <a class="btn btn-fill" href="#">Book a growth audit</a>
+          <a class="btn btn-ghost" href="#">See the work</a>
+        </div>
+      </div>
+      <div class="cue"><span class="drag">drag the spheres</span><span class="arrow"></span></div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-26T00:00:00.000Z",
+  "title": "Design System: Blueprint",
+  "extensions": {
+    "colorMeta": {
+      "night-deep": {
+        "role": "neutral",
+        "displayName": "Night Deep",
+        "canonical": "#120926",
+        "tonalRamp": ["oklch(12% 0.06 300)", "oklch(20% 0.08 300)", "oklch(28% 0.10 300)", "oklch(38% 0.11 300)", "oklch(48% 0.11 300)", "oklch(60% 0.09 300)", "oklch(74% 0.06 300)", "oklch(92% 0.02 300)"]
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "#1c1039",
+        "tonalRamp": ["oklch(14% 0.07 300)", "oklch(22% 0.09 300)", "oklch(31% 0.11 300)", "oklch(41% 0.12 300)", "oklch(51% 0.12 300)", "oklch(63% 0.10 300)", "oklch(77% 0.06 300)", "oklch(93% 0.02 300)"]
+      },
+      "plum": {
+        "role": "neutral",
+        "displayName": "Plum Horizon",
+        "canonical": "#341751",
+        "tonalRamp": ["oklch(15% 0.08 305)", "oklch(24% 0.11 305)", "oklch(33% 0.13 305)", "oklch(43% 0.14 305)", "oklch(53% 0.14 305)", "oklch(64% 0.12 305)", "oklch(78% 0.08 305)", "oklch(93% 0.03 305)"]
+      },
+      "plum-lit": {
+        "role": "secondary",
+        "displayName": "Lit Plum (the counter)",
+        "canonical": "#4d2069",
+        "tonalRamp": ["oklch(16% 0.09 305)", "oklch(25% 0.12 305)", "oklch(34% 0.15 305)", "oklch(44% 0.16 305)", "oklch(54% 0.16 305)", "oklch(65% 0.13 305)", "oklch(79% 0.09 305)", "oklch(94% 0.03 305)"]
+      },
+      "plum-edge": {
+        "role": "secondary",
+        "displayName": "Plum Edge (the only structural border)",
+        "canonical": "#6b2f8a",
+        "tonalRamp": ["oklch(17% 0.10 310)", "oklch(26% 0.13 310)", "oklch(36% 0.16 310)", "oklch(46% 0.18 310)", "oklch(56% 0.17 310)", "oklch(67% 0.14 310)", "oklch(80% 0.09 310)", "oklch(94% 0.03 310)"]
+      },
+      "tungsten": {
+        "role": "primary",
+        "displayName": "Tungsten String Light",
+        "canonical": "#ffb13c",
+        "tonalRamp": ["oklch(20% 0.06 68)", "oklch(31% 0.09 68)", "oklch(43% 0.12 68)", "oklch(54% 0.14 68)", "oklch(65% 0.16 68)", "oklch(80% 0.16 68)", "oklch(89% 0.10 68)", "oklch(96% 0.04 68)"]
+      },
+      "tungsten-hot": {
+        "role": "primary",
+        "displayName": "Hot Tungsten (the filament)",
+        "canonical": "#ffe3a8",
+        "tonalRamp": ["oklch(22% 0.04 78)", "oklch(33% 0.06 78)", "oklch(45% 0.08 78)", "oklch(57% 0.09 78)", "oklch(69% 0.10 78)", "oklch(81% 0.09 78)", "oklch(91% 0.07 78)", "oklch(97% 0.03 78)"]
+      },
+      "tungsten-deep": {
+        "role": "primary",
+        "displayName": "Deep Tungsten (awning stripe)",
+        "canonical": "#d97c15",
+        "tonalRamp": ["oklch(18% 0.06 60)", "oklch(28% 0.09 60)", "oklch(38% 0.12 60)", "oklch(49% 0.14 60)", "oklch(63% 0.15 60)", "oklch(76% 0.13 60)", "oklch(87% 0.08 60)", "oklch(96% 0.03 60)"]
+      },
+      "tarp": {
+        "role": "secondary",
+        "displayName": "Tarpaulin Blue",
+        "canonical": "#1d6fb8",
+        "tonalRamp": ["oklch(17% 0.06 250)", "oklch(26% 0.09 250)", "oklch(36% 0.12 250)", "oklch(46% 0.14 250)", "oklch(57% 0.14 250)", "oklch(69% 0.11 250)", "oklch(82% 0.07 250)", "oklch(95% 0.02 250)"]
+      },
+      "tarp-pale": {
+        "role": "neutral",
+        "displayName": "Tarpaulin Pale (body text)",
+        "canonical": "#eaf2fb",
+        "tonalRamp": ["oklch(20% 0.02 245)", "oklch(31% 0.03 245)", "oklch(43% 0.03 245)", "oklch(55% 0.03 245)", "oklch(67% 0.03 245)", "oklch(79% 0.03 245)", "oklch(89% 0.02 245)", "oklch(97% 0.01 245)"]
+      },
+      "fluoro": {
+        "role": "tertiary",
+        "displayName": "Fluoro (tube light and top-emphasis text)",
+        "canonical": "#e9f5ff",
+        "tonalRamp": ["oklch(20% 0.02 235)", "oklch(31% 0.03 235)", "oklch(43% 0.04 235)", "oklch(55% 0.04 235)", "oklch(67% 0.04 235)", "oklch(80% 0.03 235)", "oklch(90% 0.03 235)", "oklch(97% 0.01 235)"]
+      },
+      "card-pink": {
+        "role": "tertiary",
+        "displayName": "Marker Pink",
+        "canonical": "#ff3d8b",
+        "tonalRamp": ["oklch(20% 0.10 5)", "oklch(30% 0.14 5)", "oklch(41% 0.18 5)", "oklch(52% 0.22 5)", "oklch(64% 0.24 5)", "oklch(76% 0.18 5)", "oklch(87% 0.11 5)", "oklch(96% 0.04 5)"]
+      },
+      "card-green": {
+        "role": "tertiary",
+        "displayName": "Marker Green",
+        "canonical": "#86ff6b",
+        "tonalRamp": ["oklch(20% 0.08 140)", "oklch(31% 0.11 140)", "oklch(43% 0.15 140)", "oklch(55% 0.19 140)", "oklch(67% 0.22 140)", "oklch(80% 0.22 140)", "oklch(89% 0.14 140)", "oklch(96% 0.05 140)"]
+      },
+      "card-stock": {
+        "role": "tertiary",
+        "displayName": "Card Stock (fluorescent paper)",
+        "canonical": "#fff8e6",
+        "tonalRamp": ["oklch(21% 0.02 92)", "oklch(32% 0.03 92)", "oklch(44% 0.04 92)", "oklch(56% 0.04 92)", "oklch(68% 0.04 92)", "oklch(80% 0.04 92)", "oklch(90% 0.03 92)", "oklch(98% 0.02 92)"]
+      },
+      "chop": {
+        "role": "primary",
+        "displayName": "Chop Green (WhatsApp — reserved)",
+        "canonical": "#25d366",
+        "tonalRamp": ["oklch(19% 0.07 150)", "oklch(29% 0.10 150)", "oklch(40% 0.14 150)", "oklch(51% 0.17 150)", "oklch(63% 0.19 150)", "oklch(76% 0.17 150)", "oklch(87% 0.11 150)", "oklch(96% 0.04 150)"]
+      },
+      "chop-deep": {
+        "role": "primary",
+        "displayName": "Chop Deep (the stamp's thickness)",
+        "canonical": "#128c48",
+        "tonalRamp": ["oklch(17% 0.06 152)", "oklch(26% 0.09 152)", "oklch(36% 0.12 152)", "oklch(47% 0.14 152)", "oklch(58% 0.15 152)", "oklch(71% 0.14 152)", "oklch(84% 0.09 152)", "oklch(95% 0.03 152)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink (text on lit surfaces)",
+        "canonical": "#0d0619",
+        "tonalRamp": ["oklch(10% 0.04 300)", "oklch(19% 0.06 300)", "oklch(28% 0.07 300)", "oklch(38% 0.07 300)", "oklch(49% 0.07 300)", "oklch(62% 0.05 300)", "oklch(77% 0.03 300)", "oklch(94% 0.01 300)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Shout", "purpose": "The painted board above the stall. Page H1 only; two-tone fluoro/tungsten. Uppercase is not optional." },
+      "headline": { "displayName": "Section Shout", "purpose": "Section H2s. Same face and metrics as display, one step down." },
+      "title": { "displayName": "Stall Name", "purpose": "Stall headings, method steps, in-page H2/H3." },
+      "lead": { "displayName": "Lead", "purpose": "The first paragraph inside a stall or case study, set in fluoro rather than tarp-pale." },
+      "body": { "displayName": "Read", "purpose": "Reading prose in tarp-pale at 80-90% opacity. Written to an owner-operator, not a marketer." },
+      "label": { "displayName": "Label", "purpose": "Tag chips, disclaimers, docket source stamps, copyright." },
+      "eyebrow": { "displayName": "Eyebrow", "purpose": "Display face at 12px with 0.2em tracking. Category line, footer headings, back-links." },
+      "marker": { "displayName": "Marker", "purpose": "The hand. Only things that would genuinely be hand-written on a stall: times, domains, counts, facts." }
+    },
+    "shadows": [
+      { "name": "card-drop", "value": "0 3px 0 rgba(0,0,0,0.45)", "purpose": "Every price card. Zero blur — it is lying on a counter, not floating." },
+      { "name": "chop-body", "value": "0 6px 0 var(--color-chop-deep)", "purpose": "The thickness of the rubber stamp under a primary WhatsApp chop. 0 7px 0 on the oversized closing CTA." },
+      { "name": "chop-pressed", "value": "0 2px 0 var(--color-chop-deep)", "purpose": "Active state, paired with translateY(1px). The stamp is pressed." },
+      { "name": "bulb-glow", "value": "0 0 6px 1px var(--color-tungsten), 0 0 14px 3px rgba(255,177,60,0.42)", "purpose": "Emitted light sized to the bulb. The only blurred shadow in the system." }
+    ],
+    "motion": [
+      { "name": "sway", "value": "sway 7s ease-in-out infinite (rotate -1.1deg to 1.1deg, transform-origin top center)", "purpose": "Every awning. A tarpaulin moves because the lane moves." },
+      { "name": "flicker", "value": "flicker 9s linear infinite (opacity 1 -> 0.55 -> 0.9 in the last 7%)", "purpose": "Bulb strings, staggered 0.7s per bulb." },
+      { "name": "land", "value": "land 0.38s cubic-bezier(0.22, 1, 0.36, 1) both", "purpose": "A docket arriving on the counter. Firm decelerate, no overshoot — a card settles, it does not spring." },
+      { "name": "gate-loop", "value": "requestAnimationFrame, 5.4% lane-width per second, dt clamped to 0.05s", "purpose": "The Gate's crowd. Deterministic seed so server and client first paint agree. Skipped entirely under reduced motion." },
+      { "name": "cross-seam", "value": "transition: opacity, transform 500ms; translateY(46px) scale(0.7) to opacity 0", "purpose": "A walker crossing the seam downward into the stall." },
+      { "name": "lift-stall", "value": "transition-transform; hover: translateY(-4px)", "purpose": "Interactive stalls in the client lane." },
+      { "name": "press-chop", "value": "transition-transform; active: translateY(4px) with shadow collapse to 0 2px 0", "purpose": "The primary chop. Pressing, not hovering, is the gesture." },
+      { "name": "reduced-motion", "value": "@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; } }", "purpose": "Everything stops. No exceptions and no !important re-enables anywhere in the codebase." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "container-content", "value": "64rem (max-w-5xl)" },
+      { "name": "container-reading", "value": "48rem (max-w-3xl)" }
+    ]
+  },
+  "components": [
+    {
+      "name": "The Chop (primary WhatsApp CTA)",
+      "kind": "button",
+      "refersTo": "chop-primary",
+      "description": "The only conversion control in the system, and the only place chop green is allowed. A rubber stamp you press.",
+      "html": "<a href=\"#\" class=\"ds-chop-primary\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.8 14.15c-.24.68-1.42 1.31-1.95 1.36-.5.05-.96.23-3.23-.67-2.72-1.07-4.44-3.85-4.57-4.03-.13-.18-1.09-1.45-1.09-2.77 0-1.32.69-1.97.94-2.24.24-.27.53-.34.7-.34.18 0 .35 0 .5.01.17.01.39-.06.61.47.23.55.77 1.9.84 2.04.07.14.11.3.02.48-.09.18-.14.29-.27.45-.14.16-.29.35-.41.47-.14.14-.28.28-.12.55.16.27.71 1.17 1.52 1.9 1.04.93 1.92 1.21 2.19 1.35.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.22.61-.13.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.34Z\"/></svg>WhatsApp us</a>",
+      "css": ".ds-chop-primary { display: inline-flex; align-items: center; gap: 10px; font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 900; font-size: 16px; letter-spacing: 0.02em; text-decoration: none; background: var(--color-chop, #25d366); color: var(--color-ink, #0d0619); border: 3px solid var(--color-chop-deep, #128c48); border-radius: 6px; padding: 14px 24px; box-shadow: 0 6px 0 var(--color-chop-deep, #128c48); transition: transform 0.15s; } .ds-chop-primary:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--color-chop-deep, #128c48); } .ds-chop-primary:focus-visible { outline: 3px solid var(--color-tungsten-hot, #ffe3a8); outline-offset: 3px; border-radius: 2px; }"
+    },
+    {
+      "name": "The Chop (outline)",
+      "kind": "button",
+      "refersTo": "chop-outline",
+      "description": "Secondary action. Same stamped object, unfilled, in tungsten — because tungsten is the wayfinding colour and chop green is reserved.",
+      "html": "<a href=\"#\" class=\"ds-chop-outline\">Back to the lane</a>",
+      "css": ".ds-chop-outline { display: inline-flex; align-items: center; font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 900; font-size: 16px; letter-spacing: 0.02em; text-decoration: none; color: var(--color-tungsten, #ffb13c); background: transparent; border: 3px solid currentColor; border-radius: 6px; padding: 12px 20px; transition: transform 0.15s, color 0.15s; } .ds-chop-outline:hover { color: var(--color-tungsten-hot, #ffe3a8); transform: translateY(-2px); } .ds-chop-outline:focus-visible { outline: 3px solid var(--color-tungsten-hot, #ffe3a8); outline-offset: 3px; }"
+    },
+    {
+      "name": "The Stall",
+      "kind": "card",
+      "refersTo": "stall-counter",
+      "description": "The system's universal container: scalloped swaying awning, fluorescent tube, lit counter. Replaces the feature card everywhere.",
+      "html": "<article class=\"ds-stall\"><div class=\"ds-stall-awning\" aria-hidden=\"true\"></div><div class=\"ds-stall-tube\" aria-hidden=\"true\"></div><div class=\"ds-stall-counter\"><h3 class=\"ds-stall-title\">Man the counter</h3><p class=\"ds-stall-lead\">You are with a customer. The phone goes. That one is gone.</p><ul class=\"ds-stall-tags\"><li>WhatsApp automation</li><li>Booking systems</li><li>CRM &amp; follow-up</li></ul></div></article>",
+      "css": ".ds-stall { display: flex; flex-direction: column; max-width: 360px; } .ds-stall-awning { height: 24px; flex-shrink: 0; background-image: repeating-linear-gradient(90deg, var(--color-tarp, #1d6fb8) 0 18px, var(--color-tarp-pale, #eaf2fb) 18px 36px); -webkit-mask-image: radial-gradient(circle at 11px 100%, transparent 0 10px, #000 10.5px); mask-image: radial-gradient(circle at 11px 100%, transparent 0 10px, #000 10.5px); -webkit-mask-size: 22px 14px; mask-size: 22px 14px; -webkit-mask-repeat: repeat-x; mask-repeat: repeat-x; -webkit-mask-position: bottom; mask-position: bottom; transform-origin: top center; animation: ds-sway 7s ease-in-out infinite; } @keyframes ds-sway { 0%,100% { transform: rotate(-1.1deg); } 50% { transform: rotate(1.1deg); } } .ds-stall-tube { height: 8px; flex-shrink: 0; background: linear-gradient(180deg, var(--color-fluoro, #e9f5ff) 0 2px, rgba(233,245,255,0.85) 2px 4px, rgba(233,245,255,0.25) 4px 6px, transparent 6px); } .ds-stall-counter { flex: 1; padding: 20px; background: linear-gradient(180deg, rgba(233,245,255,0.2) 0%, rgba(233,245,255,0.07) 16%, rgba(233,245,255,0.02) 34%, transparent 60%), var(--color-plum-lit, #4d2069); } .ds-stall-title { margin: 0; font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 900; font-stretch: 75%; font-size: 24px; line-height: 0.88; letter-spacing: -0.015em; text-transform: uppercase; color: var(--color-fluoro, #e9f5ff); } .ds-stall-lead { margin: 16px 0 0; font-family: 'Be Vietnam Pro', system-ui, sans-serif; font-weight: 500; font-size: 15px; line-height: 1.625; color: var(--color-fluoro, #e9f5ff); } .ds-stall-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 20px 0 0; padding: 0; list-style: none; } .ds-stall-tags li { border: 1px solid rgba(255,177,60,0.45); padding: 4px 8px; font-family: 'Be Vietnam Pro', system-ui, sans-serif; font-size: 12px; font-weight: 500; color: var(--color-tarp-pale, #eaf2fb); } a:hover > .ds-stall { transform: translateY(-4px); }"
+    },
+    {
+      "name": "Price Card",
+      "kind": "card",
+      "refersTo": "price-card",
+      "description": "Fluorescent stock, marker hand, hard drop shadow, always slightly crooked. Used for docket rows, built-items, and honest notes.",
+      "html": "<div class=\"ds-price-card\"><span class=\"ds-price-card-time\">8:40pm</span><span class=\"ds-price-card-source\">Maps</span></div>",
+      "css": ".ds-price-card { display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; min-width: 200px; padding: 8px 12px; background: var(--color-card-stock, #fff8e6); color: var(--color-ink, #0d0619); font-family: 'Shantell Sans', 'Comic Sans MS', cursive; font-weight: 700; font-size: 14px; border-radius: 0; box-shadow: 0 3px 0 rgba(0,0,0,0.45); transform: rotate(-0.5deg); } .ds-price-card-time { font-size: 16px; font-variant-numeric: tabular-nums; } .ds-price-card-source { background: var(--color-ink, #0d0619); color: var(--color-card-stock, #fff8e6); font-family: 'Be Vietnam Pro', system-ui, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; }"
+    },
+    {
+      "name": "Tag Chip",
+      "kind": "chip",
+      "refersTo": "tag-chip",
+      "description": "The lightest object in the system: the only 1px border, square-cut, tungsten at 45%. Lists capabilities without competing with anything.",
+      "html": "<ul class=\"ds-tags\"><li>Google SEO</li><li>Meta ads</li><li>Funnel building</li></ul>",
+      "css": ".ds-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; } .ds-tags li { border: 1px solid rgba(255,177,60,0.45); border-radius: 0; padding: 4px 8px; font-family: 'Be Vietnam Pro', system-ui, sans-serif; font-size: 12px; font-weight: 500; color: var(--color-tarp-pale, #eaf2fb); }"
+    },
+    {
+      "name": "Stamped Label",
+      "kind": "chip",
+      "refersTo": "chop-label",
+      "description": "The chop shape used as a stamp rather than a control: the Gate's 'the gate' marker and its pink example-data disclaimer. Disclaimers are stamped, never set as fine print.",
+      "html": "<div class=\"ds-stamp-row\"><span class=\"ds-stamp-gate\">the gate</span><span class=\"ds-stamp-warn\">Example — not real client data</span></div>",
+      "css": ".ds-stamp-row { display: flex; gap: 12px; align-items: center; } .ds-stamp-gate { font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 900; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-tungsten, #ffb13c); background: var(--color-night, #1c1039); border: 3px solid currentColor; border-radius: 6px; padding: 4px 12px; } .ds-stamp-warn { font-family: 'Be Vietnam Pro', system-ui, sans-serif; font-weight: 700; font-size: 11px; color: var(--color-card-pink, #ff3d8b); border: 3px solid currentColor; border-radius: 6px; padding: 4px 8px; }"
+    },
+    {
+      "name": "Law Toggle",
+      "kind": "button",
+      "refersTo": "chop-label",
+      "description": "The Gate's two switches. On is chop green (it is the counter being answered); off is pink and struck through. The only place chop green appears outside a WhatsApp link, and only because it means 'someone is answering'.",
+      "html": "<div class=\"ds-laws\"><button type=\"button\" class=\"ds-law\" aria-pressed=\"true\">We're filling the lane</button><button type=\"button\" class=\"ds-law ds-law-off\" aria-pressed=\"false\">Nobody's answering</button></div>",
+      "css": ".ds-laws { display: flex; flex-wrap: wrap; gap: 8px; } .ds-law { font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.02em; background: transparent; color: var(--color-chop, #25d366); border: 3px solid var(--color-chop, #25d366); border-radius: 6px; padding: 6px 12px; cursor: pointer; transition: color 0.2s, border-color 0.2s; } .ds-law-off { color: var(--color-card-pink, #ff3d8b); border-color: var(--color-card-pink, #ff3d8b); text-decoration: line-through; text-decoration-thickness: 2px; } .ds-law:focus-visible { outline: 3px solid var(--color-tungsten-hot, #ffe3a8); outline-offset: 3px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Transparent, unpinned, sitting on the sky. Monogram plate plus wordmark left, two text links and the nav chop right. No mobile menu — below 640px it reduces to wordmark plus chop.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><a class=\"ds-nav-brand\" href=\"#\"><span class=\"ds-mark\">B</span><span class=\"ds-nav-word\">Blueprint</span></a><div class=\"ds-nav-right\"><a class=\"ds-nav-link\" href=\"#\">The lane</a><a class=\"ds-nav-link\" href=\"#\">How it works</a><a class=\"ds-nav-chop\" href=\"#\">WhatsApp us</a></div></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; } .ds-nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--color-fluoro, #e9f5ff); } .ds-mark { display: inline-grid; place-items: center; width: 32px; height: 32px; background: var(--color-tungsten, #ffb13c); color: var(--color-ink, #0d0619); font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 900; font-stretch: 75%; font-size: 18px; text-transform: uppercase; clip-path: polygon(0 0, 100% 6%, 96% 100%, 4% 94%); } .ds-nav-word { font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 900; font-stretch: 75%; font-size: 20px; letter-spacing: -0.025em; text-transform: uppercase; } .ds-nav-right { display: flex; align-items: center; gap: 16px; } .ds-nav-link { font-family: 'Be Vietnam Pro', system-ui, sans-serif; font-size: 14px; font-weight: 500; text-decoration: none; color: rgba(234,242,251,0.8); transition: color 0.2s; } .ds-nav-link:hover { color: var(--color-fluoro, #e9f5ff); } .ds-nav-chop { font-family: Archivo, 'Arial Narrow', sans-serif; font-weight: 900; font-size: 14px; text-decoration: none; background: var(--color-chop, #25d366); color: var(--color-ink, #0d0619); border: 3px solid var(--color-chop, #25d366); border-radius: 6px; padding: 6px 16px; transition: transform 0.15s; } .ds-nav-chop:hover { transform: translateY(-2px); } .ds-nav-link:focus-visible, .ds-nav-chop:focus-visible { outline: 3px solid var(--color-tungsten-hot, #ffe3a8); outline-offset: 3px; }"
+    },
+    {
+      "name": "String Lights",
+      "kind": "custom",
+      "refersTo": "chop-label",
+      "description": "Bulbs glow because bulbs glow: an object with a light source, sized to the bulb, never a decorative wash. The unlit variant loses the shadow entirely.",
+      "html": "<div class=\"ds-string\"><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb\"></span><span class=\"ds-bulb ds-bulb-dim\"></span><span class=\"ds-bulb ds-bulb-dim\"></span></div>",
+      "css": ".ds-string { display: flex; gap: 22px; padding: 12px 8px; } .ds-bulb { width: 6px; height: 6px; border-radius: 9999px; background: var(--color-tungsten-hot, #ffe3a8); box-shadow: 0 0 6px 1px var(--color-tungsten, #ffb13c), 0 0 14px 3px rgba(255,177,60,0.42); animation: ds-flicker 9s linear infinite; } .ds-bulb:nth-child(2) { animation-delay: 0.7s; } .ds-bulb:nth-child(3) { animation-delay: 1.4s; } .ds-bulb:nth-child(4) { animation-delay: 2.1s; } .ds-bulb:nth-child(5) { animation-delay: 2.8s; } .ds-bulb-dim { background: #6a5233; box-shadow: none; animation: none; } @keyframes ds-flicker { 0%, 93%, 100% { opacity: 1; } 95% { opacity: 0.55; } 97% { opacity: 0.9; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pasar Malam at Dusk",
+    "overview": "A Malaysian night market just after the lights go on. The sky is still bleeding indigo into plum, the string bulbs are already hot, and every stall is a striped tarpaulin awning over a fluorescent tube over a counter with hand-written cards on it. The page is that lane. The visitor is walking down it. Blueprint is the stall that is lit and staffed while the others are shuttered.\n\nThe system is drenched, not neutral. There is no grey, no white card on a dark background, no surface that exists only to hold content. The background is a painted sky gradient; every panel is a coloured object with a reason to be that colour. Depth comes from light — a tube throws a wash down onto a counter, a bulb glows because bulbs glow — never from soft ambient shadow. Density is generous and physical: things are stacked (awning, tube, counter), pinned (cards, always slightly crooked), and stamped (the chop, a rubber stamp with a 3px border).\n\nThe confirmed anti-reference is the site this replaced: a dark-navy / cyan / Space Grotesk drafting-blueprint vernacular with a feature-card grid. That world was destroyed deliberately. Its two signatures — the neutral card grid and the hairline technical-drawing look — are the two things this world must never drift back toward. The stall replaced the card, and light replaced the hairline.",
+    "keyCharacteristics": [
+      "Drenched dusk palette: indigo → plum → lit-plum, with tungsten amber as the only warmth",
+      "The stall (awning → tube → lit counter) as the universal container, not the card",
+      "Three hands of type: a condensed black shout, a plain reading face, a hand-written marker",
+      "Hard, zero-blur offset shadows; blur only where there is a light source",
+      "WhatsApp green reserved exclusively for the conversion action",
+      "Motion is ambient and slow (sway, flicker), and stops completely under reduced motion"
+    ],
+    "rules": [
+      { "name": "The Reserved Chop Rule", "body": "Chop green and chop-deep are WhatsApp's own green and they belong to the WhatsApp action alone. They appear on the hero chop, the sticky chop, the nav chop, the closing chop, the case-study chop, the footer WhatsApp line, and the \"someone's at the counter\" law when it is on — nothing else. Never use chop green for a heading, a border, a chart, a hover state, or a decorative accent. Its scarcity is what makes it a button on sight.", "section": "colors" },
+      { "name": "The Lit Counter Rule", "body": "The stall counter is plum-lit with a fluoro wash falling from the top. It must always be lighter than the sky around it. A dark counter panel would make the whole metaphor lie.", "section": "colors" },
+      { "name": "The Amber Wayfinding Rule", "body": "Tungsten is the only emphasis colour that may appear more than once per screen. If something needs attention and is not the WhatsApp action, it is amber.", "section": "colors" },
+      { "name": "The Three Hands Rule", "body": "Archivo shouts, Be Vietnam Pro reads, Shantell Sans writes the numbers by hand. A font never takes another's job: no Archivo paragraphs, no Be Vietnam headings, no Shantell body copy.", "section": "typography" },
+      { "name": "The Hand-Written Number Rule", "body": "Anything that would be written by hand on a real stall is set in the marker face: docket times, the method's running order, client domains, case-study facts. Numbers that are UI stay in Be Vietnam Pro. Tabular figures are applied wherever numbers change in place.", "section": "typography" },
+      { "name": "The Shout-Is-Uppercase Rule", "body": "The display class carries text-transform: uppercase — never override it. Sentence-case Archivo reads as a mistake, not a variation.", "section": "typography" },
+      { "name": "The One Geometry Rule", "body": "Lane → seam → stall holds at every width. No breakpoint may reorder it, stack it differently, or hide the lane on mobile. If a layout only works at one width, it is the wrong layout.", "section": "layout" },
+      { "name": "The Thumb-Zone Rule", "body": "The WhatsApp chop is reachable without scrolling on every screen of the site. The buyer is reading on a phone between appointments.", "section": "layout" },
+      { "name": "The Hard Shadow Rule", "body": "Shadows are offset and unblurred. Blur is reserved for light sources — a bulb may glow; a panel may not.", "section": "elevation" },
+      { "name": "The Light-Source Rule", "body": "Every glow in the build belongs to an object that would emit light in the real lane. Do not add ambient bloom, backdrop blur, or a glow behind a heading to create emphasis; use tungsten instead.", "section": "elevation" },
+      { "name": "The Crooked Card Rule", "body": "A price card is never at 0°. Rotate 0.4°–2°, and alternate the sign in a sequence so a list looks dealt rather than tiled.", "section": "shapes" },
+      { "name": "The Semantic Radius Rule", "body": "Zero radius by default. 6px means pressable; a circle means lit. Never round a container to soften it.", "section": "shapes" },
+      { "name": "The Full Stop Rule", "body": "Under prefers-reduced-motion: reduce, everything stops — one global block killing animation, transition and scroll-behaviour, with no !important re-enables anywhere. The replaced site had two. The composition must read as a deliberate still with nothing running.", "section": "components" },
+      { "name": "The Stall-Not-Card Rule", "body": "New repeating content gets a stall. If you find yourself reaching for a bordered rectangle with a title and body, you have reintroduced the feature-card grid this world was built to destroy.", "section": "components" },
+      { "name": "The Drawn-Not-Stocked Rule", "body": "People are drawn as figures; icons are inline SVG. No stock photography, no illustration library, no placeholder imagery.", "section": "components" }
+    ],
+    "dos": [
+      "Do build any new repeating content as a stall: scalloped swaying awning → fluoro tube → plum-lit counter.",
+      "Do keep the counter the brightest opaque surface in its neighbourhood.",
+      "Do use tungsten for every emphasis and wayfinding cue that is not the WhatsApp action.",
+      "Do hand-letter in Shantell Sans anything that would be hand-written on a real stall — times, domains, counts, facts — and apply .tabular when a number changes in place.",
+      "Do rotate price cards 0.4°–2° and alternate the direction down a list.",
+      "Do use offset, zero-blur shadows for weight, and reserve blur for objects that emit light.",
+      "Do stamp disclaimers in the chop shape (pink border, pink text) rather than shrinking them into fine print.",
+      "Do end every primary CTA in a WhatsApp link with a prefilled message.",
+      "Do render a missing fact as an honest note in the world's own vocabulary — the \"On results\" price card — rather than omitting the section or filling it.",
+      "Do keep body text above 4.5:1: tarp-pale at /65 or higher at 12px, /80 or higher for prose."
+    ],
+    "donts": [
+      "Don't use chop green or chop-deep for anything other than the WhatsApp conversion action. Not a heading, not a border, not a hover, not a chart.",
+      "Don't put a dark panel where a counter belongs.",
+      "Don't reintroduce the neutral bordered feature-card grid, hairline technical rules, or the navy/cyan/Space Grotesk vernacular of the replaced site.",
+      "Don't add !important re-enables inside the reduced-motion block, or exempt a \"subtle\" animation from it.",
+      "Don't override the display class's uppercase, or set body copy in Archivo or Shantell.",
+      "Don't add ambient blur, backdrop-filter, or a glow behind text to create emphasis.",
+      "Don't ship a stock photo, an illustration-library asset, or a grey placeholder box. Every image in this system is drawn SVG until real client photography exists.",
+      "Don't print a number, sector, location, or outcome that is not user-confirmed. lib/clients.ts enforces this with detail: null and outcomes: null; lib/site.ts enforces it by falling back to http://localhost:4310 rather than a guessed production domain."
+    ]
+  }
+}
