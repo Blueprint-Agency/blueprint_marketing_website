@@ -36,8 +36,6 @@ export type Client = {
   sector?: string;
   place?: string;
   href: string;
-  /** Stall awning hue — decorative only, keeps the lane from reading uniform. */
-  awning: "tarp" | "pink" | "green" | "tungsten";
   detail: ClientDetail | null;
 };
 
@@ -48,7 +46,6 @@ export const CLIENTS: Client[] = [
     sector: "Aesthetic clinic",
     place: "Bangsar + Puchong, KL",
     href: "https://fiveclinic.com.my",
-    awning: "tarp",
     detail: {
       built: [
         "SEO landing pages for every treatment",
@@ -76,35 +73,30 @@ export const CLIENTS: Client[] = [
     slug: "vatti-malaysia",
     name: "Vatti Malaysia",
     href: "https://vattimalaysia.com",
-    awning: "pink",
     detail: null,
   },
   {
     slug: "kaiteki",
     name: "Kaiteki",
     href: "https://kaiteki.my",
-    awning: "green",
     detail: null,
   },
   {
     slug: "aq-energy",
     name: "AQ Energy",
     href: "https://aq.energy",
-    awning: "tungsten",
     detail: null,
   },
   {
     slug: "teeko",
     name: "Teeko",
     href: "https://teeko.ai",
-    awning: "tarp",
     detail: null,
   },
   {
     slug: "yoga-sadhana",
     name: "Yoga Sadhana",
     href: "https://yogasadhana.sg",
-    awning: "pink",
     detail: null,
   },
 ];

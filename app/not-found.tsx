@@ -1,37 +1,39 @@
 import Link from "next/link";
-import { Nav, Footer } from "@/components/Chrome";
+import { Nav, Footer } from "@/components/v2/Chrome";
 import { WA } from "@/lib/site";
+
+export const metadata = { title: "Page not found" };
 
 export default function NotFound() {
   return (
     <>
       <Nav />
-      <main
-        id="main"
-        className="mx-auto flex min-h-[60vh] max-w-2xl flex-col justify-center px-4 py-20 text-center sm:px-6"
-      >
-        <div className="tarp tarp-scallop mx-auto mb-8 h-7 w-full max-w-xs" aria-hidden="true" />
-        <h1 className="shout text-5xl leading-[0.9] text-fluoro sm:text-6xl">
-          This stall&rsquo;s
-          <br />
-          <span className="text-tungsten">packed up.</span>
-        </h1>
-        <p className="mx-auto mt-5 max-w-md text-tarp-pale/80">
-          Nothing here. The rest of the lane is still open.
-        </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link
-            href="/"
-            className="chop border-tungsten px-5 py-3 font-black text-tungsten no-underline"
-          >
-            Back to the lane
-          </Link>
-          <a
-            href={WA.general}
-            className="chop border-chop-deep bg-chop px-5 py-3 font-black text-ink no-underline"
-          >
-            WhatsApp us
-          </a>
+      <main id="main" className="band">
+        <div className="shell col">
+          <p className="mono" style={{ color: "var(--brand-text)" }}>
+            404
+          </p>
+          <h1 className="h1" style={{ marginTop: 14, maxWidth: "16ch" }}>
+            That page is not here.
+          </h1>
+          <p className="prose" style={{ marginTop: 22 }}>
+            It may have moved, or the link may be wrong. The rest of the site
+            is where you left it, and if you were looking for something in
+            particular you can just ask us.
+          </p>
+          <div className="cta-row" style={{ marginTop: 30 }}>
+            <Link className="btn btn-line" href="/">
+              Back to the homepage
+            </Link>
+            <a
+              className="btn btn-act"
+              href={WA.general}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp us
+            </a>
+          </div>
         </div>
       </main>
       <Footer />

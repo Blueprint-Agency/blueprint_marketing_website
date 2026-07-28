@@ -1,374 +1,474 @@
 import Link from "next/link";
-import Gate from "@/components/Gate";
-import { Nav, Footer, StickyChop, WhatsAppGlyph } from "@/components/Chrome";
-import { CLIENTS } from "@/lib/clients";
-import { WA } from "@/lib/site";
+import Image from "next/image";
+import { CTASection } from "@/components/ui/hero-dithering-card";
+import { Nav, Footer } from "@/components/v2/Chrome";
+import Diagnostic from "@/components/v2/Diagnostic";
+import QualArt from "@/components/v2/QualArt";
+import ServiceTabs from "@/components/v2/ServiceTabs";
+import { CLIENTS, clientBySlug } from "@/lib/clients";
+import { BRANDS } from "@/lib/logos";
+import { MOCK_LOGO_TINTS, MOCK_RESULTS, PREVIEW_DATA } from "@/lib/preview";
+import { RESULTS } from "@/lib/results";
+import { SEGMENTS } from "@/lib/segments";
+import { FAQ, QUALIFY, SERVICES, WHY, WHY_IT_WORKS } from "@/lib/services";
+import { SITE, WA } from "@/lib/site";
 
-const AWNING: Record<string, string> = {
-  tarp: "repeating-linear-gradient(90deg,var(--color-tarp) 0 18px,var(--color-tarp-pale) 18px 36px)",
-  pink: "repeating-linear-gradient(90deg,var(--color-card-pink) 0 18px,var(--color-card-stock) 18px 36px)",
-  green:
-    "repeating-linear-gradient(90deg,var(--color-awning-green) 0 18px,var(--color-tarp-pale) 18px 36px)",
-  tungsten:
-    "repeating-linear-gradient(90deg,var(--color-tungsten-deep) 0 18px,var(--color-card-stock) 18px 36px)",
-};
-
-const TRADES = [
-  {
-    n: "01",
-    title: "Fill the lane",
-    lead: "Most of the people who want what you sell are searching for it tonight. Right now they are walking past somebody else.",
-    body: "This is the bulk of what we do and it is where our results are. We put you in front of them on Google and Meta, and we keep you there.",
-    tags: [
-      "Google SEO",
-      "Google Ads",
-      "Meta ads",
-      "Funnel building",
-      "Video",
-      "Branding",
-    ],
-    awning: "tungsten",
-    lead_size: true,
-  },
-  {
-    n: "02",
-    title: "Light the stall",
-    lead: "Getting them past your door is wasted if the door looks shut.",
-    body: "Pages built for the thing they actually searched for, that load fast on a phone on 4G, and give them one obvious next step instead of a phone number and a hope.",
-    tags: ["Websites", "Service pages", "Landing pages", "Mobile apps"],
-    awning: "pink",
-    lead_size: false,
-  },
-  {
-    n: "03",
-    title: "Man the counter",
-    lead: "You are with a customer. The phone goes. That one is gone.",
-    body: "This is the part most agencies will not touch, and it is why we are different: we build the systems that reply, book and follow up while you are busy, including at 11pm, which is when a lot of people finally get around to it.",
-    tags: [
-      "WhatsApp automation",
-      "Booking systems",
-      "CRM & follow up",
-      "Custom software",
-      "AI agents",
-    ],
-    awning: "tarp",
-    lead_size: false,
-  },
+const STEPS = [
+  [
+    "Audit",
+    "We look at what you have and find where the customers are actually going missing. Usually it is not where you think.",
+  ],
+  [
+    "Architect",
+    "We plan the marketing and the systems together, as one thing, because separately they leak.",
+  ],
+  [
+    "Build",
+    "We build it: the pages, the campaigns, the booking, the automation, the follow up.",
+  ],
+  [
+    "Scale",
+    "Once it works, we spend more where it works and cut what does not.",
+  ],
 ];
 
-const METHOD = [
-  {
-    time: "5pm",
-    title: "Walk the lane",
-    body: "We look at where your customers already are, what they are typing, and exactly where you are losing them.",
-  },
-  {
-    time: "6pm",
-    title: "Set up the stall",
-    body: "We plan the whole thing on paper before anything is built: the ads, the pages, what happens when somebody messages at midnight.",
-  },
-  {
-    time: "7pm",
-    title: "Switch the lights on",
-    body: "We build it and launch it. Pages, ads, booking, WhatsApp, all wired together, not six separate things you have to manage.",
-  },
-  {
-    time: "Late",
-    title: "Count the night",
-    body: "We measure what actually came in, tell you straight what worked, and put more into that.",
-  },
-];
-
-/** A stall: awning, the tube under it, then the lit counter. */
-function Stall({
-  awning,
-  children,
-  className = "",
-}: {
-  awning: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
+function Aurora() {
   return (
-    <article className={`flex flex-col ${className}`}>
-      <div
-        className="tarp-scallop h-6 w-full shrink-0 animate-sway"
-        style={{ backgroundImage: AWNING[awning] }}
-        aria-hidden="true"
-      />
-      <div className="tube h-2 w-full shrink-0" aria-hidden="true" />
-      <div className="counter-lit flex flex-1 flex-col p-5 sm:p-6">
-        {children}
-      </div>
-    </article>
+    <div className="aurora-field" aria-hidden="true">
+      <span className="blob blob-1" />
+      <span className="blob blob-2" />
+      <span className="blob blob-3" />
+    </div>
   );
 }
 
-export default function Home() {
+function Chop({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a className="btn btn-act" href={href} target="_blank" rel="noopener noreferrer">
+      {children}
+    </a>
+  );
+}
+
+/* The logo wall. Until real files are supplied every cell renders as a
+   typographic wordmark — a designed state rather than an empty box — and
+   keeps the link to the live site, so "go and check" survives the swap
+   away from screenshots. See lib/logos.ts. */
+function LogoWall() {
+  return (
+    <ul className="logo-row">
+      {BRANDS.map((b) => (
+        <li key={b.slug}>
+          <a
+            className="logo-cell"
+            href={b.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`${b.name}, opens their site`}
+          >
+            {b.logo ? (
+              <Image
+                src={b.logo}
+                alt={b.name}
+                width={200}
+                height={72}
+                style={b.scale ? { transform: `scale(${b.scale})` } : undefined}
+              />
+            ) : PREVIEW_DATA ? (
+              /* Neutral placeholder tile — deliberately NOT an imitation of
+                 this company's real mark. Shows weight and rhythm only. */
+              <span className="logo-mock">
+                <span
+                  className="logo-mock-tile"
+                  style={{ background: MOCK_LOGO_TINTS[b.slug] ?? "#1e4fe0" }}
+                  aria-hidden="true"
+                >
+                  {b.name.charAt(0)}
+                </span>
+                <span className="logo-word">{b.name}</span>
+              </span>
+            ) : (
+              <span className="logo-word">{b.name}</span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function HomePage() {
+  const flagship = CLIENTS[0];
+  const attract = SERVICES.filter((s) => s.group === "attract");
+  const build = SERVICES.filter((s) => s.group === "build");
+
+  /* Real figures win whenever they exist. Mock data only fills the gap. */
+  const results = RESULTS ?? (PREVIEW_DATA ? MOCK_RESULTS : null);
+
   return (
     <>
+      {PREVIEW_DATA && (
+        <div className="mockbar" role="status">
+          <strong>PREVIEW DATA</strong>
+          <span>
+            Sample figures and placeholder logos. Nothing here is real. Set{" "}
+            <code>PREVIEW_DATA = false</code> in <code>lib/preview.ts</code>{" "}
+            before publishing.
+          </span>
+        </div>
+      )}
       <Nav />
-      <StickyChop />
 
       <main id="main">
-        {/* ============================================================
-            HERO — the seam
-            ============================================================ */}
-        <section className="relative px-4 pt-6 pb-2 sm:px-6">
-          <div className="mx-auto max-w-5xl">
-            <p className="shout mb-4 text-xs tracking-[0.2em] text-tungsten sm:text-sm">
-              Marketing &amp; systems · Kuala Lumpur
+        {/* ---------------- hero ---------------- */}
+        <section className="band band-hero aurora">
+          <Aurora />
+          <div className="shell hero-center">
+            <p className="hero-kicker">Digital marketing &amp; growth systems</p>
+            <h1 className="h1">We get Malaysian businesses more customers.</h1>
+            <p className="lead hero-lead">
+              Blueprint runs the marketing that brings people in, like SEO, Google
+              Ads, Meta and funnels, then builds the booking, CRM and WhatsApp
+              systems that stop you losing them once they arrive.
             </p>
-            <h1
-              className="shout max-w-3xl text-fluoro"
-              style={{ fontSize: "clamp(2.4rem, 9vw, 4.75rem)" }}
-            >
-              The crowd is already
-              <br />
-              <span className="text-tungsten">walking past</span> your door.
-            </h1>
-
-            {/* Say the plain thing. She arrived cold and should not have to
-                infer the category from a 12px eyebrow. */}
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-tarp-pale/90 sm:text-lg">
-              Blueprint is a Kuala Lumpur marketing agency.{" "}
-              <span className="text-fluoro">
-                We run the ads, search and pages that bring customers to your
-                door, then we build the booking, WhatsApp and follow up systems
-                that make sure you don&rsquo;t lose them when they arrive.
-              </span>
-            </p>
-
-            <a
-              href={WA.general}
-              className="chop mt-7 inline-flex items-center gap-2.5 border-chop-deep bg-chop px-6 py-3.5 text-base font-black text-ink no-underline shadow-[0_6px_0_var(--color-chop-deep)] transition-transform active:translate-y-1 active:shadow-[0_2px_0_var(--color-chop-deep)]"
-            >
-              <WhatsAppGlyph size={20} />
-              WhatsApp us
-            </a>
-          </div>
-
-          <div className="mx-auto mt-9 max-w-5xl overflow-hidden rounded-md border-2 border-plum-edge bg-night/60">
-            <Gate />
-          </div>
-        </section>
-
-        {/* ============================================================
-            THE TRADE — marketing dominant, by area as well as order
-            ============================================================ */}
-        <section className="px-4 py-16 sm:px-6 sm:py-24" aria-labelledby="trade">
-          <div className="mx-auto max-w-5xl">
-            <h2
-              id="trade"
-              className="shout max-w-2xl text-4xl text-fluoro sm:text-5xl"
-            >
-              Three jobs. We do all three.
-            </h2>
-            <p className="mt-4 max-w-xl text-tarp-pale/80">
-              Most agencies do the first one and hand you the rest. That is
-              where the money leaks out.
-            </p>
-
-            <div className="mt-10 grid gap-5 lg:grid-cols-2">
-              {TRADES.map((t) => (
-                <Stall
-                  key={t.n}
-                  awning={t.awning}
-                  className={t.lead_size ? "lg:col-span-2" : ""}
-                >
-                  <div
-                    className={
-                      t.lead_size
-                        ? "flex flex-col gap-6 lg:flex-row lg:items-start"
-                        : ""
-                    }
-                  >
-                    <div className={t.lead_size ? "lg:w-1/2" : ""}>
-                      <div className="flex items-baseline gap-3">
-                        <span className="price-card marker inline-block rotate-[-2deg] px-2.5 py-0.5 text-2xl leading-none">
-                          {t.n}
-                        </span>
-                        <h3
-                          className={`shout text-fluoro ${t.lead_size ? "text-3xl sm:text-4xl" : "text-2xl"}`}
-                        >
-                          {t.title}
-                        </h3>
-                      </div>
-                      <p
-                        className={`mt-4 leading-relaxed font-medium text-fluoro ${t.lead_size ? "text-lg sm:text-xl" : "text-base"}`}
-                      >
-                        {t.lead}
-                      </p>
-                    </div>
-                    <div className={t.lead_size ? "lg:w-1/2 lg:pt-2" : ""}>
-                      <p className="mt-3 text-sm leading-relaxed text-tarp-pale/85 lg:mt-0">
-                        {t.body}
-                      </p>
-                      <ul className="mt-5 flex flex-wrap gap-1.5">
-                        {t.tags.map((tag) => (
-                          <li
-                            key={tag}
-                            className="border border-tungsten/45 px-2 py-1 text-xs font-medium text-tarp-pale"
-                          >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </Stall>
-              ))}
+            <div className="cta-row hero-cta">
+              <Chop href={WA.audit}>
+                Tell us where you&rsquo;re losing customers
+              </Chop>
+              <a className="btn btn-line" href="#services">
+                See what we do
+              </a>
             </div>
           </div>
         </section>
 
-        {/* ============================================================
-            THE LANE — six stalls, real live links
-            ============================================================ */}
-        <section
-          id="work"
-          className="scroll-mt-4 px-4 py-16 sm:px-6 sm:py-24"
-          aria-labelledby="work-h"
-        >
-          <div className="mx-auto max-w-5xl">
-            <h2 id="work-h" className="shout text-4xl text-fluoro sm:text-5xl">
-              Walk the lane.
-            </h2>
+        {/* ---------------- logo wall ---------------- */}
+        <section className="strip">
+          <div className="shell">
+            <p className="strip-label">
+              Trusted by clinics, product brands and studios across Malaysia and
+              Singapore
+            </p>
+            <LogoWall />
+          </div>
+        </section>
 
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-tarp-pale/90">
-              We are not going to put a big invented number on this page. What
-              we have is six businesses you can go and look at for yourself.
+        {/* ---------------- qualification ---------------- */}
+        <section className="band">
+          <div className="shell">
+            <div className="col">
+              <h2 className="h2">
+                You&rsquo;re probably here because of one of these.
+              </h2>
+            </div>
+
+            {/* Statements and illustrations are paired grid ROWS, not two
+                independent stacks — that is the only way the artwork stays
+                level with the line it illustrates at every width. */}
+            <div className="qual-grid">
+              {QUALIFY.map((q, i) => (
+                <div className="qual-row" key={q}>
+                  <p className="qual-text">{q}</p>
+                  <div className="qual-art">
+                    <QualArt i={i} />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="col">
+              <p className="prose" style={{ marginTop: 34 }}>
+                If any of that sounds like your business, you are in the right
+                place, and the fix is usually not more ad spend.
+              </p>
+              <div className="cta-row" style={{ marginTop: 26 }}>
+                <Chop href={WA.audit}>Find out if we&rsquo;re a fit</Chop>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- the diagnostic ----------------
+            Was "Two things cost you customers", which told the reader what
+            her problem was and then sold her the answer. She names it
+            herself now, and the reading she gets back is the version she
+            believes — because she supplied the evidence for it. It doubles
+            as the lead form: the finished questionnaire leaves as a
+            pre-written WhatsApp message. See lib/diagnostic.ts. */}
+        <section className="band band-sunk" id="fix">
+          <div className="shell">
+            <h2 className="h2" style={{ maxWidth: "22ch" }}>
+              Where is your business losing customers?
+            </h2>
+            <p className="prose" style={{ marginTop: 22 }}>
+              Seven questions, under a minute. At the end you get our honest
+              reading of where the money is going, and the three moves we
+              would make, in the order we would make them. Whether or not you
+              ever hire us.
             </p>
 
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {CLIENTS.map((c) => {
-                const domain = c.href.replace("https://", "");
-                const body = (
-                  <>
-                    <h3 className="shout text-2xl text-fluoro">{c.name}</h3>
-                    {c.sector && (
-                      <p className="mt-1 text-sm text-tarp-pale/80">
-                        {c.sector} · {c.place}
-                      </p>
-                    )}
-                    {/* The evidence is the live site. Hand-lettered, because
-                        on a stall the important number is always hand-written. */}
-                    <p className="marker mt-3 text-lg break-all text-card-green">
-                      {domain}
-                    </p>
-                    {c.detail && (
-                      <ul className="mt-4 flex flex-wrap gap-1.5">
-                        {c.detail.built.slice(0, 3).map((b) => (
-                          <li
-                            key={b}
-                            className="border border-tungsten/45 px-2 py-0.5 text-xs text-tarp-pale"
+            <Diagnostic />
+          </div>
+        </section>
+
+        {/* ---------------- services ---------------- */}
+        <section className="band" id="services">
+          <div className="shell">
+            <h2 className="h2" style={{ maxWidth: "22ch" }}>
+              What we can help you with.
+            </h2>
+            <p className="prose" style={{ marginTop: 22 }}>
+              No buzzwords, and nothing on this list that we do not actually build.
+              Start with one, or let us run the whole thing.
+            </p>
+
+            <ServiceTabs
+              groupId="attract"
+              eyebrow="Bringing people in"
+              services={attract}
+            />
+            <ServiceTabs
+              groupId="build"
+              eyebrow="Keeping them once they arrive"
+              services={build}
+            />
+
+            <p className="small svt-note">
+              The screens beside each service are illustrations of the work,
+              drawn here. They are not screenshots of a client account, and not a
+              claimed result.
+            </p>
+          </div>
+        </section>
+
+        {/* ---------------- mid CTA ---------------- */}
+        <section className="midcta">
+          <div className="shell midcta-row">
+            <div>
+              <h2 className="h3" style={{ fontSize: "1.5rem" }}>
+                Not sure which of these you need?
+              </h2>
+              <p className="small" style={{ marginTop: 6, maxWidth: "56ch" }}>
+                Tell us what your business does and where it feels like people
+                are dropping off. We will tell you what we would look at first.
+              </p>
+            </div>
+            <Chop href={WA.audit}>Ask us on WhatsApp</Chop>
+          </div>
+        </section>
+
+        {/* ---------------- who it's for ---------------- */}
+        <section className="band" id="who">
+          <div className="shell">
+            <h2 className="h2" style={{ maxWidth: "20ch" }}>
+              Find your business. We&rsquo;ve built this before.
+            </h2>
+            <p className="prose" style={{ marginTop: 22 }}>
+              The problem is never quite the same. A clinic loses people at 11pm;
+              a solar company loses them three weeks into a decision. What we
+              build depends on which one you are.
+            </p>
+
+            <div className="seg-grid">
+              {SEGMENTS.map((s) => {
+                const clients = s.clientSlugs
+                  .map(clientBySlug)
+                  .filter((c): c is NonNullable<typeof c> => Boolean(c));
+                return (
+                  <article className="seg" key={s.id}>
+                    <h3 className="h3">{s.title}</h3>
+                    <p className="small seg-who">{s.who}</p>
+                    <p className="seg-pain">{s.pain}</p>
+                    <ul className="seg-builds">
+                      {s.builds.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                    <div className="seg-foot">
+                      <span className="small">We do this for</span>
+                      <span className="seg-clients">
+                        {clients.map((c) => (
+                          <a
+                            key={c.slug}
+                            className="seg-client"
+                            href={c.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
-                            {b}
-                          </li>
+                            {c.name}
+                          </a>
                         ))}
-                      </ul>
-                    )}
-                    <span className="shout mt-auto pt-5 text-sm text-tungsten">
-                      {c.detail ? "Read the full night →" : "Visit the site ↗"}
-                    </span>
-                  </>
-                );
-
-                const shell =
-                  "no-underline transition-transform hover:-translate-y-1";
-
-                return c.detail ? (
-                  <Link key={c.slug} href={`/work/${c.slug}`} className={shell}>
-                    <Stall awning={c.awning} className="h-full">
-                      {body}
-                    </Stall>
-                  </Link>
-                ) : (
-                  <a
-                    key={c.slug}
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={shell}
-                  >
-                    <Stall awning={c.awning} className="h-full">
-                      {body}
-                    </Stall>
-                  </a>
+                      </span>
+                    </div>
+                  </article>
                 );
               })}
             </div>
           </div>
         </section>
 
-        {/* ============================================================
-            METHOD — a night's running order, not another card grid
-            ============================================================ */}
-        <section
-          id="method"
-          className="scroll-mt-4 border-y-2 border-plum-edge bg-night-deep/60 px-4 py-16 sm:px-6 sm:py-24"
-          aria-labelledby="method-h"
-        >
-          <div className="mx-auto max-w-3xl">
-            <h2 id="method-h" className="shout text-4xl text-fluoro sm:text-5xl">
-              How a night runs.
+        {/* ---------------- why it works ---------------- */}
+        <section className="band band-sunk">
+          <div className="shell">
+            <h2 className="h2" style={{ maxWidth: "20ch" }}>
+              Why it works.
             </h2>
-
-            <ol className="mt-10 border-l-2 border-tungsten/50 pl-6 sm:pl-8">
-              {METHOD.map((m) => (
-                <li key={m.time} className="relative pb-9 last:pb-0">
-                  <span
-                    className="bulb absolute -left-[31px] top-2 h-3 w-3 sm:-left-[39px]"
-                    aria-hidden="true"
-                  />
-                  <span className="marker text-xl text-tungsten">{m.time}</span>
-                  <h3 className="shout mt-1 text-2xl text-fluoro">{m.title}</h3>
-                  <p className="mt-2 leading-relaxed text-tarp-pale/85">
-                    {m.body}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        {/* ============================================================
-            CLOSE
-            ============================================================ */}
-        <section className="px-4 py-20 sm:px-6 sm:py-28" aria-labelledby="close">
-          <div className="mx-auto max-w-3xl text-center">
-            <div
-              className="tarp tarp-scallop mx-auto mb-2 h-7 w-full max-w-md animate-sway"
-              aria-hidden="true"
-            />
-            <div
-              className="tube mx-auto mb-8 h-2 w-full max-w-md"
-              aria-hidden="true"
-            />
-            <h2
-              id="close"
-              className="shout text-4xl leading-[0.92] text-fluoro sm:text-6xl"
-            >
-              Tell us what you sell.
-              <br />
-              <span className="text-tungsten">
-                We&rsquo;ll tell you where you&rsquo;re losing people.
-              </span>
-            </h2>
-            <p className="mx-auto mt-5 max-w-lg text-tarp-pale/85">
-              Message us on WhatsApp. A real person replies, and yes, we know
-              how that sounds coming from the people who sell you automation.
+            <p className="prose" style={{ marginTop: 22 }}>
+              Most businesses buy traffic first and think about what happens to
+              it afterwards. We build it the other way round.
             </p>
-
-            <a
-              href={WA.audit}
-              className="chop mt-8 inline-flex items-center gap-3 border-chop-deep bg-chop px-7 py-4 text-lg font-black text-ink no-underline shadow-[0_7px_0_var(--color-chop-deep)] transition-transform active:translate-y-1 active:shadow-[0_2px_0_var(--color-chop-deep)]"
-            >
-              <WhatsAppGlyph size={22} />
-              Start a WhatsApp chat
-            </a>
+            <div className="works">
+              {WHY_IT_WORKS.map((w) => (
+                <div className="work-item" key={w.title}>
+                  <h3 className="h3">{w.title}</h3>
+                  <p className="prose" style={{ marginTop: 8 }}>
+                    {w.body}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
+
+        {/* ---------------- why us ---------------- */}
+        <section className="band">
+          <div className="shell">
+            <h2 className="h2" style={{ maxWidth: "20ch" }}>
+              Why Blueprint.
+            </h2>
+            <div className="why">
+              {WHY.map((w, i) => (
+                <div className="why-item" key={w.title}>
+                  <span className="why-n mono" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="h3">{w.title}</h3>
+                    <p className="prose" style={{ marginTop: 8 }}>
+                      {w.body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- results OR the honest note ---------------- */}
+        <section className="band band-sunk">
+          <div className="shell">
+            {results ? (
+              <div className="col">
+                {!RESULTS && (
+                  <p className="sample-tag">Sample data, not real figures</p>
+                )}
+                <h2 className="h2">{results.headline}</h2>
+                <p className="prose" style={{ marginTop: 18 }}>
+                  {results.client} · {results.period}
+                </p>
+                <div className="res-grid">
+                  {results.metrics.map((m) => (
+                    <div className="res" key={m.label}>
+                      <div className="res-value">{m.value}</div>
+                      <div className="small res-label">{m.label}</div>
+                    </div>
+                  ))}
+                </div>
+                {results.note && (
+                  <p className="small" style={{ marginTop: 22 }}>
+                    {results.note}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div className="note col">
+                <h2 className="h3" style={{ fontSize: "1.375rem" }}>
+                  On results
+                </h2>
+                <p className="prose" style={{ marginTop: 14 }}>
+                  You will not find an agency-wide revenue number or an average
+                  percentage lift anywhere on this page, because we do not have
+                  one we could honestly defend. Results belong to each client, in
+                  that client&rsquo;s own numbers.
+                </p>
+                <p className="prose" style={{ marginTop: 14 }}>
+                  Ask us about a business like yours in the chat and we will tell
+                  you exactly what we are able to share.
+                </p>
+                {flagship.detail && (
+                  <div style={{ marginTop: 24 }}>
+                    <Link className="btn btn-line" href={`/work/${flagship.slug}`}>
+                      Read what we built for {flagship.name}
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ---------------- how it runs ---------------- */}
+        <section className="band">
+          <div className="shell">
+            <div className="col">
+              <h2 className="h2">How it runs.</h2>
+              <p className="prose" style={{ marginTop: 22 }}>
+                Four stages. You are told what is happening at each one, in plain
+                words, by the person doing it.
+              </p>
+              <div style={{ marginTop: 36 }}>
+                {STEPS.map(([name, body], i) => (
+                  <div className="step" key={name}>
+                    <span className="step-n" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <h3 className="h3">{name}</h3>
+                      <p className="prose" style={{ marginTop: 7 }}>
+                        {body}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- FAQ ---------------- */}
+        <section className="band band-sunk" id="faq">
+          <div className="shell">
+            <div className="col">
+              <h2 className="h2">Questions people actually ask.</h2>
+              <div className="faq">
+                {FAQ.map((f) => (
+                  <details className="faq-item" key={f.q}>
+                    <summary>
+                      <span>{f.q}</span>
+                      <span className="faq-mark" aria-hidden="true" />
+                    </summary>
+                    <div className="faq-a">
+                      {f.a.map((para) => (
+                        <p className="prose" key={para}>
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- close ----------------
+            The bookend, as an inset card. Copy unchanged; the band it used
+            to sit in is now a 48px card carrying a dithered warp field. */}
+        <CTASection
+          waHref={WA.general}
+          emailHref={`mailto:${SITE.email}`}
+          phone={SITE.whatsappDisplay}
+        />
       </main>
 
       <Footer />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Nav, Footer, StickyChop } from "@/components/Chrome";
+import { Nav, Footer } from "@/components/v2/Chrome";
 import { CASE_STUDIES, clientBySlug } from "@/lib/clients";
 import { WA } from "@/lib/site";
 
@@ -49,87 +49,60 @@ export default async function CaseStudy({
   return (
     <>
       <Nav />
-      <StickyChop />
 
-      <main id="main" className="px-4 sm:px-6">
-        <article className="mx-auto max-w-3xl py-10 sm:py-16">
-          <Link
-            href="/#work"
-            className="shout text-xs tracking-[0.16em] text-tungsten no-underline hover:underline"
-          >
-            ← Back to the lane
+      <main id="main" className="band">
+        <article className="shell col">
+          <Link className="back-link" href="/#who">
+            Back to the work
           </Link>
 
-          <header className="mt-6">
-            <div
-              className="tarp tarp-scallop mb-6 h-7 w-full animate-sway"
-              aria-hidden="true"
-            />
-            <h1 className="shout text-5xl leading-[0.9] text-fluoro sm:text-6xl">
-              {client.name}
-            </h1>
+          <header style={{ marginTop: 26 }}>
+            <h1 className="h1">{client.name}</h1>
             {client.sector && (
-              <p className="mt-3 text-tarp-pale/80">
+              <p className="small" style={{ marginTop: 14 }}>
                 {client.sector} · {client.place}
               </p>
             )}
             <a
+              className="btn btn-line"
+              style={{ marginTop: 22 }}
               href={client.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="shout mt-4 inline-block text-sm text-tungsten no-underline hover:underline"
             >
-              Open {client.href.replace("https://", "")} ↗
+              Open {client.href.replace("https://", "")}
             </a>
           </header>
 
           {/* Verifiable structural facts. Not outcome claims. */}
-          <ul className="mt-10 grid gap-3 sm:grid-cols-3">
+          <div className="res-grid">
             {detail.facts.map((f) => (
-              <li
-                key={f.label}
-                className="border-2 border-plum-edge/50 bg-night-deep/60 p-4"
-              >
-                <span className="marker block text-3xl text-tungsten">
-                  {f.value}
-                </span>
-                <span className="mt-1 block text-xs leading-snug text-tarp-pale/75">
-                  {f.label}
-                </span>
-              </li>
+              <div className="res" key={f.label}>
+                <div className="res-value">{f.value}</div>
+                <div className="small res-label">{f.label}</div>
+              </div>
             ))}
-          </ul>
+          </div>
 
-          <div className="mt-10 space-y-5">
-            {detail.story.map((p, i) => (
+          <div style={{ marginTop: 40 }}>
+            {detail.story.map((para, i) => (
               <p
-                key={i}
-                className={
-                  i === 0
-                    ? "text-lg leading-relaxed font-medium text-fluoro"
-                    : "leading-relaxed text-tarp-pale/85"
-                }
+                className={i === 0 ? "lead" : "prose"}
+                key={para}
+                style={{ marginTop: i === 0 ? 0 : 16, maxWidth: "68ch" }}
               >
-                {p}
+                {para}
               </p>
             ))}
           </div>
 
-          <section className="mt-10" aria-labelledby="built">
-            <h2
-              id="built"
-              className="shout text-2xl text-fluoro"
-            >
+          <section style={{ marginTop: 44 }} aria-labelledby="built">
+            <h2 className="h3" id="built">
               What we built
             </h2>
-            <ul className="mt-4 flex flex-wrap gap-2">
+            <ul className="built-list">
               {detail.built.map((b) => (
-                <li
-                  key={b}
-                  className="price-card rotate-[-0.4deg] px-3 py-1.5 text-sm"
-                >
-                  {b}
-                </li>
+                <li key={b}>{b}</li>
               ))}
             </ul>
           </section>
@@ -138,19 +111,13 @@ export default async function CaseStudy({
             The outcome section, told honestly. PRODUCT.md records that no
             measured result exists for this project. Saying so costs less
             than inventing one and being asked about it in the WhatsApp thread.
-
-            Rendered as a price card — a note pinned to the stall, in the
-            world's own vocabulary rather than a generic accent-bordered callout.
           */}
           {detail.outcomes === null && (
-            <section
-              className="price-card mt-10 rotate-[-0.5deg] p-5 sm:p-6"
-              aria-labelledby="results"
-            >
-              <h2 id="results" className="shout text-xl text-ink">
+            <section className="note" style={{ marginTop: 44 }} aria-labelledby="results">
+              <h2 className="h3" id="results">
                 On results
               </h2>
-              <p className="font-body mt-3 text-sm leading-relaxed text-ink/85">
+              <p className="prose" style={{ marginTop: 12 }}>
                 We are not publishing a percentage here. We would rather you
                 open the site, look at what is actually live, and ask us
                 directly what it did. We will tell you straight on WhatsApp.
@@ -158,16 +125,20 @@ export default async function CaseStudy({
             </section>
           )}
 
-          <section className="mt-14 border-t-2 border-plum-edge/40 pt-10 text-center">
-            <h2 className="shout text-3xl leading-tight text-fluoro sm:text-4xl">
+          <section style={{ marginTop: 56 }}>
+            <h2 className="h2" style={{ maxWidth: "18ch" }}>
               Want the same for your business?
             </h2>
-            <a
-              href={WA.fromWork(client.name)}
-              className="chop mt-6 inline-flex items-center gap-2 border-chop-deep bg-chop px-6 py-3.5 font-black text-ink no-underline shadow-[0_6px_0_var(--color-chop-deep)] transition-transform active:translate-y-1 active:shadow-[0_2px_0_var(--color-chop-deep)]"
-            >
-              Message us about this
-            </a>
+            <div className="cta-row" style={{ marginTop: 26 }}>
+              <a
+                className="btn btn-act"
+                href={WA.fromWork(client.name)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Message us about this
+              </a>
+            </div>
           </section>
         </article>
       </main>

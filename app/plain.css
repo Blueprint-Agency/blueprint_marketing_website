@@ -59,13 +59,14 @@
   overflow-x: clip;
 }
 
-/* The root ground is Pasar Malam's night gradient. Where the v2 world
-   mounts, the whole document surface changes with it — otherwise
-   overscroll and the area under a short page flash indigo. */
-body:has(.v2) {
-  background: #fcfcfd;
-}
-html:has(.v2) {
+/* .v2 is the <body> element itself now, so html has to be painted too or
+   overscroll shows the browser's default white against the paper ground.
+   These were body:has(.v2) / html:has(.v2) while the world was a nested
+   div; :has() would no longer match, since body cannot contain itself. */
+/* Literal, not var(--paper): the tokens are declared on .v2, which IS the
+   body, so html sits outside their scope and var() would resolve to
+   nothing. Keep this in step with --paper above. */
+html {
   background: #fcfcfd;
 }
 
@@ -87,12 +88,25 @@ html:has(.v2) {
   outline-color: var(--act);
 }
 
-/* The root layout's skip link belongs to the incumbent world and paints
-   itself amber-on-ink; inside this world it reads as another site's brand
-   appearing on the first keyboard press. */
-body:has(.v2) a[href="#main"]:focus {
-  background: #0b0c0e !important;
-  color: #fcfcfd !important;
+/* Skip link. Off-screen until focused, then it lands top-left in the
+   world's own ink-on-paper rather than the amber-on-ink the deleted world
+   used. Owned here rather than by Tailwind utilities in the layout, because
+   the layout no longer carries any utility classes. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 650;
+  text-decoration: none;
 }
 
 /* ---------- shell ---------- */
@@ -1242,6 +1256,46 @@ body:has(.v2) a[href="#main"]:focus {
   letter-spacing: -0.015em;
 }
 
+/* ---------- case study ---------- */
+
+.v2 .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: var(--brand-text);
+  text-decoration: none;
+}
+/* A rule that grows rather than an arrow glyph: the page's own vocabulary
+   is hairline rules, and it keeps the control out of the icon set. */
+.v2 .back-link::before {
+  content: "";
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+  transition: width 0.16s ease-out;
+}
+.v2 .back-link:hover::before {
+  width: 22px;
+}
+
+.v2 .built-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.v2 .built-list li {
+  padding: 8px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
 /* ---------- footer ---------- */
 
 .v2 .foot {
@@ -1410,7 +1464,10 @@ body:has(.v2) a[href="#main"]:focus {
   -webkit-backdrop-filter: none;
   border-bottom: 1px solid var(--on-brand-line);
 }
-.v2 .nav-word {
+/* Scoped to .nav. Unscoped, this also caught the footer's wordmark, which
+   sits on paper rather than on the navy bar, and painted it near-white on
+   near-white. The mark below was already scoped correctly; this was not. */
+.v2 .nav .nav-word {
   color: var(--on-brand);
 }
 .v2 .nav-link {
