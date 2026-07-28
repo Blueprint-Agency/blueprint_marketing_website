@@ -1268,16 +1268,22 @@ html {
   text-decoration: none;
 }
 /* A rule that grows rather than an arrow glyph: the page's own vocabulary
-   is hairline rules, and it keeps the control out of the icon set. */
+   is hairline rules, and it keeps the control out of the icon set.
+
+   Scaled, not widened. Animating width relayouts the link's flex row on
+   every hover; scaleX from the left edge is the same 14px-to-22px movement
+   on the compositor. Same reason .dq-bar-fill is built this way. */
 .v2 .back-link::before {
   content: "";
-  width: 14px;
+  width: 22px;
   height: 1.5px;
   background: currentColor;
-  transition: width 0.16s ease-out;
+  transform: scaleX(0.636);
+  transform-origin: left center;
+  transition: transform 0.16s ease-out;
 }
 .v2 .back-link:hover::before {
-  width: 22px;
+  transform: scaleX(1);
 }
 
 .v2 .built-list {
