@@ -15,8 +15,14 @@ import { SITE } from "@/lib/site";
  * rewritten to become the default.
  */
 
+/* Italic is loaded deliberately, not as a convenience. Every display
+   heading carries one phrase set in the family's TRUE italic, and a
+   browser-synthesised oblique is a sheared roman rather than the drawn
+   letterforms — the device only reads if the real cut is present. One
+   extra variable woff2 (~20kb) buys the page its whole typographic voice. */
 const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-schibsted",
   display: "swap",
 });
@@ -104,6 +110,28 @@ const CONTRACT = `<!--
 
   SOLE DIRECTION (2026-07-28): Pasar Malam removed at the user's request.
   This is now the site.
+
+  EMPHASIS + CHAPTERS (2026-07-28): two devices adopted from subyect.com
+  after the user asked for its rhythm; teardown in SUBYECT-TEARDOWN.md.
+  (1) Display weight drops 800 -> 640 and one phrase per heading takes
+  Schibsted's TRUE italic at 880. Still one family — the italic is the
+  same face, so "one family, worked hard" holds rather than breaking.
+  (2) An ink chapter on --brand-deep: "Why it works" + "Why Blueprint"
+  originally, and "Why Blueprint" alone since 2026-07-29, when the first
+  of the two was removed. It is the page's only dark event between the
+  navy hero and the navy close, which keeps the COLOUR LAYER's rule
+  intact: blue owns the ends, paper holds the middle, and one chapter
+  interrupts it. What did NOT transfer is subyect's palette — no warm
+  near-black, no orange — because the chroma-from-real-client-sites rule
+  stands.
+
+  HERO REVEAL (2026-07-28): the headline resolves out of blur a word at a
+  time on load, with the kicker leading and the lead and action landing
+  after it. Blur rather than a slide, because the gesture being borrowed
+  is a lens finding focus. CSS keyframes only — no scroll position is
+  read, so the site still ships zero animation libraries and the hero is
+  still a server component. Measured CLS 0.0000: every word holds its box
+  from first paint and only opacity and filter change.
 -->`;
 
 export default function RootLayout({

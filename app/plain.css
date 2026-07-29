@@ -42,6 +42,12 @@
   /* The only blue permitted to carry words on paper. 5.4:1 on --paper. */
   --brand-text: #1741c4;
 
+  /* The hero's ground. Not --brand-deep and not --ink: the mesh grid
+     needs true black behind it or the white-grey lines pick up the
+     navy and read as a tinted overlay rather than as drawn lines. It is
+     the one surface on the site at this value. */
+  --hero-ground: #000000;
+
   --on-brand: #ffffff;
   --on-brand-soft: rgba(255, 255, 255, 0.82);
   --on-brand-mute: rgba(255, 255, 255, 0.68);
@@ -147,7 +153,14 @@ html {
 }
 
 /* ---------- type ----------
-   One family, worked hard. Scale steps are obvious and few. */
+   One family, worked hard. Scale steps are obvious and few.
+
+   Display weight is 640, not the 800 it was until 2026-07-28. Two reasons.
+   The first is that .close-h has always been 640, so the page's largest
+   headline and its section headings disagreed by 160 units — an
+   inconsistency, not a decision. The second is the emphasis rule below:
+   an italic phrase inside an 800 heading is a nudge, and inside a 640
+   heading it is an event. The device needs the roman to step back. */
 
 .v2 .h1 {
   /* 2.25rem floor, not 2.6: at 390px the larger floor pushed the headline
@@ -155,7 +168,7 @@ html {
   font-size: clamp(2.25rem, 6.4vw, 5rem);
   line-height: 0.98;
   letter-spacing: -0.033em;
-  font-weight: 800;
+  font-weight: 640;
   text-wrap: balance;
   margin: 0;
 }
@@ -164,9 +177,30 @@ html {
   font-size: clamp(2rem, 3.9vw, 3rem);
   line-height: 1.04;
   letter-spacing: -0.028em;
-  font-weight: 800;
+  font-weight: 640;
   text-wrap: balance;
   margin: 0;
+}
+
+/* ---------- the emphasis ----------
+   The page's one typographic event: a phrase inside a display heading
+   swaps to the family's true italic at near-maximum weight and tighter
+   tracking. It is <em>, not a span with a class, because the emphasis is
+   real — the phrase carries the sentence, and assistive tech should say so.
+
+   Kept to headings. An italic in body copy is a different signal and would
+   dilute this one; the rule deliberately does not cascade to .prose. */
+.v2 .h1 em,
+.v2 .h2 em {
+  font-style: italic;
+  font-weight: 880;
+  /* Italics set optically tighter than their roman at the same tracking.
+     This is on top of the heading's own negative value, not instead of it. */
+  letter-spacing: -0.042em;
+  /* Never accept a synthesised oblique. A sheared 640-weight roman is not
+     this family's drawn italic, and the whole device rests on the drawn
+     one — better to lose the slant on an old browser than to fake it. */
+  font-synthesis-style: none;
 }
 
 .v2 .h3 {
@@ -4412,5 +4446,1530 @@ html {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   CHAPTER LAYER (2026-07-28)
+
+   Two devices borrowed from subyect.com after the user asked for its
+   rhythm — see SUBYECT-TEARDOWN.md for the full analysis. Both are
+   structural, not decorative, and neither imports that site's palette:
+   the ink here is Blueprint's own --brand-deep, not their warm near-black.
+
+   1. Eyebrows. A small uppercase label above a heading, naming what KIND
+      of section this is where the heading only makes its claim.
+   2. Ink chapters. A full ground inversion, not the 3% shift .band-sunk
+      does. The COLOUR LAYER above concentrates blue at the two ends of
+      the page and lets paper hold the long middle; this adds exactly one
+      dark event in that middle, so the page reads as three movements
+      rather than a stripe pattern. One event, not six — the inversion is
+      expensive and stops working the moment it repeats.
+   ============================================================ */
+
+/* ---------- eyebrow ----------
+   Only where it adds wayfinding. Sections whose heading is already a bare
+   label ("Why Blueprint.", "How it runs.") deliberately have none, because
+   an eyebrow repeating the heading beneath it is decoration. */
+
+.v2 .eyebrow {
+  display: block;
+  margin: 0 0 16px;
+  font-size: 0.75rem;
+  font-weight: 650;
+  /* 0.16em, not the 0.18em subyect uses: Schibsted Grotesk is a wider face
+     than their Instrument Sans and reaches the same openness with less. */
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* ---------- ink chapter ----------
+   Implemented by re-declaring the world's tokens rather than by writing
+   inverted rules for each child. Every selector downstream already reads
+   var(--ink) / var(--line) / var(--paper), so the whole subtree inverts
+   itself and nothing has to be kept in step by hand. */
+
+.v2 .band-ink {
+  /* Every value here is an existing token, not a new literal. The chapter
+     ground IS the brand deep that already opens and closes the page, and
+     the inverted text colours are the same --on-brand set the hero and the
+     close card use — so there is one definition of "type on navy" in this
+     file rather than three that have to be kept in step. */
+  --paper: var(--brand-deep);
+  --ink: var(--on-brand);
+  --ink-soft: var(--on-brand-soft);
+  --ink-mute: var(--on-brand-mute);
+  --line: var(--on-brand-line);
+  /* No --on-brand equivalents exist for these two, and they are alpha over
+     whatever the ground is rather than palette values in their own right. */
+  --paper-sunk: rgba(255, 255, 255, 0.055);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  /* Blue-on-blue is invisible, so the emphasis colour inside a chapter is
+     the ramp's cyan. 8.4:1 on this ground. */
+  --brand-text: var(--cyan);
+
+  background: var(--brand-deep);
+  color: var(--on-brand);
+}
+
+/* Consecutive chapters are ONE chapter. Without this the two sections read
+   as two dark stripes with a seam of doubled padding between them. */
+.v2 .band-ink + .band-ink {
+  padding-top: 0;
+}
+
+/* The world's focus ring is --act-text, a dark green that measures ~2.4:1
+   on this navy — the same failure the .dither-card rule above already
+   fixes, for the same reason. */
+.v2 .band-ink :focus-visible {
+  outline-color: var(--cyan);
+}
+
+/* ============================================================
+   HERO REVEAL LAYER (2026-07-28)
+
+   The focus-pull entrance from subyect.com — see SUBYECT-TEARDOWN.md
+   §2.1. Two tiers, which is how theirs is built too:
+
+   1. The display headline splits into words that resolve out of blur.
+      Blur, not a slide: it reads as a lens finding focus, and it is the
+      reason their hero feels shot rather than assembled.
+   2. Everything around it (kicker, lead, action) fades and rises. Plain
+      support, so the headline stays the only thing anyone watches.
+
+   CSS only — no scroll position is involved, so this needs neither
+   Framer Motion nor Lenis and the hero stays a server component.
+
+   The animations carry their start state in the keyframe rather than in
+   the base rule, with animation-fill-mode: both. If this stylesheet ever
+   fails to load, the words are simply visible text — a hero that depends
+   on CSS to become visible at all is a hero that sometimes is not.
+   ============================================================ */
+
+@keyframes hero-word-in {
+  from {
+    opacity: 0;
+    /* em, not px: the headline runs 36px to 80px across the clamp, and a
+       fixed blur that reads right at 80px is a smear at 36px. */
+    filter: blur(0.14em);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.v2 .hero-word {
+  /* inline-block so the filter has a box to work on. The spaces between
+     words are real text nodes, NOT aria-hidden spacer spans — the
+     accessibility tree still reads one sentence, and the h1 is still one
+     string to a crawler. */
+  display: inline-block;
+  animation: hero-word-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--hero-word-i, 0) * 75ms + 140ms);
+}
+
+@keyframes hero-rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Delay is passed per element rather than derived from an index, because
+   these four do not fire in DOM order: the kicker leads, the headline
+   plays through the middle, and the lead and action land after it. */
+.v2 .hero-rise {
+  animation: hero-rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--hero-rise-d, 0ms);
+}
+
+/* The world's reduced-motion rule collapses animation-duration but leaves
+   animation-delay alone, which would still stagger the hero in — snapping
+   rather than moving, over a second and a half. Zero the delays too, so
+   the hero is simply present. */
+@media (prefers-reduced-motion: reduce) {
+  .v2 .hero-word,
+  .v2 .hero-rise {
+    animation-delay: 0s !important;
+  }
+}
+
+/* ============================================================
+   LOGO WALL — REAL FILES (2026-07-28)
+   Ten client marks replaced the wordmark placeholders. Every file is an
+   identical 480x160 transparent PNG with the ink normalised to a constant
+   optical area, so the wall needs no per-logo correction — see lib/logos.ts
+   for the pipeline.
+   ============================================================ */
+
+/* Raised from 34px. That value was tuned for tightly-cropped art; the files
+   now carry a uniform canvas whose ink fills at most 92.5% of the height, so
+   the old cap rendered every mark noticeably smaller than intended. */
+.v2 .logo-cell img {
+  max-height: 46px;
+}
+
+/* The treatment, retuned for the real files.
+   grayscale(1) at 0.72 opacity was calibrated against nothing — with actual
+   marks on the wall it erased three of them. Yoga Sadhana is thin gold
+   strokes, Garden Gem light purple, Global Marque a pale coin: desaturated
+   they land near the paper and then lose another 28% to opacity.
+
+   Measured ink mass across the ten files spans 1823 to 7989, a 4.4x range,
+   and the light end cannot be fixed by scaling because those marks already
+   fill the canvas height. So the fix is tonal, not geometric: drop opacity
+   entirely and darken instead. Every logo now sits in the same tonal band,
+   which is what made the row read as one thing in the first place. */
+.v2 .logo-cell img {
+  filter: grayscale(1) contrast(1.25) brightness(0.7);
+  opacity: 1;
+}
+
+/* A cell with no confirmed URL is a <span>, not an <a>. It keeps the frame so
+   the row stays even, and drops every affordance that would promise a click:
+   no lift, no border change, no pointer. */
+.v2 .logo-cell-static {
+  cursor: default;
+}
+.v2 .logo-cell-static:hover {
+  border-color: var(--line);
+  transform: none;
+}
+
+/* ============================================================
+   SERVICE ART — THE INTERFACE ASSEMBLING (2026-07-28)
+
+   Each service panel shows a mock of the surface the work happens on.
+   Until now they appeared fully drawn; these rules have them build
+   themselves — results ranking, meters measuring, the trend drawing.
+
+   No JS, and nothing to wire to the tab state. The panels are hidden with
+   the `hidden` attribute, which is display:none, and an element that is
+   display:none runs no animation and restarts it when displayed again. So
+   every rule below replays on each tab switch by construction.
+
+   Motion is chosen per element for what that element MEANS, not applied
+   uniformly: a meter fills because it measures, a search result slides in
+   because it ranked, the live dot pulses because the campaign is running.
+   The panel already fades in as a whole via .svt-panel/svt-in above; these
+   start at 120ms so they overlap it rather than queue behind it.
+   ============================================================ */
+
+.v2 .sa-hit,
+.v2 .sa-row,
+.v2 .sa-bub {
+  animation: sa-item 0.52s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes sa-item {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Stagger within each list. nth-child rather than a --i custom property so
+   the illustration components stay free of presentation detail. */
+.v2 .sa-hit:nth-child(1),
+.v2 .sa-row:nth-child(1),
+.v2 .sa-bub:nth-child(1) {
+  animation-delay: 0.12s;
+}
+.v2 .sa-hit:nth-child(2),
+.v2 .sa-row:nth-child(2),
+.v2 .sa-bub:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.v2 .sa-hit:nth-child(3),
+.v2 .sa-row:nth-child(3),
+.v2 .sa-bub:nth-child(3) {
+  animation-delay: 0.28s;
+}
+.v2 .sa-hit:nth-child(n + 4),
+.v2 .sa-row:nth-child(n + 4),
+.v2 .sa-bub:nth-child(n + 4) {
+  animation-delay: 0.36s;
+}
+
+/* Skeleton copy lines wipe in from the left, like text setting. scaleX on a
+   left origin, not width — width would relayout the row on every frame. */
+.v2 .sa-line {
+  transform-origin: left center;
+  animation: sa-wipe 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.3s;
+}
+@keyframes sa-wipe {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Meters fill. The inline width stays the target; scaleX grows into it. */
+.v2 .sa-meter i {
+  transform-origin: left center;
+  animation: sa-wipe 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.34s;
+}
+
+/* The trend draws itself, then the head lands. pathLength=1 on the path
+   makes the dasharray exact rather than a guess. */
+.v2 .sa-trend-line {
+  stroke-dasharray: 1;
+  animation: sa-draw 0.9s cubic-bezier(0.33, 1, 0.68, 1) both;
+  animation-delay: 0.18s;
+}
+@keyframes sa-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.v2 .sa-trend-area {
+  animation: sa-fade 0.6s ease-out both;
+  animation-delay: 0.6s;
+}
+@keyframes sa-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.v2 .sa-trend-dot {
+  transform-origin: 120px 6px;
+  animation: sa-pop 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.98s;
+}
+@keyframes sa-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.v2 .sa-chip {
+  animation: sa-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.5s;
+}
+.v2 .sa-chip:nth-child(2) {
+  animation-delay: 0.57s;
+}
+.v2 .sa-chip:nth-child(n + 3) {
+  animation-delay: 0.64s;
+}
+
+/* The caption is not part of the interface, so it arrives after it. */
+.v2 .sa-pill {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.72s;
+}
+
+/* The one looping motion on the page, and it carries meaning: this campaign
+   is live. Idle dots deliberately do not pulse. */
+.v2 .sa-dot.is-live {
+  animation: sa-breathe 2.4s ease-in-out 1.1s infinite;
+}
+@keyframes sa-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* The world's reduced-motion rule collapses duration but not delay, so a
+   staggered set would still pop in sequence. Zero the delays and stop the
+   pulse outright. */
+@media (prefers-reduced-motion: reduce) {
+  .v2 .sa-hit,
+  .v2 .sa-row,
+  .v2 .sa-bub,
+  .v2 .sa-line,
+  .v2 .sa-meter i,
+  .v2 .sa-trend-line,
+  .v2 .sa-trend-area,
+  .v2 .sa-trend-dot,
+  .v2 .sa-chip,
+  .v2 .sa-pill {
+    animation-delay: 0s !important;
+  }
+  .v2 .sa-dot.is-live {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   LOGO MARQUEE (2026-07-28)
+   The six-column grid became one self-scrolling line at the user's request.
+   The .logo-row rules above are now unused by the homepage.
+   ============================================================ */
+
+.v2 .logo-marquee {
+  position: relative;
+  overflow: hidden;
+  /* Dissolve at both ends instead of cutting. Two properties, not one:
+     Safari still wants the prefixed form, and without it the mask is simply
+     ignored there and the marks get guillotined at the frame edge. */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 9%,
+    #000 91%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 9%,
+    #000 91%,
+    transparent 100%
+  );
+}
+
+.v2 .logo-track {
+  display: flex;
+  /* max-content, or the flex line would compress to the viewport and the
+     -50% below would no longer land on the start of the second copy. */
+  width: max-content;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  animation: logo-run 44s linear infinite;
+}
+
+/* Spacing lives on the item as margin, NOT as gap on the track.
+   With gap, the track measures 22 cells + 21 gaps, so -50% is half a gap
+   short of where the second copy actually starts and the loop visibly
+   stutters once per cycle. Margin makes every cell an identical
+   width+margin unit, so half the track is exactly eleven of them. */
+.v2 .logo-track > li {
+  flex: none;
+  margin-right: 10px;
+}
+
+@keyframes logo-run {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Stop for anyone who wants to actually look at one. */
+.v2 .logo-marquee:hover .logo-track,
+.v2 .logo-marquee:focus-within .logo-track {
+  animation-play-state: paused;
+}
+
+/* The cells were grid children sized by 1fr; in a flex track they need a
+   width of their own. */
+.v2 .logo-marquee .logo-cell {
+  width: 172px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No crawl. The line becomes a plain scrollable row, and the duplicate
+     copy goes away — it exists only to make the loop seamless, and left in
+     place it would read as eleven clients listed twice. */
+  .v2 .logo-track {
+    animation: none;
+  }
+  .v2 .logo-track > li[aria-hidden="true"] {
+    display: none;
+  }
+  .v2 .logo-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* The cell chrome comes off in the marquee.
+   A bordered card earned its place in the static six-column grid: it gave
+   eleven unrelated marks a shared frame and an even rhythm. In a moving
+   line it does the opposite — the boxes become a repeating pattern that
+   competes with the logos for attention, and the edge mask cuts through
+   borders mid-stroke, which reads as clipping rather than dissolving.
+   The marks travel on their own. */
+.v2 .logo-marquee .logo-cell {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+/* Hover already restores full colour on the image, which is enough of a
+   response. The lift and the border tint were affordances for a card that
+   no longer exists. */
+.v2 .logo-marquee .logo-cell:hover {
+  border-color: transparent;
+  transform: none;
+}
+
+/* ============================================================
+   SCROLL-EXPANSION HERO (2026-07-28)
+   Replaces the static aurora hero. The reader's scroll opens a photograph
+   of a crowd out of the middle of the headline. See
+   components/ui/scroll-expansion-hero.tsx for the behaviour and for what
+   was changed from the source component.
+   ============================================================ */
+
+.v2 .seh {
+  position: relative;
+}
+
+/* The base the aurora fades ONTO. Without it the ground under a fading
+   background is the page's own paper, and the white headline would pass
+   through a moment of white-on-white before the photograph covered it. */
+.v2 .seh-stage {
+  position: relative;
+  isolation: isolate;
+  /* A full viewport. This was calc(100dvh - 63px) while the nav was sticky
+     and in normal flow, taking its height off the top before the hero began.
+     The nav went fixed on 2026-07-29 so it could be see-through over this
+     hero, which handed the space back — see the SEE-THROUGH NAV layer. */
+  min-height: 100dvh;
+  overflow: hidden;
+  /* Matches the canvas's own fill, so the moment the grid fades out under
+     the expanding photograph there is no change of ground behind it. */
+  background: var(--hero-ground);
+  color: var(--on-brand);
+}
+
+.v2 .seh-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+/* The ground is handed in as a node. It was the site's drifting aurora
+   until 2026-07-29; it is now an interactive mesh grid on black, which
+   answers the cursor. See components/ui/interactive-grid.tsx.
+
+   The canvas measures this box, so the box has to have a size before the
+   canvas is asked for one — hence inset rather than intrinsic height. */
+.v2 .seh-grid {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-ground);
+}
+.v2 .seh-grid canvas {
+  display: block;
+  /* Pointer events stay off: the grid reads the cursor from window-level
+     listeners, and swallowing clicks here would kill the headline's
+     scroll gesture and anything that ever sits over it. */
+  pointer-events: none;
+}
+
+.v2 .seh-viewport {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  /* Three bands. The headline owns the centre line so the media opens
+     through it; the kicker and the action sit clear of the panel's
+     footprint at every size it passes through. */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  align-items: center;
+  padding: 104px var(--gut) 52px;
+}
+
+/* Absolutely placed, so growing it never reflows the words around it. */
+.v2 .seh-media {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  max-width: 95vw;
+  max-height: 85vh;
+  /* 16px, matching .dq-card. The 18px this started as existed nowhere else
+     in the file — a twelfth radius on an eleven-step scale. */
+  border-radius: 16px;
+  overflow: hidden;
+  /* The same shadow .band-hero .frame carries, because it is the same
+     object: a media panel sitting on the brand ground. */
+  box-shadow:
+    0 2px 6px rgba(4, 10, 28, 0.4),
+    0 30px 70px -28px rgba(4, 10, 28, 0.85);
+}
+.v2 .seh-media video,
+.v2 .seh-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.v2 .seh-scrim {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+}
+
+.v2 .seh-kicker {
+  position: relative;
+  z-index: 2;
+  align-self: start;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--on-brand-mute);
+}
+
+.v2 .seh-title {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  text-align: center;
+  max-width: 1100px;
+  color: var(--on-brand);
+  text-wrap: balance;
+  margin: 0;
+  /* The photograph behind the words is busy and mid-grey even under the
+     scrim, so the type carries its own shadow rather than relying on it. */
+  text-shadow: 0 2px 30px rgba(4, 10, 28, 0.55);
+  pointer-events: none;
+}
+
+.v2 .seh-foot {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.v2 .seh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+/* Pinned to the foot of the viewport rather than stacked under the buttons.
+   In the flow it measured 11px past the fold at 900px tall — the one thing
+   telling the reader the hero responds to scroll was itself below the fold.
+   It also belongs at the edge: it is an affordance for the page, not a third
+   item in the action row. */
+.v2 .seh-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--on-brand-mute);
+  transition: opacity 0.2s linear;
+}
+
+.v2 .seh-reveal {
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: 72px;
+}
+
+/* Focus has to survive both grounds the hero passes through. */
+.v2 .seh :focus-visible {
+  outline-color: var(--cyan);
+}
+
+@media (max-width: 720px) {
+  .v2 .seh-viewport {
+    padding-top: 84px;
+    /* Was 82px, for an action row that stacked full-width here and would
+       otherwise have run into the cue pinned at the bottom edge. The hero
+       carries no actions now, so this only has to clear the cue itself and
+       matches the desktop value. Put 82px back if actions return. */
+    padding-bottom: 52px;
+  }
+  .v2 .seh-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: min(100%, 360px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The component already renders fully open; make sure nothing here
+     re-introduces a delay in front of the headline. */
+  .v2 .seh-line {
+    animation-delay: 0s !important;
+  }
+}
+
+/* ============================================================
+   PROCESS LOOP (2026-07-29)
+   "How it runs" as four cards with arrows between them, adopted from
+   subyect.com's process section — see SUBYECT-TEARDOWN.md §2.8 and the
+   header of components/v2/ProcessLoop.tsx for what was and was not taken.
+   The short version: the structure transferred, the orange did not.
+   ============================================================ */
+
+.v2 .loop-wrap {
+  margin-top: 40px;
+}
+
+.v2 .loop {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 46px;
+}
+
+/* THE 2x2. Four across in one row was the first attempt and it was wrong
+   twice over: it made the four stages read as a pipeline with an end, and it
+   left the return leg with nowhere to go but a stranded rule underneath.
+
+   In a 2x2 the cards snake — 01 → 02 along the top, down the right, then
+   03 → 04 back along the bottom — which puts 04 directly beneath 01 and
+   gives the return arrow a short, obvious way home up the left. The diagram
+   closes on itself, which is the whole claim the copy makes. */
+@media (min-width: 1000px) {
+  .v2 .loop {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* The gaps are the arrows' housing, so they are sized by the arrow
+       (44px long) and not by the page's spacing scale. */
+    gap: 64px;
+  }
+  .v2 .loop-cell:nth-child(1) {
+    grid-area: 1 / 1;
+  }
+  .v2 .loop-cell:nth-child(2) {
+    grid-area: 1 / 2;
+  }
+  .v2 .loop-cell:nth-child(3) {
+    grid-area: 2 / 2;
+  }
+  .v2 .loop-cell:nth-child(4) {
+    grid-area: 2 / 1;
+  }
+}
+
+.v2 .loop-cell {
+  position: relative;
+  display: flex;
+}
+
+/* ---------- the card ---------- */
+
+.v2 .loop-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  cursor: default;
+  /* Colour and shadow only. No transform: four cards that lift on hover
+     turn a diagram into a row of buttons, and nothing here is clickable. */
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease,
+    color 0.28s ease;
+}
+
+/* THE HIGHLIGHT. Implemented by re-declaring the world's tokens rather than
+   by writing an inverted rule for every child — the same mechanism .band-ink
+   uses, for the same reason: the illustration inside reads var(--line) and
+   var(--brand-text) already, so it inverts itself and there is not a second
+   set of colours to keep in step.
+
+   If this reads too loud on the paper band, the whole treatment softens to
+   subyect's own lighter version by deleting the seven token lines below and
+   keeping only the border-color and the box-shadow. */
+.v2 .loop-card.is-on {
+  --paper: var(--brand-deep);
+  --ink: var(--on-brand);
+  --ink-soft: var(--on-brand-soft);
+  --ink-mute: var(--on-brand-mute);
+  --line: var(--on-brand-line);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  /* The sunk ground inside an inverted surface. Same value .band-ink
+     declares, for the same reason: there is no --on-brand equivalent,
+     because it is alpha over whatever the ground is rather than a palette
+     value in its own right. */
+  --paper-sunk: rgba(255, 255, 255, 0.055);
+  /* Blue on blue is invisible; the emphasis colour inside the inverted card
+     is the ramp's cyan, exactly as in an ink chapter. */
+  --brand-text: var(--cyan);
+
+  background: var(--brand-deep);
+  color: var(--on-brand);
+  border-color: var(--brand-deep);
+  box-shadow:
+    0 2px 6px rgba(4, 10, 28, 0.16),
+    0 22px 44px -24px rgba(4, 10, 28, 0.5);
+}
+
+.v2 .loop-art {
+  display: block;
+  margin-bottom: 16px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  /* No inverted override: --paper-sunk is re-declared on the active card
+     above, so this one line covers both grounds. */
+  background: var(--paper-sunk);
+  transition: background 0.28s ease;
+}
+.v2 .lp-art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.v2 .loop-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+}
+.v2 .loop-n {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-mute);
+  transition: color 0.28s ease;
+}
+.v2 .loop-card.is-on .loop-n {
+  color: var(--brand-text);
+}
+.v2 .loop-name {
+  margin: 0;
+}
+.v2 .loop-body {
+  margin-top: 8px;
+}
+
+/* ---------- the arrows ---------- */
+
+/* The arrow is always DRAWN pointing right; the direction it actually points
+   is a rotation, because that depends on where in the 2x2 its card sits. */
+.v2 .loop-arrow {
+  position: absolute;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  /* One column: down, centred in the row gap under the card. */
+  top: 100%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  transform: translate(-50%, 0) rotate(90deg);
+}
+/* In one column there is no left-hand side for a return leg to run up, and
+   an arrow off the bottom of the last card would point at the FAQ. The
+   caption underneath carries the loop in words instead. */
+.v2 .loop-arrow.loop-arrow-back {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .v2 .loop-arrow.loop-arrow-back {
+    display: grid;
+  }
+
+  /* Horizontal legs sit on the card's middle. They were pinned to the
+     illustration's height at first, to guard against cards of differing
+     height stepping the arrows up and down across the row — but the cell is
+     a stretched grid item and the card inside it is flex: 1, so every card
+     in a row is exactly as tall as the row. The two halves of each gap are
+     therefore equal, and the arrow belongs in the middle of it. */
+  .v2 .loop-cell:nth-child(1) .loop-arrow,
+  .v2 .loop-cell:nth-child(3) .loop-arrow {
+    top: 50%;
+    width: 64px;
+    height: 16px;
+  }
+  /* 01 → 02, rightwards across the top. */
+  .v2 .loop-cell:nth-child(1) .loop-arrow {
+    left: 100%;
+    transform: translate(0, -50%);
+  }
+  /* 03 → 04, back leftwards along the bottom. */
+  .v2 .loop-cell:nth-child(3) .loop-arrow {
+    left: auto;
+    right: 100%;
+    transform: translate(0, -50%) rotate(180deg);
+  }
+
+  /* Vertical legs are square boxes filling the row gap, rotated about their
+     own centre so the 44px arrow lands in the middle of the 64px gap. */
+  .v2 .loop-cell:nth-child(2) .loop-arrow,
+  .v2 .loop-cell:nth-child(4) .loop-arrow {
+    left: 50%;
+    width: 64px;
+    height: 64px;
+  }
+  /* 02 ↓ 03, down the right-hand side. */
+  .v2 .loop-cell:nth-child(2) .loop-arrow {
+    top: 100%;
+    transform: translate(-50%, 0) rotate(90deg);
+  }
+  /* 04 ↑ 01, the return leg, up the left-hand side. */
+  .v2 .loop-cell:nth-child(4) .loop-arrow {
+    top: auto;
+    bottom: 100%;
+    transform: translate(-50%, 0) rotate(-90deg);
+  }
+}
+.v2 .lp-arrow {
+  width: 44px;
+  height: 16px;
+  overflow: visible;
+}
+
+.v2 .lp-arrow-base {
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+.v2 .lp-arrow-head {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* The travelling segment: a dash pattern whose offset runs, so the arrow
+   reads as carrying something along rather than as blinking. */
+.v2 .lp-arrow-flow {
+  stroke: var(--brand);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 5 27;
+  animation: lp-flow 1.6s linear infinite;
+}
+@keyframes lp-flow {
+  from {
+    stroke-dashoffset: 32;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- the loop closing ---------- */
+
+/* On the 2x2 the return arrow already closes the loop, so this is a caption
+   naming what the arrow means rather than the thing carrying it. In one
+   column, where the return arrow is hidden, it is the only statement that
+   the cycle repeats — which is why it is text and not decoration. */
+.v2 .loop-return {
+  margin: 34px 0 0;
+  color: var(--ink-mute);
+  font-size: 0.9375rem;
+}
+@media (min-width: 1000px) {
+  .v2 .loop-return {
+    margin-top: 40px;
+    text-align: center;
+  }
+}
+
+/* ---------- the illustrations ----------
+   Every one animates ONLY inside the active card. Four looping animations
+   at once on a paper band is a fidget spinner, not a diagram. */
+
+.v2 .lp-dot {
+  fill: var(--line-strong);
+}
+.v2 .lp-dot-hit {
+  fill: var(--brand-text);
+}
+.v2 .lp-scan {
+  stroke: var(--brand);
+  stroke-width: 2;
+  opacity: 0;
+}
+.v2 .loop-card.is-on .lp-scan {
+  animation: lp-scan 2.6s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+.v2 .loop-card.is-on .lp-dot {
+  animation: lp-blink 2.6s ease-in-out infinite;
+}
+.v2 .loop-card.is-on .lp-dot-hit {
+  animation: lp-hit 2.6s ease-in-out infinite;
+}
+@keyframes lp-scan {
+  0% {
+    transform: translateX(4px);
+    opacity: 0;
+  }
+  12%,
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(196px);
+    opacity: 0;
+  }
+}
+@keyframes lp-blink {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+/* Scale, not the `r` attribute. CSS animation of SVG geometry properties is
+   still unreliable in Safari, and a transform is hardware-composited
+   anyway. */
+@keyframes lp-hit {
+  0%,
+  55% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.55);
+    opacity: 1;
+  }
+  85%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+.v2 .lp-wire {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+.v2 .lp-flow {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 10 92;
+  stroke-dashoffset: 102;
+  opacity: 0;
+}
+.v2 .loop-card.is-on .lp-flow {
+  opacity: 1;
+  animation: lp-wire 2.4s linear infinite;
+}
+.v2 .loop-card.is-on .lp-flow-b {
+  animation-delay: 0.28s;
+}
+.v2 .loop-card.is-on .lp-flow-c {
+  animation-delay: 0.9s;
+}
+@keyframes lp-wire {
+  from {
+    stroke-dashoffset: 102;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.v2 .lp-node {
+  fill: var(--brand-text);
+}
+.v2 .lp-head {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.v2 .lp-plate {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+.v2 .lp-bar {
+  fill: var(--line-strong);
+}
+.v2 .lp-bar-act {
+  fill: var(--brand-text);
+}
+.v2 .lp-panel {
+  opacity: 0.5;
+}
+.v2 .loop-card.is-on .lp-panel {
+  animation: lp-rise 2.8s ease-out infinite;
+}
+@keyframes lp-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  22% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.v2 .lp-tick-disc {
+  fill: var(--brand-text);
+}
+.v2 .lp-tick-mark {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.v2 .lp-tick {
+  opacity: 0;
+}
+.v2 .loop-card.is-on .lp-tick {
+  animation: lp-pop 2.8s ease-out infinite;
+}
+@keyframes lp-pop {
+  0%,
+  55% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  70%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+.v2 .lp-axis {
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+.v2 .lp-col {
+  fill: var(--line-strong);
+}
+.v2 .lp-col-win {
+  fill: var(--brand-text);
+}
+.v2 .loop-card.is-on .lp-col {
+  animation: lp-grow 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes lp-grow {
+  0% {
+    transform: scaleY(0.12);
+  }
+  26% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* The tick and the panels scale about their own middle. The bars scale from
+   the axis instead, so their origin is set per-bar in the component — it
+   depends on each bar's x, which CSS here cannot know. */
+.v2 .lp-tick,
+.v2 .lp-panel,
+.v2 .lp-dot-hit {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.v2 .lp-col {
+  transform-box: view-box;
+}
+
+/* Motion here is decoration on a diagram that is fully legible standing
+   still, so under reduced motion every loop stops and each illustration
+   holds its finished frame rather than its first one. */
+@media (prefers-reduced-motion: reduce) {
+  .v2 .lp-arrow-flow,
+  .v2 .loop-card.is-on .lp-scan,
+  .v2 .loop-card.is-on .lp-dot,
+  .v2 .loop-card.is-on .lp-dot-hit,
+  .v2 .loop-card.is-on .lp-flow,
+  .v2 .loop-card.is-on .lp-panel,
+  .v2 .loop-card.is-on .lp-tick,
+  .v2 .loop-card.is-on .lp-col {
+    animation: none;
+  }
+  .v2 .lp-flow,
+  .v2 .lp-panel,
+  .v2 .lp-tick {
+    opacity: 1;
+  }
+  .v2 .lp-flow {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+  .v2 .lp-scan {
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   TESTIMONIAL MARQUEE (2026-07-29)
+
+   Cards on a self-scrolling row. Same device as the logo wall above, and the
+   three things that make that loop seamless are the same three here: the
+   track holds the list twice, spacing is margin on the item rather than gap
+   on the track, and the duplicate copy is hidden from assistive tech.
+
+   Was a one-at-a-time fader with dots and arrows earlier the same day.
+   ============================================================ */
+
+.v2 .tst-marquee {
+  position: relative;
+  /* Clips the track horizontally — and, unavoidably, everything vertically
+     too. overflow-x: hidden with overflow-y: visible is not an escape: the
+     spec computes the visible axis to auto the moment the other is hidden,
+     which trades a cropped glow for a scrollbar.
+
+     So the room has to come from padding, and it has to be measured off the
+     hover shadow rather than guessed. That shadow reaches
+     18px offset + 44px blur - 20px spread = 42px below the card, and
+     -18 + 44 - 20 = 6px above it, plus the 4px ring in both directions.
+     48px and 16px clear both with a little to spare. It was a flat 14px,
+     which cropped the glow's bottom two thirds. */
+  overflow: hidden;
+  padding: 16px 0 48px;
+  /* Dissolve at both ends instead of cutting, and both properties rather
+     than one: Safari still wants the prefixed form, and without it the mask
+     is ignored there and the cards are guillotined at the frame edge. */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+}
+
+.v2 .tst-track {
+  display: flex;
+  /* max-content, or the flex line compresses to the viewport and the -50%
+     below no longer lands on the start of the second copy. */
+  width: max-content;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Slow. These are sentences, not logos: the row has to move slowly enough
+     that a reader can finish a card before it leaves, or the only way to read
+     one is to chase it with the cursor. */
+  animation: tst-run 90s linear infinite;
+}
+.v2 .tst-track > li {
+  flex: none;
+  margin-right: 20px;
+}
+
+@keyframes tst-run {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Stop for anyone who wants to actually read one. Hovering ANY card stops
+   the whole row — stopping just the hovered card is not possible while they
+   share a track, and would be wrong anyway: the card would slide out from
+   under the cursor the moment its neighbours kept moving. */
+.v2 .tst-marquee:hover .tst-track,
+.v2 .tst-marquee:focus-within .tst-track {
+  animation-play-state: paused;
+}
+
+/* ---------- the card ---------- */
+
+.v2 .tst-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  min-height: 100%;
+  margin: 0;
+  padding: 26px 26px 24px;
+  border-radius: 16px;
+  background: var(--paper);
+  transition: box-shadow 0.32s ease;
+}
+
+/* THE GRADIENT BORDER, as two stacked masked pseudo-elements rather than a
+   border-image or a padding-box/border-box background pair. Both of those
+   draw the gradient as a background-image, and background-image does not
+   transition — the colour would snap on hover instead of lifting. Two
+   layers, cross-fading on opacity, is the only version of this that can
+   actually move.
+
+   The mask cuts the element's own middle out, leaving a 1.5px ring. */
+.v2 .tst-card::before,
+.v2 .tst-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: opacity 0.32s ease;
+}
+
+/* Resting ring: the house gradient, the same ramp .dq-card and .seg carry,
+   held well back so a row of six does not read as a row of neon. */
+.v2 .tst-card::before {
+  background: linear-gradient(
+    135deg,
+    var(--brand) 0%,
+    var(--violet) 48%,
+    var(--cyan) 100%
+  );
+  opacity: 0.42;
+}
+
+/* Hover ring: same three hues, reordered and lifted — cyan leads, so the
+   ring reads brighter and cooler than the one underneath it rather than
+   simply more of the same. This is the "slight colour change"; the contrast
+   comes from it arriving at full opacity as the other fades out. */
+.v2 .tst-card::after {
+  background: linear-gradient(
+    135deg,
+    var(--cyan) 0%,
+    var(--brand-lift) 50%,
+    var(--violet) 100%
+  );
+  opacity: 0;
+}
+
+.v2 .tst-card:hover::before,
+.v2 .tst-card:focus-within::before {
+  opacity: 0;
+}
+.v2 .tst-card:hover::after,
+.v2 .tst-card:focus-within::after {
+  opacity: 1;
+}
+
+/* The glow. Two shadows: a tight one that reads as the ring itself lighting
+   up, and a wide soft one that lifts the card off the sunk band. */
+.v2 .tst-card:hover,
+.v2 .tst-card:focus-within {
+  box-shadow:
+    0 0 0 4px rgba(37, 201, 232, 0.13),
+    0 18px 44px -20px rgba(30, 79, 224, 0.55);
+}
+
+/* ---------- card contents ---------- */
+
+.v2 .tst-quote {
+  flex: 1;
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.v2 .tst-quote p {
+  margin: 0;
+}
+
+.v2 .tst-by {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.v2 .tst-face {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--brand-deep);
+  color: var(--on-brand);
+}
+.v2 .tst-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.v2 .tst-initials {
+  font-size: 0.9375rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.v2 .tst-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.v2 .tst-name {
+  font-weight: 650;
+  color: var(--ink);
+}
+.v2 .tst-role {
+  font-size: 0.9375rem;
+  color: var(--ink-mute);
+}
+
+@media (max-width: 560px) {
+  .v2 .tst-card {
+    width: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No crawl. The row becomes a plain scrollable strip, and the duplicate
+     copy goes away — it exists only to make the loop seamless, and left in
+     place it would read as six clients quoted twice. */
+  .v2 .tst-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .v2 .tst-track {
+    animation: none;
+    width: auto;
+  }
+  .v2 .tst-track > li[aria-hidden="true"] {
+    display: none;
+  }
+  /* The ring still changes on hover; it just does so instantly. Colour is
+     information here — it says which card the cursor has stopped — and
+     reduced motion is a request about movement, not about contrast. */
+  .v2 .tst-card,
+  .v2 .tst-card::before,
+  .v2 .tst-card::after {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   SEE-THROUGH NAV OVER THE HERO (2026-07-29)
+
+   The bar was solid #0b1e4d. The note that justified it said a translucent
+   navy over the paper page beneath would render lighter than the hero and
+   put a seam across the first viewport — true when it was written, and no
+   longer true now: the hero is black with the mesh grid, and the bar is
+   being asked to show that grid through itself.
+
+   Applies ONLY with .nav-over, which only the homepage passes. Everywhere
+   else the first viewport is paper and the solid bar above still stands.
+   ============================================================ */
+
+/* FIXED, not sticky. Sticky still occupies its 63px of normal flow, so the
+   hero would begin below the bar and a transparent bar would reveal the
+   paper body behind it rather than the hero. Out of flow, the hero starts at
+   the top of the page and runs underneath. */
+.v2 .nav-over {
+  position: fixed;
+  left: 0;
+  right: 0;
+  /* A scrim, not full transparency. The grid reads clearly through it, but
+     the nav's white type never has to sit directly on whatever the hero
+     happens to be showing — including the photograph, which expands to
+     near-full-bleed under this bar while the scroll gesture holds scrollY
+     at 0 and the frosted state below has therefore not engaged. */
+  /* Black with alpha, because the ground it fades into IS --hero-ground
+     (#000000). No new colour is introduced: this is the hero's own value
+     at three opacities. */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.66) 0%,
+    rgba(0, 0, 0, 0.34) 58%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    backdrop-filter 0.3s ease;
+}
+
+/* Scrolled: frosted glass. The blur is what the bar earns by leaving the
+   hero — from here down it is over paper and over text, and a scrim alone
+   would let body copy run legibly under the type in the bar. */
+.v2 .nav-over[data-scrolled="true"] {
+  /* --brand-deep (#0a1b45) at 72%. Written long rather than as a var()
+     because it needs an alpha channel and there is no --on-brand equivalent
+     for "the chapter ground, see-through" — the same reason .band-ink writes
+     its --paper-sunk and --line-strong out longhand. It is the palette
+     value, not a new colour. */
+  background: rgba(10, 27, 69, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--on-brand-line);
+}
+
+/* Safari on iOS drops backdrop-filter under memory pressure and simply does
+   not paint it; the fallback has to be opaque enough to carry white type on
+   its own, or the bar vanishes over paper. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .v2 .nav-over[data-scrolled="true"] {
+    background: rgba(10, 27, 69, 0.94);
+  }
+}
+
+/* The hero starts at the top of the page rather than under a 63px bar and
+   takes the whole viewport back — applied at .seh-stage and .seh-viewport
+   themselves rather than overridden from here, so there is one source of
+   truth for the hero's height. The viewport's 104px top padding is what
+   clears the bar the hero now sits beneath (84px on mobile; both are more
+   than the 63px bar). */
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .nav-over {
+    transition: none;
   }
 }

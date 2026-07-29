@@ -396,10 +396,132 @@ in the "port these" table is pure CSS.
 
 ## 5. Suggested order if you build it
 
-1. Type: italic emphasis + eyebrows. (Half a day, changes the whole feel.)
-2. Bands: real ink⇄paper inversion.
+1. ~~Type: italic emphasis + eyebrows.~~ **Shipped 2026-07-28.**
+2. ~~Bands: real ink⇄paper inversion.~~ **Shipped 2026-07-28**, as one ink
+   chapter rather than an alternating pattern — see below.
 3. Process loop → snake layout.
 4. Case studies → fanned decks + chat-bubble testimonials.
 5. Compounding SVG chart.
 6. Then, and only then, decide on the hero photograph and the pinned
    annotation section — those two are where the money and the dependencies are.
+
+---
+
+## 6. What shipped, and how it differs from the plan
+
+### Type
+- `Schibsted_Grotesk` now loads `style: ["normal", "italic"]`. The family has
+  a real italic (variable, 400–900), so the whole device runs on the font the
+  site already used — no second family, no commercial licence, ~20kb.
+- Display weight went **800 → 640**. This was not in the original plan and it
+  is the change that actually makes the device work: an italic inside an 800
+  heading is a nudge. It also resolved a pre-existing inconsistency — `.close-h`
+  had always been 640 while `.h1`/`.h2` were 800.
+- `.h1 em, .h2 em` → italic, weight 880, `letter-spacing: -0.042em`,
+  `font-synthesis-style: none` (a synthesised oblique would defeat the point).
+- Applied to 7 headings. **Deliberately not applied to "What we can help you
+  with."** — it is a bare label with no phrase worth slanting, and an emphasis
+  placed for consistency rather than meaning is exactly what makes a device
+  read as a template.
+
+### Eyebrows
+Five, not one per section: `SYMPTOMS`, `THE DIAGNOSTIC`, `SERVICES`,
+`WHO IT'S FOR`, `THE ORDER WE BUILD IN`. Sections whose heading is already a
+bare label ("Why Blueprint.", "How it runs.") get none — an eyebrow repeating
+the heading under it is decoration, not wayfinding.
+
+### Bands — one correction to the plan
+Section 3 above said to "upgrade `--paper-sunk`" to a full inversion. **That
+would have broken the page.** `--paper-sunk` is read by ten other rules —
+`.msg-in` chat bubbles, `.strip`, `.midcta` and five more — where it means
+"faintly sunken surface", not "band ground". Inverting it would have turned
+every chat bubble navy.
+
+What shipped instead is a separate `.band-ink` that re-declares the world's
+tokens in its own scope:
+
+```css
+.v2 .band-ink {
+  --paper: var(--brand-deep);
+  --ink:   var(--on-brand);
+  --line:  var(--on-brand-line);
+  ...
+}
+```
+
+Every selector downstream already reads `var(--ink)` / `var(--line)`, so the
+whole subtree inverts itself — the `01/02/03` numerals, the 2px `.work-item`
+rules and the `.why-item` hairlines all flipped with no per-child rules to
+maintain. Values are existing tokens, not new literals, so there is still one
+definition of "type on navy" in the file.
+
+**Placement: one chapter, not an alternating pattern.** "Why it works" and
+"Why Blueprint" are one argument, so they share one ground
+(`.band-ink + .band-ink { padding-top: 0 }` removes the seam). That is the
+page's only dark event between the navy hero and the navy close — three dark
+moments total, which is a composition. Six would be a stripe pattern, and the
+inversion stops working the moment it repeats.
+
+Verified: production build clean, renders correctly at 1440px and 390px,
+eyebrow contrast 7.9:1 and cyan numerals 8.4:1 on the chapter ground.
+
+---
+
+## 7. Hero reveal (shipped 2026-07-28) — and a correction to §2.1
+
+§2.1 above guessed the hero zoom was a CSS transform. **It is not.** Reading
+the markup properly:
+
+```html
+<div class="relative hidden md:block md:h-[360vh]">     <!-- 3.6vh runway -->
+  <div class="sticky top-0 h-screen overflow-hidden">   <!-- pinned viewport -->
+    <img src="/photography/hero-poster.webp" style="opacity:0">   <!-- poster only -->
+    <video playsinline preload="auto">
+      <source src="/video/hero-ascent.webm"><source src="/video/hero-ascent.mp4">
+```
+
+The mountain does not zoom — **the camera does, in filmed footage, and scroll
+position drives `video.currentTime`.** The `.webp` is the poster frame. The
+tell is the `<video>` having `playsinline preload="auto"` but no `autoplay`,
+no `muted`, no `loop`: ambient background video always has all three, so their
+absence means nothing calls `play()` and something sets `currentTime` by hand.
+
+It is also `hidden md:block` — **desktop only**. Scrubbing video needs a very
+short keyframe interval to avoid stuttering, and iOS Safari throttles
+`currentTime` seeks. They gated it rather than fight that.
+
+Not portable here without commissioning footage. What shipped instead is the
+**second half of their hero — the word reveal** — which needs no imagery.
+
+### What shipped
+
+- `revealWords()` in `app/page.tsx` splits a phrase into per-word spans and
+  continues the stagger across the `<em>` via a `start` offset.
+- `.hero-word` resolves `opacity 0 → 1` and `filter: blur(0.14em) → 0` on a
+  75ms per-word stagger. **Blur, not a slide** — that is the whole gesture:
+  a lens finding focus, which is why their hero feels shot rather than built.
+- Blur is set in `em` so it tracks the `clamp(2.25rem, 6.4vw, 5rem)` headline.
+  A fixed px blur tuned at 80px is a smear at 36px.
+- `.hero-rise` fades and lifts the kicker (0ms), lead (680ms) and action
+  (800ms) around it. Two tiers, same as theirs.
+- **CSS keyframes only.** No scroll position is read, so this needed neither
+  Framer Motion nor Lenis, and the hero remains a server component. The site
+  still ships zero animation libraries.
+
+### Two things done differently from subyect
+
+1. **Real spaces, not spacer spans.** They wrap the gaps between words in
+   `<span aria-hidden="true"> </span>`, which is why a text extractor reads
+   their headline as `WeWedesigndesignthethe…`. Here the spaces are plain text
+   nodes, so `h1.textContent` is still `"We get Malaysian businesses more
+   customers."` — verified.
+2. **Start state lives in the keyframe**, with `animation-fill-mode: both`,
+   not in the base rule. If this stylesheet ever fails to load the words are
+   simply visible text. A hero that needs CSS to become visible at all is a
+   hero that is sometimes blank.
+
+Verified: CLS **0.0000**; the `<h1>` bounding box is identical across five
+samples over two seconds, because every word holds its box from first paint
+and only `opacity` and `filter` change. Under `prefers-reduced-motion: reduce`
+all seven words measure `opacity: 1` at 400ms — the world's global rule kills
+duration but not delay, so the hero layer zeroes delay explicitly.

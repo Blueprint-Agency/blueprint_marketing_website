@@ -83,10 +83,16 @@ function Trend() {
         </linearGradient>
       </defs>
       <path
+        className="sa-trend-area"
         d="M0 40 L20 34 L40 36 L60 24 L80 26 L100 12 L120 6 L120 46 L0 46 Z"
         fill="url(#sa-trend-fill)"
       />
+      {/* pathLength normalises the geometry to 1, so the draw-on animation
+          in plain.css can use a dasharray of exactly 1 rather than a magic
+          number guessed at the real path length. */}
       <path
+        className="sa-trend-line"
+        pathLength={1}
         d="M0 40 L20 34 L40 36 L60 24 L80 26 L100 12 L120 6"
         fill="none"
         style={{ stroke: "var(--brand)" }}
@@ -94,7 +100,13 @@ function Trend() {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="120" cy="6" r="3" style={{ fill: "var(--brand)" }} />
+      <circle
+        className="sa-trend-dot"
+        cx="120"
+        cy="6"
+        r="3"
+        style={{ fill: "var(--brand)" }}
+      />
     </svg>
   );
 }

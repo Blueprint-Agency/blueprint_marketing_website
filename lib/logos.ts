@@ -1,77 +1,143 @@
 /**
- * The client logo wall for /v2.
+ * The client logo wall.
  *
  * REPLACES the client website screenshots at the user's request (2026-07-27).
+ * REAL FILES SUPPLIED 2026-07-28 — the wordmark placeholder state below is
+ * now only reached by Teeko, which has no logo file yet.
  *
- * STATUS: no logo files exist yet. PRODUCT.md records `assets/` as empty and
- * notes that the six clients are confirmed but their marks still need
- * sourcing. The user will supply a logo list once they approve the design.
+ * THE FILES
+ * ---------
+ * Sources came from `Downloads/blueprint client logo` as a mix of png, jpg,
+ * webp and gif. Every one was processed to a single consistent form:
  *
- * Until then every entry has `logo: null` and renders as a typographic
- * wordmark cell — a real, designed state, not a broken image or a grey box.
- * The cell still links to the client's live site, so the "go and check"
- * proof the screenshots used to carry is not lost entirely.
+ *   1. Converted to PNG (gif takes frame 0).
+ *   2. Flat backgrounds knocked out by a flood fill FROM THE BORDER, so the
+ *      outer white goes transparent while white *inside* a mark — the counter
+ *      in Global Marque's coin, the highlight in QueueBee's speech bubble —
+ *      survives. A global white-to-alpha replace would have punched holes
+ *      straight through those.
+ *   3. Cropped tight to real content. This is where the "empty white space"
+ *      went: vatti lost 81% of its area, five-clinic 61%, garden-gem 38%.
+ *   4. Scaled to a constant OPTICAL AREA rather than a constant height, then
+ *      centred on an identical 480x160 transparent canvas. Constant height
+ *      would make a 6:1 wordmark like ttklia read as enormous beside a square
+ *      mark like yoga-sadhana; equal area is what makes them look like one row.
  *
- * TO ADD A REAL LOGO
- * ------------------
- * 1. Drop the file in `public/logos/` — SVG preferred, otherwise transparent
- *    PNG at 2x the display height (so at least 96px tall).
- * 2. Set `logo: "/logos/<file>"` on that entry.
- * Nothing else changes; the wall swaps that cell from wordmark to image.
+ * Every file is therefore exactly 480x160 and needs no per-logo CSS.
+ *
+ * TO ADD OR REPLACE ONE
+ * ---------------------
+ * Drop the source in `Downloads/blueprint client logo` and re-run the same
+ * pipeline, or hand-make a 480x160 transparent PNG with the mark centred and
+ * roughly 40,000px^2 of ink. Then set `logo` on the entry below.
  *
  * A note on treatment: logos arrive in wildly different weights, colours and
  * aspect ratios, and a wall of them at full colour reads as clutter. They are
- * rendered in a uniform optical height and desaturated, lifting to full
- * colour on hover. That is a deliberate design decision, not a limitation.
+ * rendered desaturated at a uniform optical height, lifting to full colour on
+ * hover. That is a deliberate design decision, not a limitation.
  */
 
 export type Brand = {
   slug: string;
   name: string;
-  href: string;
+  /**
+   * The client's live site, or null where no URL is confirmed.
+   *
+   * NOT A PLACEHOLDER FOR A GUESS. PRODUCT.md records URLs for six clients
+   * only; the rest are null and render as an unlinked cell rather than send
+   * a visitor to an address that may not exist. See lib/site.ts, which holds
+   * the same line about the company's own domain.
+   */
+  href: string | null;
   /** Path under /public, or null while no file exists. */
   logo: string | null;
-  /** Optical size correction. A wide wordmark and a square mark do not sit
-   *  at the same height; nudge per logo once the real files land. */
+  /** Optical size correction. The pipeline already equalises area, so this
+   *  should stay unset unless a specific mark reads wrong on the wall. */
   scale?: number;
 };
 
 export const BRANDS: Brand[] = [
+  /* --- confirmed in PRODUCT.md: name, URL and logo all verified --- */
   {
     slug: "five-clinic",
     name: "Five Clinic",
     href: "https://fiveclinic.com.my",
-    logo: null,
+    logo: "/logos/five-clinic.png",
   },
   {
     slug: "vatti-malaysia",
     name: "Vatti Malaysia",
     href: "https://vattimalaysia.com",
-    logo: null,
+    logo: "/logos/vatti-malaysia.png",
   },
   {
     slug: "kaiteki",
     name: "Kaiteki",
     href: "https://kaiteki.my",
-    logo: null,
+    logo: "/logos/kaiteki.png",
   },
   {
     slug: "aq-energy",
     name: "AQ Energy",
     href: "https://aq.energy",
-    logo: null,
-  },
-  {
-    slug: "teeko",
-    name: "Teeko",
-    href: "https://teeko.ai",
-    logo: null,
+    logo: "/logos/aq-energy.png",
   },
   {
     slug: "yoga-sadhana",
     name: "Yoga Sadhana",
     href: "https://yogasadhana.sg",
-    logo: null,
+    logo: "/logos/yoga-sadhana.png",
+  },
+  {
+    /* Not in PRODUCT.md's client table, but Blueprint builds and maintains
+       this site — it is a sibling project in the same workspace. The URL is
+       taken from that repo's own metadata, not guessed. */
+    slug: "persistence-chiro",
+    name: "Persistence Chiropractic",
+    href: "https://www.persistencechiropractic.com",
+    logo: "/logos/persistence-chiro.png",
+  },
+
+  /* Teeko was removed from the wall on 2026-07-28 at the user's request. It
+     is still a confirmed client in PRODUCT.md and still appears elsewhere on
+     the site; it is only absent from this row, because no logo file exists
+     and a lone wordmark among eleven real marks read as an omission. */
+
+  /* --- supplied 2026-07-28, not recorded in PRODUCT.md ---
+     The folder they arrived in is the user's assertion that these are
+     clients, so they are on the wall. Their URLs are a separate question:
+     only the two that print a domain inside their own wordmark have one. */
+  {
+    slug: "partglobal",
+    name: "PartGlobal",
+    /* Read off the logo itself, which sets "PARTGLOBAL.com". */
+    href: "https://partglobal.com",
+    logo: "/logos/partglobal.png",
+  },
+  {
+    slug: "ttklia",
+    name: "TTKLIA",
+    /* Read off the logo itself, which sets "ttklia.com". */
+    href: "https://ttklia.com",
+    logo: "/logos/ttklia.png",
+  },
+  {
+    slug: "queuebee",
+    name: "QueueBee",
+    href: null,
+    logo: "/logos/queuebee.png",
+  },
+  {
+    slug: "garden-gem",
+    name: "Garden Gem",
+    href: null,
+    logo: "/logos/garden-gem.png",
+  },
+  {
+    slug: "global-marque",
+    name: "Global Marque",
+    href: null,
+    logo: "/logos/global-marque.png",
   },
 ];
 

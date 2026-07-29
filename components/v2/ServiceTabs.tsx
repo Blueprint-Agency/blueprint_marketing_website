@@ -171,21 +171,11 @@ export default function ServiceTabs({
             <div className="svt-art">
               <ServiceArt id={s.id} />
             </div>
+            {/* The panel is the artwork and one paragraph. The "What we do"
+                list and the "Ideal for" line came out on 2026-07-29; the
+                copy for both is still on each service in lib/services.ts
+                (`does`, `idealFor`) if they are ever wanted back. */}
             <p className="prose svt-body">{s.body}</p>
-            <div className="svt-detail">
-              <div>
-                <p className="small svc-label">What we do</p>
-                <ul className="svc-does">
-                  {s.does.map((d) => (
-                    <li key={d}>{d}</li>
-                  ))}
-                </ul>
-              </div>
-              <p className="svc-ideal">
-                <span className="small svc-label">Ideal for</span>
-                {s.idealFor}
-              </p>
-            </div>
           </div>
         ))}
 

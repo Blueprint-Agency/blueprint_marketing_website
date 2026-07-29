@@ -9,12 +9,12 @@
  *   figure appears anywhere. PRODUCT.md records none of them.
  * - "Ideal for" lines are judgements about fit, not claims of results.
  *
- * FLAGGED FOR USER CONFIRMATION (2026-07-27)
- * ------------------------------------------
- * `WHY[1]` ("You talk to the person doing the work") describes how Blueprint
- * staffs an engagement. It is NOT recorded in PRODUCT.md — it was inferred
- * from the agency's size and the WhatsApp-first conversion path. If the user
- * cannot confirm it, cut it; it is a promise a buyer will hold them to.
+ * NOTHING IN THIS FILE IS AWAITING CONFIRMATION (2026-07-29)
+ * ----------------------------------------------------------
+ * The one flagged line — `WHY[1]`, "You talk to the person doing the work",
+ * inferred from the agency's size rather than recorded in PRODUCT.md — was
+ * cut in the PASE rewrite of WHY below, per the instruction attached to the
+ * flag. Every claim here is now traceable to PRODUCT.md.
  */
 
 export type Service = {
@@ -215,48 +215,64 @@ export const QUALIFY: string[] = [
   "You have been handed reports before, and never a system.",
 ];
 
-/** Why the combination works. Mechanism, not claims. */
-export const WHY_IT_WORKS: { title: string; body: string }[] = [
-  {
-    title: "The marketing and the systems are built together",
-    body: "Traffic and follow-up are designed as one thing. That is the whole point. Separately, they leak into the gap between them.",
-  },
-  {
-    title: "Every path ends in a conversation",
-    body: "Not a form, not a call-back request. WhatsApp, where your customers already are, answered immediately.",
-  },
-  {
-    title: "We build what we recommend",
-    body: "The booking system, the CRM, the automation. We are not writing a spec for somebody else to deliver, so nothing gets handed over and dropped.",
-  },
-  {
-    title: "Plain reporting",
-    body: "What we did, what happened, what we are doing next, in language that does not assume you have a marketing department.",
-  },
-];
-
 /**
  * Differentiators.
  *
- * NOTE: index 1 is NOT confirmed in PRODUCT.md — see the file header.
+ * PASE (2026-07-29). Four points, each aimed at one buyer temperament, so
+ * the section persuades four different readers rather than making the same
+ * argument four times. In order: Practical (a quick, cheap, certain first
+ * win), Action (the cost of leaving it alone), Social (the competitor is
+ * already doing it), Emotional (the pain the owner actually feels).
+ *
+ * WHAT THIS DELIBERATELY DOES NOT DO
+ * ----------------------------------
+ * The three commercial versions of these hooks all want numbers this
+ * business does not have: "results in 30 days" (Practical), "offer closes
+ * Friday" (Action), "join 200 Malaysian businesses" (Social). PRODUCT.md
+ * records no aggregate figure, no timeline, no client count and no
+ * testimonial, and lib/results.ts exists precisely so the results slot can
+ * stay empty rather than guessed. So every hook here runs on a mechanism
+ * that is true instead of a figure that is not:
+ *
+ * - Practical: the audit-first sequence and cheapest-fix-first order.
+ * - Action: money already spent on clicks that went quiet. The buyer's own
+ *   situation, not a manufactured deadline.
+ * - Social: the competitor answering faster. No client count, no logo
+ *   claim, nothing asserted about what any named client runs.
+ * - Emotional: QUALIFY's own lines — the owner doing follow up at night.
+ *
+ * The honesty position that used to live at WHY[3] ("we will not print a
+ * number we cannot defend") is not lost by dropping it: RESULTS is null, so
+ * the results section still renders its "On results" note saying the same
+ * thing in the place a reader looks for proof.
+ *
+ * ALSO RESOLVED HERE: the old WHY[1], "You talk to the person doing the
+ * work", was flagged unconfirmed on 2026-07-27 with a note to cut it if it
+ * could not be confirmed. It never was, so it is gone, and with it the last
+ * unverified promise in this file.
  */
-export const WHY: { title: string; body: string; unconfirmed?: boolean }[] = [
+export const WHY: { title: string; body: string }[] = [
   {
-    title: "We build the machine, not just the ads",
-    body: "Most agencies buy media and hand the leads back to you. The booking system, the CRM, the WhatsApp automation and the apps are built here, by the same people who ran the campaign that filled them.",
+    // PRACTICAL — a small, certain, cheap first win. No timeline claimed.
+    title: "We fix the cheapest leak first",
+    body: "The audit comes before anything is sold: which step is losing people, and what that step is costing you. Usually the first fix is a booking flow or a follow-up gap rather than a bigger ad budget. And because we build the systems as well as run the campaigns, there is no second supplier to brief before it actually gets done.",
   },
   {
-    title: "You talk to the person doing the work",
-    body: "Not a salesperson in the pitch and an account manager afterwards. The person who would run it is the person in the chat.",
-    unconfirmed: true,
+    // ACTION — urgency from the cost of delay, which is real, rather than
+    // from a deadline or a closing offer, which would have to be invented.
+    title: "The leak is running right now",
+    body: "You have already paid for the clicks. The enquiries that went quiet this week were bought and then lost, and nothing about that corrects itself while you decide. Every week it keeps running is money spent twice: once to bring someone in, and again to replace the one you did not answer in time.",
   },
   {
-    title: "We write to an owner, not a marketer",
-    body: "You run the whole business. You should not need to learn marketing jargon to understand what you are paying for.",
+    // SOCIAL — FOMO against the competitor, not against a client count.
+    // Nothing is asserted about what any named client runs.
+    title: "Your competitor already replies in seconds",
+    body: "Not because they are quicker than you. Because it is automated, and it answers on a Sunday and on a public holiday and while you are with a customer. It is one of the first things we build. Someone waiting until Monday for your reply has usually booked with somebody else by Saturday.",
   },
   {
-    title: "We will not print a number we cannot defend",
-    body: "There is no agency-wide revenue figure or average lift on this site, because we do not have one we could stand behind. Ask us what we can share about a specific client and we will tell you honestly.",
+    // EMOTIONAL — names the pain from QUALIFY and resolves it.
+    title: "You should not be doing follow up at 11pm",
+    body: "You run the whole business. Chasing the person who enquired three days ago is not your job, and doing it yourself is exactly why it stops the moment you get busy. We build the thing that does it instead, so the follow up survives your worst week rather than depending on it being a good one.",
   },
 ];
 

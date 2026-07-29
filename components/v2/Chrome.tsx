@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SERVICES } from "@/lib/services";
 import { SITE, WA } from "@/lib/site";
@@ -15,9 +18,34 @@ import { SITE, WA } from "@/lib/site";
  * scroll to nothing.
  */
 
-export function Nav() {
+/**
+ * `overHero` is passed only by a page whose first viewport is a dark hero —
+ * in practice, the homepage. It lets the nav go see-through so the hero's
+ * mesh grid runs behind it, and switches it to frosted glass on scroll.
+ *
+ * It has to be opt-in rather than automatic. This nav is shared chrome: on a
+ * case study page or the 404 the first viewport is paper, and a transparent
+ * bar carrying white type would be white-on-white until the reader scrolled.
+ */
+export function Nav({ overHero }: { overHero?: boolean } = {}) {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!overHero) return;
+    /* 12px rather than 0: a trackpad resting against the page produces a
+       stream of 1-2px scroll events, and a bar that frosts and clears on
+       every one of them is a flicker, not a transition. */
+    const read = () => setScrolled(window.scrollY > 12);
+    read();
+    window.addEventListener("scroll", read, { passive: true });
+    return () => window.removeEventListener("scroll", read);
+  }, [overHero]);
+
   return (
-    <header className="nav">
+    <header
+      className={`nav${overHero ? " nav-over" : ""}`}
+      data-scrolled={overHero && scrolled ? "true" : undefined}
+    >
       <div className="shell nav-row">
         <Link className="nav-brand" href="/">
           <span className="mark" aria-hidden="true">
