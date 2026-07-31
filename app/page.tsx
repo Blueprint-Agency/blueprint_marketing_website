@@ -152,23 +152,6 @@ export default function HomePage() {
 
   return (
     <>
-      {PREVIEW_DATA && (
-        <div className="mockbar" role="status">
-          <strong>PREVIEW DATA</strong>
-          {/* The bar names exactly what is invented, and nothing else. The
-              logos stopped being placeholders on 2026-07-28 and the results
-              grid was removed on 2026-07-29, so the testimonials are now the
-              only thing on the page that is made up. A warning that
-              overstates gets ignored. */}
-          <span>
-            The testimonials are invented. Nobody said them, and the people
-            named do not exist. Put real quotes in{" "}
-            <code>lib/testimonials.ts</code> and set{" "}
-            <code>PREVIEW_DATA = false</code> in <code>lib/preview.ts</code>{" "}
-            before publishing.
-          </span>
-        </div>
-      )}
       {/* The only page with a dark hero, so the only one whose nav is
           see-through over it. See the Nav definition in Chrome.tsx. */}
       <Nav overHero />

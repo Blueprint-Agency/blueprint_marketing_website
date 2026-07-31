@@ -1495,11 +1495,15 @@ html {
 
 /* ---------- nav on brand ---------- */
 
-/* Solid, not translucent. A translucent navy over the paper page beneath
+/* Solid, not translucent. A translucent bar over the paper page beneath
    renders lighter than the hero it sits on, putting a visible seam across
-   the top of the first viewport. */
+   the top of the first viewport.
+
+   Black rather than navy since 2026-07-31, matching the homepage bar's
+   scrolled state. One bar colour across the site, and it is the hero's own
+   ground rather than a third value between paper and hero. */
 .v2 .nav {
-  background: #0b1e4d;
+  background: var(--hero-ground, #000);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-bottom: 1px solid var(--on-brand-line);
@@ -1516,10 +1520,13 @@ html {
 .v2 .nav-link:hover {
   color: var(--on-brand);
 }
-/* The mark inverts on blue: paper plate, blue letter. */
+/* The mark inverts on the bar: paper plate, black letter. The letter tracks
+   the bar's ground, so it went black with it — left navy it would have been
+   the only blue left up there, which is what made the old bar read as a
+   colour rather than as a ground. */
 .v2 .nav .mark {
   background: var(--on-brand);
-  color: var(--brand-deep);
+  color: var(--hero-ground, #000);
 }
 
 /* ---------- hero on brand ---------- */
@@ -2429,43 +2436,7 @@ html {
 /* ============================================================
    PREVIEW MODE
    Only rendered while lib/preview.ts has PREVIEW_DATA === true.
-   Loud on purpose: this is the guard against a mockup being
-   mistaken for a finished site, or worse, published as one.
    ============================================================ */
-
-.v2 .mockbar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 90;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 12px;
-  padding: 10px 16px;
-  background: #ffd400;
-  color: #1a1400;
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  border-top: 2px solid #1a1400;
-  box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, 0.4);
-}
-.v2 .mockbar strong {
-  font-weight: 800;
-  letter-spacing: 0.04em;
-}
-.v2 .mockbar code {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 0.75rem;
-  background: rgba(0, 0, 0, 0.12);
-  padding: 1px 5px;
-  border-radius: 3px;
-}
-/* Keep the bar off the footer's last line. */
-.v2 .foot {
-  padding-bottom: 84px;
-}
 
 .v2 .sample-tag {
   display: inline-block;
@@ -5933,33 +5904,26 @@ html {
   border-bottom-color: transparent;
   transition:
     background 0.3s ease,
-    border-color 0.3s ease,
-    backdrop-filter 0.3s ease;
+    border-color 0.3s ease;
 }
 
-/* Scrolled: frosted glass. The blur is what the bar earns by leaving the
-   hero — from here down it is over paper and over text, and a scrim alone
-   would let body copy run legibly under the type in the bar. */
+/* Scrolled: solid black. This was translucent navy over blur, and the two
+   faults compounded — the blue was a second ground fighting the hero's own
+   black, and at 72% whatever scrolled under the bar tinted it, so the colour
+   moved as the page moved. Opaque removes both: the bar is the hero's ground
+   (--hero-ground, #000000) carried down the page, and it reads the same over
+   paper as it does over the hero. Nothing is blurred because nothing shows
+   through. */
 .v2 .nav-over[data-scrolled="true"] {
-  /* --brand-deep (#0a1b45) at 72%. Written long rather than as a var()
-     because it needs an alpha channel and there is no --on-brand equivalent
-     for "the chapter ground, see-through" — the same reason .band-ink writes
-     its --paper-sunk and --line-strong out longhand. It is the palette
-     value, not a new colour. */
-  background: rgba(10, 27, 69, 0.72);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: var(--hero-ground, #000);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom-color: var(--on-brand-line);
 }
 
-/* Safari on iOS drops backdrop-filter under memory pressure and simply does
-   not paint it; the fallback has to be opaque enough to carry white type on
-   its own, or the bar vanishes over paper. */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .v2 .nav-over[data-scrolled="true"] {
-    background: rgba(10, 27, 69, 0.94);
-  }
-}
+/* The Safari fallback that used to sit here is gone with the blur. It existed
+   because iOS drops backdrop-filter under memory pressure and leaves the bar
+   see-through; an opaque bar has nothing to fall back from. */
 
 /* The hero starts at the top of the page rather than under a 63px bar and
    takes the whole viewport back — applied at .seh-stage and .seh-viewport
