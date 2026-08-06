@@ -290,13 +290,13 @@ export const WHY: { title: string; body: string }[] = [
     // day it was written — it was about how we spend, not about what we
     // claim, and keeping it here blurred both points.
     title: "We only say what we can prove",
-    body: "There is no revenue figure and no average lift anywhere on this site, because we do not have one we could honestly stand behind, and a number without a source is decoration. Results belong to each client, in that client's own numbers. Ask us about a business like yours and we will tell you exactly what we can share — and if we are not the right fit, you will hear that from us before you hear a price.",
+    body: "There is no revenue figure and no average lift anywhere on this site, because we do not have one we could honestly stand behind, and a number without a source is decoration. Results belong to each client, in that client's own numbers. Ask us about a business like yours and we will tell you exactly what we can share. And if we are not the right fit, you will hear that from us before you hear a price.",
   },
   {
     // WHAT WE DO. The position, and the one claim a competing KL agency
     // cannot truthfully repeat. Last line is the value, not the feature.
     title: "We build what we recommend",
-    body: "We do not hand over a strategy and leave you to find someone to build it. The marketing that brings people in and the systems that hold them once they arrive — sites, booking, CRM, WhatsApp automation — come from the same team that recommended them. It is a useful discipline: advice you have to build yourself is advice you give more carefully.",
+    body: "We do not hand over a strategy and leave you to find someone to build it. The same team that recommends the work builds it: the marketing that brings people in, and the sites, booking, CRM and WhatsApp automation that hold them once they arrive. It is a useful discipline, because advice you have to build yourself is advice you give more carefully.",
   },
   {
     // WHAT WE DO FIRST. Audit-first, which is stage one of the recorded
