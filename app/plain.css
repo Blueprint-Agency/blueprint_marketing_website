@@ -2438,6 +2438,9 @@ html {
    Only rendered while lib/preview.ts has PREVIEW_DATA === true.
    ============================================================ */
 
+/* Unused since 2026-08-06: the mock testimonials it labelled are no longer
+   imported by app/page.tsx. Kept because the tag and the mock data have to
+   return together — invented quotes must never render without it. */
 .v2 .sample-tag {
   display: inline-block;
   margin: 0 0 16px;

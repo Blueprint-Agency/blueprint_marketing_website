@@ -39,7 +39,13 @@ import type { Testimonial } from "./testimonials";
    quarantined behind a flag and a warning bar rather than being written
    into lib/testimonials.ts, which is the file that will hold real quotes.
    Those two things must never be in the same array, or the day the real
-   ones arrive nobody will be able to tell which is which. */
+   ones arrive nobody will be able to tell which is which.
+
+   2026-08-06: the flag is still true, but it no longer reaches the
+   testimonials. app/page.tsx stopped importing MOCK_TESTIMONIALS while real
+   testimony is pending, so the only thing this switch still turns on is the
+   monogram logo wall (MOCK_LOGO_TINTS). Setting it false now changes the logo
+   wall and nothing else. */
 export const PREVIEW_DATA = true;
 
 /** INVENTED. Not measured. Not Five Clinic's real numbers.
@@ -101,10 +107,13 @@ export const MOCK_LOGO_TINTS: Record<string, string> = {
  *
  * REPLACING THESE
  * ---------------
- * Do not edit this array into truth. Put real quotes in lib/testimonials.ts
- * and set PREVIEW_DATA = false. The real file wins automatically and this one
- * stops rendering. Keeping invented and genuine quotes in one array is how a
- * placeholder ends up published as a client's word.
+ * Do not edit this array into truth. Put real quotes in lib/testimonials.ts.
+ * Keeping invented and genuine quotes in one array is how a placeholder ends
+ * up published as a client's word.
+ *
+ * UNUSED since 2026-08-06 — app/page.tsx no longer imports it, so no flag
+ * setting can render it. Kept as the shape a real Testimonial takes. If you
+ * ever wire it back up, the sample tag has to come back with it.
  */
 export const MOCK_TESTIMONIALS: Testimonial[] = [
   {

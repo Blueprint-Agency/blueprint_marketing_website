@@ -10,7 +10,7 @@ import ServiceTabs from "@/components/v2/ServiceTabs";
 import Testimonials from "@/components/v2/Testimonials";
 import { CLIENTS, clientBySlug } from "@/lib/clients";
 import { BRANDS, HAS_REAL_LOGOS } from "@/lib/logos";
-import { MOCK_LOGO_TINTS, MOCK_TESTIMONIALS, PREVIEW_DATA } from "@/lib/preview";
+import { MOCK_LOGO_TINTS, PREVIEW_DATA } from "@/lib/preview";
 import { SEGMENTS } from "@/lib/segments";
 import { FAQ, SERVICES, WHY } from "@/lib/services";
 import { TESTIMONIALS } from "@/lib/testimonials";
@@ -141,14 +141,13 @@ export default function HomePage() {
   const attract = SERVICES.filter((s) => s.group === "attract");
   const build = SERVICES.filter((s) => s.group === "build");
 
-  /* Real quotes win whenever they exist. The mock set only fills the gap,
-     and only while the preview flag is on. */
-  const quotes =
-    TESTIMONIALS.length > 0
-      ? TESTIMONIALS
-      : PREVIEW_DATA
-        ? MOCK_TESTIMONIALS
-        : [];
+  /* Real quotes only. The mock set was rendering here behind PREVIEW_DATA so
+     the slider could be judged with content in it; the user turned that off on
+     2026-08-06 because no client has agreed to be quoted yet. MOCK_TESTIMONIALS
+     stays in lib/preview.ts, unimported — nothing on the page can reach it now.
+     Put real quotes in lib/testimonials.ts and this section comes back on its
+     own. */
+  const quotes = TESTIMONIALS;
 
   return (
     <>
@@ -382,7 +381,13 @@ export default function HomePage() {
             because PRODUCT.md records no testimonial about Blueprint — see
             lib/testimonials.ts for what has to be true before one goes in.
             The note is not a placeholder; it is what this section says
-            until a client agrees to be quoted. */}
+            until a client agrees to be quoted.
+
+            2026-08-06: the mock slider is off. It rendered for a week behind
+            PREVIEW_DATA so the design could be judged populated; the user
+            pulled it while real testimony is still pending, so the note is
+            what ships. The marquee branch below is live code, not dead — it
+            switches back on the moment lib/testimonials.ts has an entry. */}
         <section className="band band-sunk">
           {quotes.length > 0 ? (
             <>
@@ -394,13 +399,6 @@ export default function HomePage() {
                   rather than a line that keeps going. */}
               <div className="shell">
                 <div className="col">
-                  {/* Real quotes win whenever they exist; the mock set only
-                      fills the gap, and says so on the card. */}
-                  {TESTIMONIALS.length === 0 && (
-                    <p className="sample-tag">
-                      Sample testimonials, not real client quotes
-                    </p>
-                  )}
                   <h2 className="h2">
                     In their <em>words</em>.
                   </h2>
