@@ -5,9 +5,13 @@
  * HOW THIS WORKS
  * --------------
  * `TESTIMONIALS` is empty until real, attributable quotes exist. While it is
- * empty the page renders the honest "On results" note instead of a slider,
- * and looks complete doing it. Fill this array and the slider appears
+ * empty the home page renders no testimonial band at all — the section is
+ * skipped, not filled with an apology. Fill this array and the band appears
  * automatically. Nothing else needs changing.
+ *
+ * It used to fall through to an honest "On results" note in the same slot.
+ * The user removed that on 2026-08-06; the argument it made now lives in
+ * WHY[0] ("We only say what we can prove") in lib/services.ts and in the FAQ.
  *
  * WHY IT SHIPS EMPTY
  * ------------------

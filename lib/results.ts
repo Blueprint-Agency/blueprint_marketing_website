@@ -3,10 +3,16 @@
  *
  * HOW THIS WORKS
  * --------------
- * `RESULTS` is null until real, defensible figures exist. While it is null
- * the page renders the honest "On results" note instead of a results grid,
- * and looks complete doing it. The moment you fill this in, the grid appears
- * automatically and the note steps aside. Nothing else needs changing.
+ * `RESULTS` is null until real, defensible figures exist.
+ *
+ * STALE SINCE 2026-07-29, READ BEFORE USING: the home page no longer has a
+ * results grid to fill. It was removed that day and nothing reads `RESULTS`
+ * now — this file is a kept shape and a kept standard, not a live switch.
+ * The "On results" note it used to fall through to went too, on 2026-08-06,
+ * along with the empty testimonial band that inherited the slot. The case
+ * study at app/work/[slug] still renders its own version of that note when
+ * `detail.outcomes` is null, and that is where measured figures should land
+ * first, because per-client is the only scope PRODUCT.md allows.
  *
  * WHY IT IS BUILT THIS WAY
  * ------------------------

@@ -15,8 +15,9 @@
  *  TO TURN IT OFF BEFORE THIS GOES ANYWHERE NEAR THE PUBLIC
  * ------------------------------------------------------------
  *  Set PREVIEW_DATA to false. That is the whole procedure.
- *  The results grid reverts to the honest "On results" note and the logo
- *  wall reverts to typographic wordmark cells. Nothing breaks.
+ *  The logo wall reverts to typographic wordmark cells. Nothing breaks.
+ *  (It used to also revert a results grid to an honest "On results" note.
+ *  Both of those are gone from the page — see the dated note below.)
  *
  * While it is true, a fixed warning bar is pinned to every viewport of the
  * page. That bar is deliberate and must not be removed while the flag is

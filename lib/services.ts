@@ -216,63 +216,98 @@ export const QUALIFY: string[] = [
 ];
 
 /**
- * Differentiators.
+ * BRAND VALUES.
  *
- * PASE (2026-07-29). Four points, each aimed at one buyer temperament, so
- * the section persuades four different readers rather than making the same
- * argument four times. In order: Practical (a quick, cheap, certain first
- * win), Action (the cost of leaving it alone), Social (the competitor is
- * already doing it), Emotional (the pain the owner actually feels).
+ * Was "Differentiators" — a PASE persuasion ladder whose four rungs mostly
+ * landed on one mechanism (the leak, the automated reply, the 11pm follow-up).
+ * The user called that out on 2026-08-06 as too WhatsApp-heavy and asked for
+ * values instead. A first pass gave four; the user asked for three and for
+ * better ones. This is that cut.
+ *
+ * WHY THREE, AND WHY THESE THREE
+ * ------------------------------
+ * The four-point version had a structural fault: [0] "we look before we sell"
+ * and [2] "no number we cannot defend" were the same value wearing two
+ * costumes — both were honesty-at-a-cost — and [3] was a tone commitment
+ * rather than a stance. Four points that are really two-and-a-half read as a
+ * list padded to fill a grid.
+ *
+ * Three axes, no overlap:
+ *
+ *   [0] WHAT WE SAY       <- "Proof precedes claim" (PRODUCT.md Principle 1)
+ *   [1] WHAT WE DO        <- Positioning: marketing leads, the build is edge
+ *   [2] WHAT WE DO FIRST  <- Audit → Architect → Build → Scale, stage one
+ *
+ * [2] replaced a "we work for owners, not marketing departments" point on
+ * 2026-08-06. That one failed a test worth remembering: a value has to say
+ * something about US. It described the READER instead, and told him what he
+ * lacks. The page already proves it works that way by being written in plain
+ * words — a site that has to announce it is plain-spoken is neither.
+ *
+ * The test each one does have to pass is that it costs the company something.
+ * A value that is free to hold is a slogan: nobody advertises that they will
+ * happily take your money. [0] loses sales — it declines a bad fit rather
+ * than sell into it. [1] removes the escape hatch of blaming the other
+ * supplier. [2] is the most expensive of the three, because the cheap fix it
+ * recommends first bills less than the ad budget it talks you out of.
+ *
+ * They also reinforce each other rather than sitting in parallel, which is
+ * what makes this a position instead of a list: advice you have to build
+ * yourself ([1]) is advice you give more carefully ([0]), and the reason you
+ * can afford to name the unprofitable fix first ([2]) is that you are paid
+ * for the build rather than the media ([1]).
+ *
+ * KEEP [0] AND [2] SEPARATE. They drift together every time this file is
+ * edited, because both read as "honesty". [0] is about what we CLAIM; [2] is
+ * about what we SPEND. The "fix you already own" line belongs in [2] and was
+ * moved there out of [0] for exactly this reason.
  *
  * WHAT THIS DELIBERATELY DOES NOT DO
  * ----------------------------------
- * The three commercial versions of these hooks all want numbers this
- * business does not have: "results in 30 days" (Practical), "offer closes
- * Friday" (Action), "join 200 Malaysian businesses" (Social). PRODUCT.md
- * records no aggregate figure, no timeline, no client count and no
- * testimonial, and lib/results.ts exists precisely so the results slot can
- * stay empty rather than guessed. So every hook here runs on a mechanism
- * that is true instead of a figure that is not:
+ * The commercial version of every one of these wants a number this business
+ * does not have: "results in 30 days", "join 200 Malaysian businesses",
+ * "38% average lift". PRODUCT.md records no aggregate figure, no timeline,
+ * no client count and no testimonial. Nothing below asserts any of the four.
+ * WhatsApp appears exactly once, inside a list of systems in [1], which is
+ * the weight the positioning gives it.
  *
- * - Practical: the audit-first sequence and cheapest-fix-first order.
- * - Action: money already spent on clicks that went quiet. The buyer's own
- *   situation, not a manufactured deadline.
- * - Social: the competitor answering faster. No client count, no logo
- *   claim, nothing asserted about what any named client runs.
- * - Emotional: QUALIFY's own lines — the owner doing follow up at night.
+ * LOAD-BEARING: [0] is the only place on the home page that explains why
+ * there are no percentages on it, since the "On results" note was removed on
+ * 2026-08-06 with the empty testimonial band. The FAQ answers it a second
+ * time for a reader who goes looking; this is where a reader who does not go
+ * looking meets it. Do not soften [0] without putting that argument back
+ * somewhere a reader will actually pass.
  *
- * The honesty position that used to live at WHY[3] ("we will not print a
- * number we cannot defend") is not lost by dropping it: RESULTS is null, so
- * the results section still renders its "On results" note saying the same
- * thing in the place a reader looks for proof.
- *
- * ALSO RESOLVED HERE: the old WHY[1], "You talk to the person doing the
- * work", was flagged unconfirmed on 2026-07-27 with a note to cut it if it
- * could not be confirmed. It never was, so it is gone, and with it the last
- * unverified promise in this file.
+ * Both promises in [0] — that we will name a fix we are not paid for, and
+ * that we will decline a bad fit — are on record. See the "What does it
+ * cost?" answer in FAQ below, which already commits to the second in the
+ * user's own framing.
  */
 export const WHY: { title: string; body: string }[] = [
   {
-    // PRACTICAL — a small, certain, cheap first win. No timeline claimed.
-    title: "We fix the cheapest leak first",
-    body: "The audit comes before anything is sold: which step is losing people, and what that step is costing you. Usually the first fix is a booking flow or a follow-up gap rather than a bigger ad budget. And because we build the systems as well as run the campaigns, there is no second supplier to brief before it actually gets done.",
+    // WHAT WE SAY. Proof precedes claim. Costs us sales, which is the point.
+    // The "fix you already own" line moved out of here into [2] on the same
+    // day it was written — it was about how we spend, not about what we
+    // claim, and keeping it here blurred both points.
+    title: "We only say what we can prove",
+    body: "There is no revenue figure and no average lift anywhere on this site, because we do not have one we could honestly stand behind, and a number without a source is decoration. Results belong to each client, in that client's own numbers. Ask us about a business like yours and we will tell you exactly what we can share — and if we are not the right fit, you will hear that from us before you hear a price.",
   },
   {
-    // ACTION — urgency from the cost of delay, which is real, rather than
-    // from a deadline or a closing offer, which would have to be invented.
-    title: "The leak is running right now",
-    body: "You have already paid for the clicks. The enquiries that went quiet this week were bought and then lost, and nothing about that corrects itself while you decide. Every week it keeps running is money spent twice: once to bring someone in, and again to replace the one you did not answer in time.",
+    // WHAT WE DO. The position, and the one claim a competing KL agency
+    // cannot truthfully repeat. Last line is the value, not the feature.
+    title: "We build what we recommend",
+    body: "We do not hand over a strategy and leave you to find someone to build it. The marketing that brings people in and the systems that hold them once they arrive — sites, booking, CRM, WhatsApp automation — come from the same team that recommended them. It is a useful discipline: advice you have to build yourself is advice you give more carefully.",
   },
   {
-    // SOCIAL — FOMO against the competitor, not against a client count.
-    // Nothing is asserted about what any named client runs.
-    title: "Your competitor already replies in seconds",
-    body: "Not because they are quicker than you. Because it is automated, and it answers on a Sunday and on a public holiday and while you are with a customer. It is one of the first things we build. Someone waiting until Monday for your reply has usually booked with somebody else by Saturday.",
-  },
-  {
-    // EMOTIONAL — names the pain from QUALIFY and resolves it.
-    title: "You should not be doing follow up at 11pm",
-    body: "You run the whole business. Chasing the person who enquired three days ago is not your job, and doing it yourself is exactly why it stops the moment you get busy. We build the thing that does it instead, so the follow up survives your worst week rather than depending on it being a good one.",
+    // WHAT WE DO FIRST. Audit-first, which is stage one of the recorded
+    // delivery method and the only stage that decides what the other three
+    // do. Replaced "We work for owners, not marketing departments" on
+    // 2026-08-06: the user judged it did not fit and did not need saying.
+    // Correct on both counts — it described the reader back to himself and
+    // told him what he does not have, which the rest of the page already
+    // demonstrates by simply being written in plain words.
+    title: "We spend your money last",
+    body: "Before anything is bought or built, we look at what you already have and find where people are actually dropping off. Often the first fix is a page or a follow-up step you own already, and it costs a fraction of the ad budget that would have papered over it. More traffic is the easiest thing for an agency to sell you, and it is rarely the first thing you need.",
   },
 ];
 

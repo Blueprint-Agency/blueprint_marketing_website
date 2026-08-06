@@ -333,6 +333,21 @@ export default function HomePage() {
                 );
               })}
             </div>
+
+            {/* Moved here 2026-08-06 from the "On results" note, which was
+                removed with the testimonial band. It was the only link on
+                this page into the one written-up case study, and deleting
+                its container would have deleted the homepage's only route to
+                the strongest real proof the site has. It reads better here
+                anyway: the heading claims "we've built this before" and this
+                is where a reader can go check. */}
+            {flagship.detail && (
+              <div style={{ marginTop: 30 }}>
+                <Link className="btn btn-line" href={`/work/${flagship.slug}`}>
+                  Read what we built for {flagship.name}
+                </Link>
+              </div>
+            )}
           </div>
         </section>
 
@@ -370,80 +385,51 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ---------------- testimonials OR the honest note ----------------
+        {/* ---------------- testimonials ----------------
             Was the results grid, which had nothing real in it and was
             rendering MOCK_RESULTS behind the PREVIEW_DATA flag with a
             "Sample data" tag on top. Removed 2026-07-29 and replaced with
             client quotes.
 
-            Same shape as the slot it replaces: real material if there is
-            any, the honest note if there is not. TESTIMONIALS ships empty
-            because PRODUCT.md records no testimonial about Blueprint — see
-            lib/testimonials.ts for what has to be true before one goes in.
-            The note is not a placeholder; it is what this section says
-            until a client agrees to be quoted.
+            The band renders only when there is something real to put in it.
+            TESTIMONIALS ships empty because PRODUCT.md records no testimonial
+            about Blueprint — see lib/testimonials.ts for what has to be true
+            before one goes in — so today nothing renders here at all.
 
-            2026-08-06: the mock slider is off. It rendered for a week behind
-            PREVIEW_DATA so the design could be judged populated; the user
-            pulled it while real testimony is still pending, so the note is
-            what ships. The marquee branch below is live code, not dead — it
-            switches back on the moment lib/testimonials.ts has an entry. */}
-        <section className="band band-sunk">
-          {quotes.length > 0 ? (
-            <>
-              {/* The heading stays inside the shell; the row does not — the
-                  same split the logo wall makes, for the same reason. Inside
-                  .col the track was held to 780px, so it faded out against
-                  empty band less than halfway across the screen. A marquee
-                  has to run to the edges or it reads as a cropped component
-                  rather than a line that keeps going. */}
-              <div className="shell">
-                <div className="col">
-                  <h2 className="h2">
-                    In their <em>words</em>.
-                  </h2>
-                </div>
-              </div>
-              {/* 26, not 34: the marquee now carries 16px of its own top
-                  padding to keep the hover glow out of the clip, and that
-                  padding is part of the gap the reader sees. */}
-              <div style={{ marginTop: 26 }}>
-                <Testimonials items={quotes} />
-              </div>
-            </>
-          ) : (
+            History, so nobody re-adds either half by accident: the empty case
+            used to fall through to an "On results" note explaining why the
+            page carries no percentages and no quotes. The user removed it
+            2026-08-06, one step after the mock slider came out. The argument
+            it made is not lost — the FAQ still answers "Why do you not show
+            results and percentages?" in lib/services.ts, and the WHY list now
+            carries the same commitment as a stated value rather than as an
+            apology in the slot where proof was meant to be.
+
+            Band rhythm still holds with this gone: ink (why) -> paper (how it
+            runs) -> sunk (faq). No two neighbours share a ground. */}
+        {quotes.length > 0 && (
+          <section className="band band-sunk">
+            {/* The heading stays inside the shell; the row does not — the
+                same split the logo wall makes, for the same reason. Inside
+                .col the track was held to 780px, so it faded out against
+                empty band less than halfway across the screen. A marquee
+                has to run to the edges or it reads as a cropped component
+                rather than a line that keeps going. */}
             <div className="shell">
-              <div className="note col">
-                <h2 className="h3" style={{ fontSize: "1.375rem" }}>
-                  On results
+              <div className="col">
+                <h2 className="h2">
+                  In their <em>words</em>.
                 </h2>
-                <p className="prose" style={{ marginTop: 14 }}>
-                  You will not find an agency-wide revenue number or an average
-                  percentage lift anywhere on this page, because we do not have
-                  one we could honestly defend. Results belong to each client, in
-                  that client&rsquo;s own numbers.
-                </p>
-                <p className="prose" style={{ marginTop: 14 }}>
-                  You will not find a wall of quotes either. When a client is
-                  happy to be named saying something, it will appear here in
-                  their words, with their face on it. Until then this space
-                  stays empty rather than borrowed.
-                </p>
-                <p className="prose" style={{ marginTop: 14 }}>
-                  Ask us about a business like yours in the chat and we will tell
-                  you exactly what we are able to share.
-                </p>
-                {flagship.detail && (
-                  <div style={{ marginTop: 24 }}>
-                    <Link className="btn btn-line" href={`/work/${flagship.slug}`}>
-                      Read what we built for {flagship.name}
-                    </Link>
-                  </div>
-                )}
               </div>
             </div>
-          )}
-        </section>
+            {/* 26, not 34: the marquee now carries 16px of its own top
+                padding to keep the hover glow out of the clip, and that
+                padding is part of the gap the reader sees. */}
+            <div style={{ marginTop: 26 }}>
+              <Testimonials items={quotes} />
+            </div>
+          </section>
+        )}
 
         {/* ---------------- how it runs ----------------
             Was a stacked list until 2026-07-29; now four cards with arrows
