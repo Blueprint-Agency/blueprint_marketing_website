@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { SERVICES } from "@/lib/services";
+import { SERVICES, serviceHref } from "@/lib/services";
 import { SITE, WA } from "@/lib/site";
+import ServicesMenu from "./ServicesMenu";
 
 /**
  * Nav and footer for the Plain world.
@@ -54,9 +55,10 @@ export function Nav({ overHero }: { overHero?: boolean } = {}) {
           <span className="nav-word">Blueprint</span>
         </Link>
         <nav className="nav-links" aria-label="Main">
-          <a href="/#services" className="nav-link hide-md">
-            Services
-          </a>
+          {/* Services is a menu rather than an anchor. See ServicesMenu:
+              from any page that is not the home page, `/#services` sent the
+              reader to the top of another document to go looking. */}
+          <ServicesMenu />
           <a href="/#who" className="nav-link hide-md">
             Who it&rsquo;s for
           </a>
@@ -76,14 +78,6 @@ export function Nav({ overHero }: { overHero?: boolean } = {}) {
     </header>
   );
 }
-
-/**
- * Services that have a page of their own. Keyed by Service.id from
- * lib/services.ts. Anything absent falls back to the home page anchor.
- */
-const SERVICE_PAGES: Record<string, string> = {
-  video: "/services/video-production",
-};
 
 export function Footer() {
   const attract = SERVICES.filter((s) => s.group === "attract");
@@ -109,21 +103,15 @@ export function Footer() {
           <div>
             <h2 className="foot-head">Bringing people in</h2>
             <ul className="foot-list">
+              {/* One rule for where a service links, shared with the nav's
+                  Services menu: serviceHref() in lib/services.ts. A service
+                  with a page goes to it, the rest to their own tab in the
+                  home page's services section. */}
               {attract.map((s) => (
                 <li key={s.id}>
-                  {/* A service with a page of its own links to it; the rest
-                      still point at the home page's services section. As more
-                      services get pages, put their routes in SERVICE_PAGES
-                      rather than adding another branch here. */}
-                  {SERVICE_PAGES[s.id] ? (
-                    <Link className="foot-link" href={SERVICE_PAGES[s.id]}>
-                      {s.name}
-                    </Link>
-                  ) : (
-                    <a className="foot-link" href="/#services">
-                      {s.name}
-                    </a>
-                  )}
+                  <Link className="foot-link" href={serviceHref(s.id)}>
+                    {s.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -134,9 +122,9 @@ export function Footer() {
             <ul className="foot-list">
               {build.map((s) => (
                 <li key={s.id}>
-                  <a className="foot-link" href="/#services">
+                  <Link className="foot-link" href={serviceHref(s.id)}>
                     {s.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

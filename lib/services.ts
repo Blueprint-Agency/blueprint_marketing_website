@@ -206,6 +206,36 @@ export const SERVICES: Service[] = [
   },
 ];
 
+/**
+ * Services with a page of their own, keyed by Service.id.
+ *
+ * Single source of truth for where a service name links, wherever it is
+ * listed — the nav menu, the footer, anywhere later. It used to live inside
+ * components/v2/Chrome.tsx, which meant the nav and the footer could disagree
+ * about whether a service had a page.
+ */
+export const SERVICE_PAGES: Record<string, string> = {
+  video: "/services/video-production",
+};
+
+/**
+ * Where a service's name should link.
+ *
+ * A service with a page of its own links to it. Everything else links to the
+ * home page's services section, deep-linked to that service's own tab —
+ * `#svc-<id>` is read by ServiceTabs, which selects the tab and scrolls the
+ * section into view. Deliberately NOT an element id: no element carries it,
+ * so the browser jumps nowhere and ServiceTabs owns the whole behaviour.
+ *
+ * This is what keeps the nav's Services menu honest. Twelve rows that all
+ * scroll to the same band is a menu that lies about being a menu; twelve rows
+ * that each land on the thing they name is navigation, and each one upgrades
+ * to a real page by adding a line to SERVICE_PAGES above.
+ */
+export function serviceHref(id: string): string {
+  return SERVICE_PAGES[id] ?? `/#svc-${id}`;
+}
+
 /** Buyer qualification — the "you're probably here because" pattern. */
 export const QUALIFY: string[] = [
   "You are spending on ads and cannot tell which part of it is working.",

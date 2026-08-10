@@ -6042,6 +6042,10 @@ html {
     grid-template-columns: 1fr 1fr;
     gap: 30px;
   }
+  /* The first landscape film ran the full width here while there were three
+     of them, so the third did not sit alone in a two-up row. With four it
+     is a plain 2x2 and the rule is gone. If a fifth film ever arrives on
+     its own, this is the rule to bring back rather than leaving a gap. */
 }
 
 /* Black rather than the band's ground even though the two are the same
@@ -6071,6 +6075,213 @@ html {
   border: 0;
   background: none;
   cursor: pointer;
+}
+
+/* ---------- the cover ----------
+   A navy card carrying the client's name, which turns over to the still.
+   Landscape films only.
+
+   WHY IT EXISTS. The stills are the clients' own published thumbnails and
+   there is no other source, so the four of them are four colour
+   temperatures, two subtitle styles and one motion-blurred frame, sitting
+   together on a black band. Covering them costs nothing — they are one
+   gesture away — and it puts the client's name at full size, which is the
+   part that was doing the persuading anyway.
+
+   The radius and the 1px edge live on the FACES, not on the container.
+   A rotating child inside an `overflow: hidden` parent is where browsers
+   disagree about clipping, and the artefact only shows mid-turn. */
+
+/* THE BUTTON DOES NOT ROTATE. The span inside it does, and that split is
+   the whole reason this works.
+
+   A rotating element is hit-tested against its PROJECTION, which narrows as
+   it turns. With the control itself rotating, a pointer resting anywhere but
+   dead centre fell outside the element part-way through the turn: mouseleave
+   fired, the card started back, the projection widened, mouseenter fired, and
+   round it went. Sweeping across the row made a card flap five times.
+
+   The button below keeps a box that never moves, so hover, click and the
+   focus ring are all measured against something that holds still. */
+.v2 .film-flip {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1400px;
+}
+.v2 .film-flip:focus-visible {
+  border-radius: 14px;
+  outline: 2px solid var(--brand-lift);
+  outline-offset: 4px;
+}
+
+.v2 .film-flipper {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  /* Slow enough to read as one object turning rather than as two images
+     swapping, and eased so it settles instead of stopping. */
+  transition: transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2 .film-flip[data-flipped="true"] .film-flipper {
+  transform: rotateY(180deg);
+}
+
+.v2 .film-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Pushed 1px towards the reader. Two faces sharing a plane is a coin toss
+   for the compositor at the halfway point, and the tell is a flash of the
+   wrong face as the card passes 90°. A hair of depth settles the order. */
+.v2 .film-face-front {
+  transform: translateZ(1px);
+}
+
+.v2 .film-face-back {
+  transform: rotateY(180deg) translateZ(1px);
+  background: #000;
+  /* The same 1px inner edge .film-screen draws, for the same reason: a dark
+     frame in the still would otherwise dissolve into the band. */
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* The ground. Blueprint's own navy, not a colour invented for this page,
+   and the same family the CTA card at the foot of the page is painted in.
+
+   --i is the film's index, passed from the component. It rotates the
+   gradient and walks the highlight across the row so four cards read as a
+   set with a light source rather than as four copies of one tile. It is the
+   only thing that varies: same two colours, same texture, same type. */
+.v2 .film-face-front {
+  display: grid;
+  align-content: end;
+  padding: 24px;
+  text-align: left;
+  color: var(--on-brand);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(
+      130% 100% at calc(14% + var(--i, 0) * 24%) 6%,
+      rgba(59, 125, 255, 0.5),
+      transparent 60%
+    ),
+    linear-gradient(
+      calc(148deg + var(--i, 0) * 14deg),
+      var(--brand-deep),
+      var(--brand-mid) 54%,
+      #06122e
+    );
+}
+
+/* The dot field the CTA card at the foot of this page wears, at a quarter
+   of its strength and faded out before it reaches the type. Texture, not
+   pattern: at 7px it should read as a surface, and be almost impossible to
+   count. */
+.v2 .film-face-front::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.22) 1px,
+    transparent 1px
+  );
+  background-size: 7px 7px;
+  opacity: 0.34;
+  -webkit-mask-image: linear-gradient(155deg, #000, transparent 70%);
+  mask-image: linear-gradient(155deg, #000, transparent 70%);
+}
+
+.v2 .film-cover {
+  position: relative;
+  display: block;
+}
+.v2 .film-cover-name {
+  display: block;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.032em;
+  line-height: 1.03;
+  /* The names run from "VM Pacific" to "Garden Gem Postnatal Retreat". Held
+     to a measure so the long one breaks in two rather than shrinking the
+     type on one card and not the others. */
+  max-width: 15ch;
+}
+.v2 .film-cover-kind {
+  display: block;
+  margin-top: 9px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--on-brand-mute);
+}
+/* The one instruction on the card, and it goes quiet once the reader is
+   clearly already doing it. */
+.v2 .film-cover-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--on-brand-soft);
+  transition: color 0.2s ease-out;
+}
+.v2 .film-cover-cue::after {
+  content: "";
+  width: 20px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0.6);
+  transform-origin: left center;
+  transition: transform 0.2s ease-out;
+}
+.v2 .film-flip:hover .film-cover-cue {
+  color: var(--on-brand);
+}
+.v2 .film-flip:hover .film-cover-cue::after {
+  transform: scaleX(1);
+}
+
+/* Reduced motion: the same two states, no rotation. The faces cross-fade in
+   place, which is the honest translation — the card was never carrying
+   information in the turn itself. */
+@media (prefers-reduced-motion: reduce) {
+  .v2 .film-flipper {
+    transform-style: flat;
+    transition: none;
+  }
+  .v2 .film-flip[data-flipped="true"] .film-flipper {
+    transform: none;
+  }
+  .v2 .film-face {
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transition: opacity 0.2s ease-out;
+  }
+  .v2 .film-face-front {
+    transform: none;
+  }
+  .v2 .film-face-back {
+    transform: none;
+    opacity: 0;
+  }
+  .v2 .film-flip[data-flipped="true"] .film-face-back {
+    opacity: 1;
+  }
+  .v2 .film-flip[data-flipped="true"] .film-face-front {
+    opacity: 0;
+  }
 }
 
 .v2 .film-poster {
@@ -6134,76 +6345,70 @@ html {
   margin-top: 5px;
 }
 
+/* A vertical screen is 240px wide, and at the landscape caption's size
+   "Oriental Postnatal Centre" wraps to two lines while its neighbours sit
+   on one, which knocks the row's second lines out of alignment. Smaller
+   type fits every client name on this page in one line and suits the
+   smaller object it labels. */
+.v2 .film-v .film-cap {
+  margin-top: 14px;
+}
+.v2 .film-v .film-cap .h3 {
+  font-size: 1rem;
+}
+
 /* Vertical work sits on paper, several across, so the row wants to be
-   tighter than the two-up landscape grid. */
+   tighter than the two-up landscape grid.
+
+   Flex rather than grid, with a stated width per screen. There are six of
+   them and they want to read as two rows of three; left to fill the shell
+   at 240px they would fit four across and leave two stranded on a second
+   row. Capping the row at three widths plus two gaps is what forces the
+   3 x 2 and keeps the whole block answering to the same left edge as the
+   heading above it.
+
+   Left, not centred. A centred block under a left-aligned heading and
+   paragraph puts a second alignment on a page that has exactly one. */
 .v2 .film-grid-v {
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
+}
+/* width, not a flex-basis. `flex: 0 1 calc(50% - 10px)` was dropped on the
+   way through the CSS pipeline — the shorthand survived, the calc() in its
+   basis position did not — and the two screens fell back to intrinsic width
+   and ran off the side of a phone. Stated as its own property it cannot be
+   half-applied. */
+.v2 .film-grid-v > .film {
+  flex: 0 0 auto;
+  width: calc(50% - 10px);
 }
 @media (min-width: 720px) {
   .v2 .film-grid-v {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 26px;
+    /* 3 x 240 + 2 x 26. Three per row, and the arithmetic is written out
+       so a change to either number is obviously a change to both. */
+    max-width: 772px;
+  }
+  /* A fixed width, not a fraction. A 9:16 screen given a third of an 1180px
+     shell is 375px wide and 667px tall, which is a phone held up to the
+     face rather than a piece of a portfolio row. */
+  .v2 .film-grid-v > .film {
+    width: 240px;
   }
 }
 
-/* ---------- the two kinds ----------
-   A hairline between them rather than two cards. There is no elevation
-   to communicate here: they are siblings, and the rule says so more
-   quietly than a pair of boxes would. */
-
-.v2 .kinds {
-  margin-top: 40px;
-  display: grid;
-  gap: 32px;
-}
-@media (min-width: 860px) {
-  .v2 .kinds {
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-  }
-  .v2 .kind {
-    padding-inline: 46px;
-    border-left: 1px solid var(--line-strong);
-  }
-  .v2 .kind:first-child {
-    padding-left: 0;
-    border-left: 0;
-  }
-  .v2 .kind:last-child {
-    padding-right: 0;
-  }
-}
-
-/* The mirror of .back-link: the same 22px rule, drawn after the label
-   and growing to the right, because this one goes forward. */
-.v2 .kind-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 20px;
-  font-size: 0.9375rem;
-  font-weight: 650;
-  color: var(--brand-text);
-  text-decoration: none;
-}
-.v2 .kind-link::after {
-  content: "";
-  width: 22px;
-  height: 1.5px;
-  background: currentColor;
-  transform: scaleX(0.636);
-  transform-origin: left center;
-  transition: transform 0.16s ease-out;
-}
-.v2 .kind-link:hover::after {
-  transform: scaleX(1);
-}
+/* ---------- the kinds of film: REMOVED 2026-08-10 ----------
+   .kinds / .kind / .kind-link styled a two-column set of blocks naming the
+   kinds of film we make, each linking to an example. The user cut the
+   section on 2026-08-10 and the rules went with it rather than sitting here
+   unused: a stylesheet that keeps every rule it ever had stops being
+   readable as a description of the page. The markup and these rules are in
+   the history if the section is ever wanted back. */
 
 @media (prefers-reduced-motion: reduce) {
   .v2 .film-poster,
-  .v2 .film-mark,
-  .v2 .kind-link::after {
+  .v2 .film-mark {
     transition: none;
   }
   .v2 .film-play:hover .film-poster {
@@ -6226,5 +6431,195 @@ html {
 @media (min-width: 768px) {
   .v2 .vp-claim {
     padding: 46px 52px;
+  }
+}
+
+/* ============================================================
+   NAV — SERVICES MENU
+
+   The bar's one dropdown. Twelve service names in the site's
+   own two groups, each row landing on the service it names
+   rather than on the band that contains it.
+
+   COLOUR. A paper card under a black bar. The panel is not
+   painted in the bar's colours: the bar is chrome and the panel
+   is content, and content on this site is ink on paper. It is
+   also the only way the panel reads the same over the home
+   page's black hero as it does over a paper page.
+
+   The `.nav-link` colour rules further up paint nav children
+   near-white for the black bar; the panel's own rules below win
+   on specificity where they overlap, and everything inside the
+   panel is stated explicitly rather than inherited, so a future
+   change to the bar's ground cannot silently turn this white on
+   white the way the footer wordmark once went.
+   ============================================================ */
+
+/* Desktop chrome. The bar drops its links below 860px (.hide-md) and this
+   goes with them — it is not a mobile menu and must not pretend to be one.
+   Hidden by its own rule rather than by .hide-md, whose `display: inline`
+   would leave this positioning context inline. */
+.v2 .nav-menu {
+  display: none;
+  position: relative;
+}
+@media (min-width: 860px) {
+  .v2 .nav-menu {
+    display: block;
+  }
+}
+
+.v2 .nav-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 550;
+  line-height: 1;
+  cursor: pointer;
+}
+.v2 .nav-menu-caret {
+  /* Rotates rather than swaps glyph, so the control reads as one object
+     opening. -1px optical: the caret's ink sits low in its own box. */
+  margin-top: -1px;
+  opacity: 0.75;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.15s ease-out;
+}
+.v2 .nav-menu-btn.is-open .nav-menu-caret,
+.v2 .nav-menu-btn:hover .nav-menu-caret {
+  opacity: 1;
+}
+.v2 .nav-menu-btn.is-open .nav-menu-caret {
+  transform: rotate(180deg);
+}
+.v2 .nav-menu-btn.is-open {
+  color: var(--on-brand);
+}
+
+/* Anchored to the trigger's right edge, not its left. The nav links are
+   right-aligned in the shell, so a panel opening rightwards from "Services"
+   runs off the viewport at 860-1000px. Opening leftwards it always has the
+   width of the rest of the bar to live in. */
+.v2 .nav-menu-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: -14px;
+  width: 460px;
+  max-width: calc(100vw - 32px);
+  padding: 20px 22px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 2px rgba(11, 12, 14, 0.06),
+    0 18px 44px -14px rgba(11, 12, 14, 0.3);
+  animation: nav-menu-in 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* The gap between bar and panel is dead space a pointer crosses on its way
+   down. Without this bridge the hover closes mid-journey and the panel
+   flickers shut under the cursor. Sits behind the panel, not over it. */
+.v2 .nav-menu-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -16px;
+  height: 16px;
+}
+
+@keyframes nav-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.v2 .nav-menu-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 26px;
+}
+.v2 .nav-menu-head {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  /* Two headings of one and four words sit on different numbers of lines at
+     this width. Reserved so the two columns' first rows align. */
+  min-height: 2.4em;
+  margin-bottom: 6px;
+}
+.v2 .nav-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.v2 .nav-menu-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 9px;
+  margin-left: -9px;
+  border-radius: 8px;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  font-weight: 550;
+  line-height: 1.25;
+  text-decoration: none;
+  transition:
+    color 0.14s ease-out,
+    background-color 0.14s ease-out;
+}
+.v2 .nav-menu-item:hover,
+.v2 .nav-menu-item:focus-visible {
+  color: var(--ink);
+  background: var(--paper-sunk);
+}
+.v2 .nav-menu-name {
+  flex: 1 1 auto;
+}
+/* Marks the rows that lead to a page of their own rather than to a tab. */
+.v2 .nav-menu-flag {
+  flex: none;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-text);
+  opacity: 0.8;
+}
+
+.v2 .nav-menu-all {
+  display: block;
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.v2 .nav-menu-all::after {
+  content: " →";
+  color: var(--ink-mute);
+}
+.v2 .nav-menu-all:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .nav-menu-panel {
+    animation: none;
+  }
+  .v2 .nav-menu-caret {
+    transition: none;
   }
 }

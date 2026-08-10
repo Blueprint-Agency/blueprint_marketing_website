@@ -64,6 +64,39 @@ export default function ServiceTabs({
     return () => io.disconnect();
   }, []);
 
+  /**
+   * Deep links. The nav's Services menu and the footer send readers to
+   * `/#svc-<id>` (see serviceHref in lib/services.ts). Nothing in the document
+   * carries that id, so the browser jumps nowhere and this is the only thing
+   * that reacts: the group that owns the service selects it and scrolls
+   * itself into view, and the other group ignores it.
+   *
+   * hashchange as well as mount, because arriving from the home page itself
+   * changes only the hash and never remounts this component.
+   */
+  useEffect(() => {
+    const read = () => {
+      const hash = window.location.hash;
+      if (!hash.startsWith("#svc-")) return;
+      const i = services.findIndex((s) => s.id === hash.slice(5));
+      if (i < 0) return;
+      /* A reader who asked for a specific service is not looking for a
+         carousel. Same latch a click on a tab sets. */
+      taken.current = true;
+      setAuto(false);
+      setActive(i);
+      hostRef.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block: "center",
+      });
+    };
+    read();
+    window.addEventListener("hashchange", read);
+    return () => window.removeEventListener("hashchange", read);
+  }, [services]);
+
   useEffect(() => {
     if (!auto || hold) return;
     const id = setTimeout(
