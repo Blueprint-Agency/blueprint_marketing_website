@@ -4828,14 +4828,18 @@ html {
   list-style: none;
   margin: 0;
   padding: 0;
-  animation: logo-run 44s linear infinite;
+  /* Duration tracks the number of logos, because the track's width does.
+     It was 44s for eleven; Five Clinic came off the wall on 2026-08-11 and
+     a shorter track covered in the same time would crawl 10% faster. Ten
+     logos, 40s. Add one, add four seconds. */
+  animation: logo-run 40s linear infinite;
 }
 
 /* Spacing lives on the item as margin, NOT as gap on the track.
-   With gap, the track measures 22 cells + 21 gaps, so -50% is half a gap
+   With gap, the track measures 20 cells + 19 gaps, so -50% is half a gap
    short of where the second copy actually starts and the loop visibly
    stutters once per cycle. Margin makes every cell an identical
-   width+margin unit, so half the track is exactly eleven of them. */
+   width+margin unit, so half the track is exactly ten of them. */
 .v2 .logo-track > li {
   flex: none;
   margin-right: 10px;
@@ -4865,7 +4869,7 @@ html {
 @media (prefers-reduced-motion: reduce) {
   /* No crawl. The line becomes a plain scrollable row, and the duplicate
      copy goes away — it exists only to make the loop seamless, and left in
-     place it would read as eleven clients listed twice. */
+     place it would read as ten clients listed twice. */
   .v2 .logo-track {
     animation: none;
   }
@@ -4881,7 +4885,7 @@ html {
 
 /* The cell chrome comes off in the marquee.
    A bordered card earned its place in the static six-column grid: it gave
-   eleven unrelated marks a shared frame and an even rhythm. In a moving
+   ten unrelated marks a shared frame and an even rhythm. In a moving
    line it does the opposite — the boxes become a repeating pattern that
    competes with the logos for attention, and the edge mask cuts through
    borders mid-stroke, which reads as clipping rather than dissolving.

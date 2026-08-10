@@ -51,7 +51,7 @@ function Chop({ href, children }: { href: string; children: React.ReactNode }) {
    The track holds the brand list TWICE and slides exactly -50%, so the
    moment the first copy leaves the frame the second is sitting precisely
    where it began and the loop has no seam. The second copy is decoration:
-   aria-hidden so a screen reader is not read eleven logos twice, and
+   aria-hidden so a screen reader is not read ten logos twice, and
    tabIndex -1 so the duplicate links stay out of the tab order. */
 function LogoRun({ duplicate = false }: { duplicate?: boolean }) {
   return (

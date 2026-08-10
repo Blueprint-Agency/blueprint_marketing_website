@@ -17,7 +17,7 @@
  *      survives. A global white-to-alpha replace would have punched holes
  *      straight through those.
  *   3. Cropped tight to real content. This is where the "empty white space"
- *      went: vatti lost 81% of its area, five-clinic 61%, garden-gem 38%.
+ *      went: vatti lost 81% of its area, garden-gem 38%.
  *   4. Scaled to a constant OPTICAL AREA rather than a constant height, then
  *      centred on an identical 480x160 transparent canvas. Constant height
  *      would make a 6:1 wordmark like ttklia read as enormous beside a square
@@ -57,13 +57,13 @@ export type Brand = {
 };
 
 export const BRANDS: Brand[] = [
-  /* --- confirmed in PRODUCT.md: name, URL and logo all verified --- */
-  {
-    slug: "five-clinic",
-    name: "Five Clinic",
-    href: "https://fiveclinic.com.my",
-    logo: "/logos/five-clinic.png",
-  },
+  /* --- confirmed in PRODUCT.md: name, URL and logo all verified ---
+
+     Five Clinic was removed from the wall on 2026-08-11 at the user's
+     request. It is still a confirmed client in PRODUCT.md, still the site's
+     flagship case study at /work/five-clinic, and /public/logos/five-clinic.png
+     is still on disk — only this row no longer carries it. Restoring it is
+     putting the entry back. */
   {
     slug: "vatti-malaysia",
     name: "Vatti Malaysia",
@@ -101,7 +101,7 @@ export const BRANDS: Brand[] = [
   /* Teeko was removed from the wall on 2026-07-28 at the user's request. It
      is still a confirmed client in PRODUCT.md and still appears elsewhere on
      the site; it is only absent from this row, because no logo file exists
-     and a lone wordmark among eleven real marks read as an omission. */
+     and a lone wordmark among the real marks read as an omission. */
 
   /* --- supplied 2026-07-28, not recorded in PRODUCT.md ---
      The folder they arrived in is the user's assertion that these are
