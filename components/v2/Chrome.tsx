@@ -77,6 +77,14 @@ export function Nav({ overHero }: { overHero?: boolean } = {}) {
   );
 }
 
+/**
+ * Services that have a page of their own. Keyed by Service.id from
+ * lib/services.ts. Anything absent falls back to the home page anchor.
+ */
+const SERVICE_PAGES: Record<string, string> = {
+  video: "/services/video-production",
+};
+
 export function Footer() {
   const attract = SERVICES.filter((s) => s.group === "attract");
   const build = SERVICES.filter((s) => s.group === "build");
@@ -103,9 +111,19 @@ export function Footer() {
             <ul className="foot-list">
               {attract.map((s) => (
                 <li key={s.id}>
-                  <a className="foot-link" href="/#services">
-                    {s.name}
-                  </a>
+                  {/* A service with a page of its own links to it; the rest
+                      still point at the home page's services section. As more
+                      services get pages, put their routes in SERVICE_PAGES
+                      rather than adding another branch here. */}
+                  {SERVICE_PAGES[s.id] ? (
+                    <Link className="foot-link" href={SERVICE_PAGES[s.id]}>
+                      {s.name}
+                    </Link>
+                  ) : (
+                    <a className="foot-link" href="/#services">
+                      {s.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

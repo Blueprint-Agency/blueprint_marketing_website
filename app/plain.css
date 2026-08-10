@@ -5940,3 +5940,291 @@ html {
     transition: none;
   }
 }
+
+/* ============================================================
+   VIDEO PRODUCTION  (/services/video-production)
+
+   The site's first service page. It introduces exactly one new
+   component — a film screen — and borrows everything else from
+   the rules above it.
+
+   COLOUR. The opening band is --hero-ground, which is the same
+   black the sticky bar is painted, so the bar and the band read
+   as one surface and there is no seam across the first viewport.
+   It inverts by re-declaring the world's tokens rather than by
+   writing a light-on-dark rule for each child, which is the
+   mechanism .band-ink already uses: everything downstream reads
+   var(--ink) / var(--line) / var(--paper) and inverts itself.
+
+   The action green is untouched by all of this. It stays the
+   WhatsApp button and nothing else — in particular the play
+   control is paper-on-black, not green, because a green play
+   button would be the first decorative use of the one colour
+   this site reserves.
+   ============================================================ */
+
+.v2 .vp-open {
+  --paper: var(--hero-ground, #000);
+  --ink: var(--on-brand);
+  --ink-soft: var(--on-brand-soft);
+  --ink-mute: var(--on-brand-mute);
+  --line: var(--on-brand-line);
+  /* No --on-brand equivalent exists for these two; both are alpha over
+     whatever the ground is rather than palette values of their own. */
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --paper-sunk: rgba(255, 255, 255, 0.055);
+
+  background: var(--paper);
+  color: var(--ink);
+  /* 56px, well inside the cap on hero top padding. The bar is sticky
+     rather than fixed, so it takes its own space in the flow and this
+     number is the visible gap under it, not a clearance for it. */
+  padding-block: 56px 88px;
+}
+@media (min-width: 768px) {
+  .v2 .vp-open {
+    padding-block: 72px 104px;
+  }
+}
+
+/* --brand-text is a fixed blue tuned for paper; on black it lands near
+   2.6:1. The back link takes the inverted type colour instead, and the
+   growing rule it draws is already currentColor so it follows. */
+.v2 .vp-open .back-link {
+  color: var(--on-brand-soft);
+}
+.v2 .vp-open .back-link:hover {
+  color: var(--on-brand);
+}
+
+/* Dark green on black is not a focus ring anyone can see. The bright
+   action value is, and this is the same substitution .dither-card makes
+   for the same reason. */
+.v2 .vp-open :focus-visible {
+  outline-color: var(--act);
+}
+
+.v2 .vp-eyebrow {
+  margin-top: 34px;
+}
+
+.v2 .vp-lead {
+  margin-top: 22px;
+  /* Wider than the 34ch house measure. This lead is one short sentence
+     and a fragment; at 34ch it broke into four stubby lines under a
+     headline set at 5rem, which read as a caption rather than as the
+     line that explains the page. */
+  max-width: 46ch;
+}
+
+.v2 .vp-actions {
+  margin-top: 30px;
+}
+
+/* ---------- the films ----------
+
+   Two screens, side by side, inside the dark band. They are the proof
+   and they are placed before the argument rather than after it: the
+   reader can watch the work and leave without reading a word of the
+   page, which is the correct outcome for a video page.
+
+   One column below 900px. Two 16:9 screens stacked side by side on a
+   phone would be 160px tall each, which is not watching anything. */
+
+.v2 .film-grid {
+  margin-top: 60px;
+  display: grid;
+  gap: 34px;
+}
+@media (min-width: 900px) {
+  .v2 .film-grid {
+    margin-top: 72px;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+/* Black rather than the band's ground even though the two are the same
+   value today. The screen is a black object; if the band ever changes
+   colour the screen must not follow it. */
+.v2 .film-screen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  /* Same 1px inner edge the browser frames use, inverted for the ground.
+     Without it a dark frame in the poster dissolves into the band and the
+     screen loses its edge. */
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.v2 .film-v .film-screen {
+  aspect-ratio: 9 / 16;
+}
+
+.v2 .film-play {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.v2 .film-poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.28s ease-out;
+}
+
+/* The control. Paper plate, black glyph — the same inversion the nav
+   wordmark makes, and deliberately not the action colour. */
+.v2 .film-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(252, 252, 253, 0.92);
+  color: var(--hero-ground, #000);
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7);
+  transition:
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.22s ease-out;
+}
+/* Optical centring. A play triangle's mass sits left of its bounding
+   box, so a mathematically centred glyph reads as sitting too far left. */
+.v2 .film-mark svg {
+  margin-left: 3px;
+}
+
+.v2 .film-play:hover .film-poster {
+  transform: scale(1.035);
+  opacity: 0.88;
+}
+.v2 .film-play:hover .film-mark {
+  transform: translate(-50%, -50%) scale(1.07);
+  background: #fcfcfd;
+}
+.v2 .film-play:active .film-mark {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.v2 .film-embed {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.v2 .film-cap {
+  margin-top: 18px;
+}
+.v2 .film-kind {
+  margin-top: 5px;
+}
+
+/* Vertical work sits on paper, several across, so the row wants to be
+   tighter than the two-up landscape grid. */
+.v2 .film-grid-v {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+@media (min-width: 720px) {
+  .v2 .film-grid-v {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+/* ---------- the two kinds ----------
+   A hairline between them rather than two cards. There is no elevation
+   to communicate here: they are siblings, and the rule says so more
+   quietly than a pair of boxes would. */
+
+.v2 .kinds {
+  margin-top: 40px;
+  display: grid;
+  gap: 32px;
+}
+@media (min-width: 860px) {
+  .v2 .kinds {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .v2 .kind {
+    padding-inline: 46px;
+    border-left: 1px solid var(--line-strong);
+  }
+  .v2 .kind:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .v2 .kind:last-child {
+    padding-right: 0;
+  }
+}
+
+/* The mirror of .back-link: the same 22px rule, drawn after the label
+   and growing to the right, because this one goes forward. */
+.v2 .kind-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: var(--brand-text);
+  text-decoration: none;
+}
+.v2 .kind-link::after {
+  content: "";
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0.636);
+  transform-origin: left center;
+  transition: transform 0.16s ease-out;
+}
+.v2 .kind-link:hover::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .film-poster,
+  .v2 .film-mark,
+  .v2 .kind-link::after {
+    transition: none;
+  }
+  .v2 .film-play:hover .film-poster {
+    transform: none;
+  }
+  .v2 .film-play:hover .film-mark {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* The framed claim runs the full shell rather than the 780px column the
+   other paper sections use. Three sections in a row set to the same
+   measure against the same left edge read as one long column with rules
+   through it; this one is a different object. Its own copy is still held
+   to .prose's 68ch inside the frame, so the measure is unchanged even
+   though the frame is not. */
+.v2 .vp-claim {
+  padding: 30px 26px;
+}
+@media (min-width: 768px) {
+  .v2 .vp-claim {
+    padding: 46px 52px;
+  }
+}

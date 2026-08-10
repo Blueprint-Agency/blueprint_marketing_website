@@ -266,6 +266,17 @@ export default function HomePage() {
               drawn here. They are not screenshots of a client account, and not a
               claimed result.
             </p>
+
+            {/* The one service with a page of its own, because it is the one
+                whose proof is a thing you press play on rather than a
+                paragraph. Sits under the tabs rather than inside a panel:
+                ServiceTabs renders all twelve panels into the document, and a
+                link that only exists for one of them belongs outside the set. */}
+            <div style={{ marginTop: 30 }}>
+              <Link className="btn btn-line" href="/services/video-production">
+                Watch the films we make
+              </Link>
+            </div>
           </div>
         </section>
 

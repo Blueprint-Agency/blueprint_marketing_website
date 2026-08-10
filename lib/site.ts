@@ -43,4 +43,12 @@ export const WA = {
     whatsapp(
       `Hi Blueprint, I saw what you did for ${client} and I'd like something similar for my business.`,
     ),
+  /**
+   * /services/video-production. Names the shoot rather than the service, so
+   * the first line of the thread is already the thing she wants to talk
+   * about. No format, budget or date is asserted on her behalf.
+   */
+  shoot: whatsapp(
+    "Hi Blueprint, I'd like to talk about getting a video made for my business.",
+  ),
 } as const;
