@@ -5946,11 +5946,20 @@ html {
 }
 
 /* ============================================================
-   VIDEO PRODUCTION  (/services/video-production)
+   SERVICE PAGES — THE SHARED DARK OPENING
 
-   The site's first service page. It introduces exactly one new
-   component — a film screen — and borrows everything else from
-   the rules above it.
+   Built for /services/video-production, which was the first
+   service to get a page of its own, and generalised on
+   2026-08-13 when /services/web-design became the second.
+
+   Both names appear in every selector in this block. The
+   .vp-* set is the video page's original and is left alone
+   rather than migrated: the class names are load-bearing in a
+   page whose comments refer to them by name, and a rename to
+   tidy up the CSS would have been a diff across a file nobody
+   asked to touch. .svc-* is what a THIRD service page should
+   use. If the video page is ever edited substantially, move it
+   over and drop the aliases.
 
    COLOUR. The opening band is --hero-ground, which is the same
    black the sticky bar is painted, so the bar and the band read
@@ -5967,7 +5976,8 @@ html {
    this site reserves.
    ============================================================ */
 
-.v2 .vp-open {
+.v2 .vp-open,
+.v2 .svc-open {
   --paper: var(--hero-ground, #000);
   --ink: var(--on-brand);
   --ink-soft: var(--on-brand-soft);
@@ -5986,7 +5996,8 @@ html {
   padding-block: 56px 88px;
 }
 @media (min-width: 768px) {
-  .v2 .vp-open {
+  .v2 .vp-open,
+  .v2 .svc-open {
     padding-block: 72px 104px;
   }
 }
@@ -5994,25 +6005,30 @@ html {
 /* --brand-text is a fixed blue tuned for paper; on black it lands near
    2.6:1. The back link takes the inverted type colour instead, and the
    growing rule it draws is already currentColor so it follows. */
-.v2 .vp-open .back-link {
+.v2 .vp-open .back-link,
+.v2 .svc-open .back-link {
   color: var(--on-brand-soft);
 }
-.v2 .vp-open .back-link:hover {
+.v2 .vp-open .back-link:hover,
+.v2 .svc-open .back-link:hover {
   color: var(--on-brand);
 }
 
 /* Dark green on black is not a focus ring anyone can see. The bright
    action value is, and this is the same substitution .dither-card makes
    for the same reason. */
-.v2 .vp-open :focus-visible {
+.v2 .vp-open :focus-visible,
+.v2 .svc-open :focus-visible {
   outline-color: var(--act);
 }
 
-.v2 .vp-eyebrow {
+.v2 .vp-eyebrow,
+.v2 .svc-eyebrow {
   margin-top: 34px;
 }
 
-.v2 .vp-lead {
+.v2 .vp-lead,
+.v2 .svc-lead {
   margin-top: 22px;
   /* Wider than the 34ch house measure. This lead is one short sentence
      and a fragment; at 34ch it broke into four stubby lines under a
@@ -6021,7 +6037,8 @@ html {
   max-width: 46ch;
 }
 
-.v2 .vp-actions {
+.v2 .vp-actions,
+.v2 .svc-actions {
   margin-top: 30px;
 }
 
@@ -6429,11 +6446,13 @@ html {
    through it; this one is a different object. Its own copy is still held
    to .prose's 68ch inside the frame, so the measure is unchanged even
    though the frame is not. */
-.v2 .vp-claim {
+.v2 .vp-claim,
+.v2 .svc-claim {
   padding: 30px 26px;
 }
 @media (min-width: 768px) {
-  .v2 .vp-claim {
+  .v2 .vp-claim,
+  .v2 .svc-claim {
     padding: 46px 52px;
   }
 }
@@ -6626,4 +6645,202 @@ html {
   .v2 .nav-menu-caret {
     transition: none;
   }
+}
+
+/* ============================================================
+   WEB DESIGN  (/services/web-design)
+
+   The branding service's page. It borrows the dark opening from
+   the block above and the browser frame from the top of this
+   file, and introduces one device: two client sites held side
+   by side, both panning through their full height as the reader
+   scrolls. See components/v2/BeforeAfter.tsx for why it is a
+   pair of scrolling windows rather than the usual wipe slider.
+
+   COLOUR. The pair sits inside the dark opening band, which is
+   the same decision the film screens make: a screenshot reads as
+   a lit screen when it is the only lit thing in the frame. It
+   also does something the film screens do not need to — it puts
+   the site's one rule about chroma to work. The palette of this
+   page is supposed to come from the clients' own sites, and here
+   there are two of them, three feet apart, being compared.
+   Nothing else in this block carries a colour of its own.
+   ============================================================ */
+
+.v2 .ba-head {
+  margin-top: 64px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.v2 .ba-meta {
+  margin-top: 6px;
+}
+
+.v2 .ba {
+  margin-top: 26px;
+  display: grid;
+  gap: 34px;
+}
+/* Two up from 900px. Below that they stack, and stacked is not a
+   worse comparison than side by side — it is a slower one, which
+   on a phone is the only version that is legible at all. */
+@media (min-width: 900px) {
+  .v2 .ba {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+}
+
+.v2 .ba-pane {
+  margin: 0;
+}
+
+.v2 .ba-tag {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 12px;
+}
+.v2 .ba-tag-word {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.v2 .ba-tag-note {
+  font-size: 0.8125rem;
+  color: var(--ink-mute);
+}
+
+/* The frame is a paper object standing on a black band, so its
+   own chrome keeps paper values rather than inheriting the
+   band's inverted tokens — otherwise the bar's bottom rule and
+   the three dots resolve to white-on-white and disappear. The
+   outer edge does invert, to the same 14% white the film screens
+   use, and the drop shadow comes off: a shadow on black is paint
+   nobody can see. */
+.v2 .ba-frame {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+}
+.v2 .ba-frame .frame-bar {
+  border-bottom-color: #e4e6ea;
+}
+.v2 .ba-frame .dot {
+  background: #d2d6dc;
+}
+.v2 .ba-frame .frame-url {
+  color: #5f646c;
+}
+
+/* The window the page is seen through. Squarer on a phone, where
+   the column is narrow and a 4:3 letterbox would show about two
+   inches of website. */
+.v2 .ba-window {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #fff;
+}
+@media (min-width: 900px) {
+  .v2 .ba-window {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Transformed by BeforeAfter on scroll. The image inside is
+   already handled by `.frame img` — full width, natural height —
+   so this element is exactly as tall as the whole page it holds,
+   and the component pans it by its overhang. */
+.v2 .ba-pan {
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2 .ba-pan {
+    transform: none !important;
+  }
+}
+
+/* ---------- what changed ----------
+   A numbered list whose every row is a pair. "Was" is set in the
+   muted ink and "Now" in the full one, so the eye lands on the
+   right-hand half first and the left reads as the thing being
+   left behind. The blue rule on the "Now" side is the brand
+   colour, not the action green: green is reserved for the
+   WhatsApp button and never appears as decoration. */
+
+.v2 .chg {
+  margin: 44px 0 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.v2 .chg-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 18px;
+  row-gap: 14px;
+  padding: 26px 0;
+  border-top: 1px solid var(--line);
+}
+
+.v2 .chg-n {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--brand-text);
+  padding-top: 3px;
+}
+
+.v2 .chg-label {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.v2 .chg-pair {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 860px) {
+  .v2 .chg-pair {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+.v2 .chg-side {
+  margin: 0;
+  padding-left: 15px;
+  border-left: 2px solid var(--line-strong);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.v2 .chg-was {
+  color: var(--ink-mute);
+}
+.v2 .chg-now {
+  color: var(--ink);
+  border-left-color: var(--brand-text);
+}
+
+.v2 .chg-tag {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.v2 .chg-now .chg-tag {
+  color: var(--brand-text);
 }

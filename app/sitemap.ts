@@ -10,8 +10,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
+    /* The service pages. Kept in step with SERVICE_PAGES in lib/services.ts —
+       a service that gets a page of its own gets a line here too, or the
+       nav links to something the sitemap says does not exist. */
     {
       url: `${SITE.url}/services/video-production`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE.url}/services/web-design`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,

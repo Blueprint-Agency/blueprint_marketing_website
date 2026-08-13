@@ -51,4 +51,13 @@ export const WA = {
   shoot: whatsapp(
     "Hi Blueprint, I'd like to talk about getting a video made for my business.",
   ),
+  /**
+   * /services/web-design. Names the website rather than "branding", because
+   * the website is what the reader has just spent the page looking at and it
+   * is the thing she can picture. No timeline, budget or page count is
+   * asserted on her behalf.
+   */
+  rebuild: whatsapp(
+    "Hi Blueprint, I'd like to talk about rebuilding my website.",
+  ),
 } as const;

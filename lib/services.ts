@@ -216,6 +216,12 @@ export const SERVICES: Service[] = [
  */
 export const SERVICE_PAGES: Record<string, string> = {
   video: "/services/video-production",
+  /* Branding's page is at /web-design, not /branding, and that is deliberate.
+     The page argues that for a local business the brand is met as a website
+     first, and the whole of its proof is one site rebuilt end to end — so the
+     URL names what is actually on it. A reader clicking "Branding" in the nav
+     lands on a page whose first section explains the substitution. */
+  branding: "/services/web-design",
 };
 
 /**

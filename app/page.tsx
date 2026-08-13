@@ -267,14 +267,23 @@ export default function HomePage() {
               claimed result.
             </p>
 
-            {/* The one service with a page of its own, because it is the one
-                whose proof is a thing you press play on rather than a
-                paragraph. Sits under the tabs rather than inside a panel:
-                ServiceTabs renders all twelve panels into the document, and a
-                link that only exists for one of them belongs outside the set. */}
-            <div style={{ marginTop: 30 }}>
+            {/* The two services with pages of their own, because they are the
+                two whose proof is a thing you look at rather than a paragraph:
+                a film you press play on, and a website you can open. Sits
+                under the tabs rather than inside a panel: ServiceTabs renders
+                all twelve panels into the document, and a link that only
+                exists for two of them belongs outside the set.
+
+                Both are named by what the reader gets to see, not by the
+                service. "Branding" is on the tab above and in the nav; nobody
+                clicks a second button that repeats a word they have just
+                read. */}
+            <div className="cta-row" style={{ marginTop: 30 }}>
               <Link className="btn btn-line" href="/services/video-production">
                 Watch the films we make
+              </Link>
+              <Link className="btn btn-line" href="/services/web-design">
+                See a website before and after
               </Link>
             </div>
           </div>
