@@ -222,6 +222,7 @@ export const SERVICE_PAGES: Record<string, string> = {
      URL names what is actually on it. A reader clicking "Branding" in the nav
      lands on a page whose first section explains the substitution. */
   branding: "/services/web-design",
+  booking: "/services/booking-system",
 };
 
 /**

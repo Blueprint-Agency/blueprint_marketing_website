@@ -60,4 +60,20 @@ export const WA = {
   rebuild: whatsapp(
     "Hi Blueprint, I'd like to talk about rebuilding my website.",
   ),
+  /**
+   * /services/booking-system. The only CTA on the site that follows a
+   * published price, so it names the demo rather than an open-ended
+   * conversation — a reader who has just read a price list and tapped
+   * "Book a demo" should not open a thread that says something else.
+   *
+   * There is no self-serve trial, which is why this says demo and not
+   * sign-up. If a trial is ever offered, this string and the note under
+   * the plans both have to change together.
+   *
+   * No plan is named: she may well have read three of them and picked a
+   * fourth.
+   */
+  booking: whatsapp(
+    "Hi Blueprint, I'd like to book a demo of the booking system for my studio.",
+  ),
 } as const;
