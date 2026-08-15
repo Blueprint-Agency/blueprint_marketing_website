@@ -6652,10 +6652,10 @@ html {
 
    The branding service's page. It borrows the dark opening from
    the block above and the browser frame from the top of this
-   file, and introduces one device: two client sites held side
-   by side, both panning through their full height as the reader
-   scrolls. See components/v2/BeforeAfter.tsx for why it is a
-   pair of scrolling windows rather than the usual wipe slider.
+   file, and adds almost nothing: two client sites side by side,
+   each shown whole, at whatever height its own capture is. See
+   components/v2/BeforeAfter.tsx for why it is neither a wipe
+   slider nor the scrolling window it briefly was.
 
    COLOUR. The pair sits inside the dark opening band, which is
    the same decision the film screens make: a screenshot reads as
@@ -6667,19 +6667,110 @@ html {
    Nothing else in this block carries a colour of its own.
    ============================================================ */
 
+/* A plain band on the dark ground, for the rebuilds that fall in the
+   middle of the page rather than in the opening. Same token
+   inversion .svc-open makes; see the note above that block for why
+   it is done by re-declaring the world rather than by writing a
+   light-on-dark rule for each child. */
+.v2 .band-shots {
+  --paper: var(--hero-ground, #000);
+  --ink: var(--on-brand);
+  --ink-soft: var(--on-brand-soft);
+  --ink-mute: var(--on-brand-mute);
+  --line: var(--on-brand-line);
+  --line-strong: rgba(255, 255, 255, 0.3);
+  --paper-sunk: rgba(255, 255, 255, 0.055);
+
+  background: var(--paper);
+  color: var(--ink);
+}
+.v2 .band-shots :focus-visible {
+  outline-color: var(--act);
+}
+
 .v2 .ba-head {
   margin-top: 64px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
+/* The second rebuild opens its own band, so its header is a section
+   opening rather than a caption under one. */
+.v2 .ba-head-lead {
+  margin-top: 0;
+  padding-bottom: 30px;
+}
 .v2 .ba-meta {
   margin-top: 6px;
+}
+.v2 .ba-brief {
+  margin-top: 14px;
+  max-width: 68ch;
+}
+
+/* ---------- the page index ----------
+   Only rendered for a rebuild with more than one page. Over the six
+   Vatti pairs the band runs to tens of thousands of pixels, and a
+   reader who wants the dishwasher page should not have to scroll
+   through three others to reach it. */
+
+.v2 .pg-index {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 18px;
+}
+.v2 .pg-index-label {
+  flex: none;
+}
+.v2 .pg-index ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.v2 .pg-index a {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition:
+    color 0.14s ease-out,
+    border-color 0.14s ease-out;
+}
+.v2 .pg-index a:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+/* One page's pair. scroll-margin so a jump from the index does not
+   land the heading under the sticky bar. */
+.v2 .pg {
+  margin-top: 56px;
+  scroll-margin-top: 84px;
+}
+.v2 .pg-name {
+  margin: 0 0 18px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  color: var(--ink);
 }
 
 .v2 .ba {
   margin-top: 26px;
   display: grid;
-  gap: 34px;
+  gap: 44px;
+  /* Top, not stretch. The two captures are different heights and the
+     grid's default would stretch each cell to match the taller one,
+     which does nothing visible to the picture but leaves the shorter
+     pane's box hanging below its own frame. */
+  align-items: start;
 }
 /* Two up from 900px. Below that they stack, and stacked is not a
    worse comparison than side by side — it is a slower one, which
@@ -6695,7 +6786,24 @@ html {
   margin: 0;
 }
 
+/* Sticky, and the only reason there is any position work left in
+   this block. The frames are 2,300 and 2,900px tall on a desktop
+   column, so a reader a third of the way down a side-by-side has
+   scrolled the labels off the top of the screen and is looking at
+   two anonymous slabs of website. The tag rides down with her and
+   is still there to say which is which.
+
+   72px clears the sticky nav, which is 63px plus a little air. */
 .v2 .ba-tag {
+  position: sticky;
+  top: 72px;
+  z-index: 1;
+  /* The band's own ground, so the label is legible where it
+     overlaps a screenshot rather than sitting on a see-through
+     strip of somebody's homepage. Literal because the frames sit
+     inside .svc-open, where --paper has been inverted to black. */
+  background: var(--hero-ground, #000);
+  padding-block: 10px;
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
@@ -6735,33 +6843,14 @@ html {
   color: #5f646c;
 }
 
-/* The window the page is seen through. Squarer on a phone, where
-   the column is narrow and a 4:3 letterbox would show about two
-   inches of website. */
-.v2 .ba-window {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: #fff;
-}
-@media (min-width: 900px) {
-  .v2 .ba-window {
-    aspect-ratio: 4 / 3;
-  }
-}
-
-/* Transformed by BeforeAfter on scroll. The image inside is
-   already handled by `.frame img` — full width, natural height —
-   so this element is exactly as tall as the whole page it holds,
-   and the component pans it by its overhang. */
-.v2 .ba-pan {
-  will-change: transform;
-}
-@media (prefers-reduced-motion: reduce) {
-  .v2 .ba-pan {
-    transform: none !important;
-  }
-}
+/* There is no rule here sizing the picture, and that is the whole
+   of the change made on 2026-08-13. `.frame img` at the top of
+   this file already sets width 100% and height auto, so each
+   capture arrives at its own full length and the two panes end
+   where their sites end. What used to be here — a fixed 4:3
+   window, an overflow clip and a transformed inner element the
+   component panned on scroll — is gone with the JavaScript that
+   drove it. */
 
 /* ---------- what changed ----------
    A numbered list whose every row is a pair. "Was" is set in the

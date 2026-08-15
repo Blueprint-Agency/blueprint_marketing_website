@@ -1,134 +1,69 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import Image from "next/image";
-import type { Shot } from "@/lib/rebuilds";
+import type { PagePair } from "@/lib/rebuilds";
 
 /**
- * Two websites, side by side, both scrolling as the reader scrolls.
+ * Two websites, side by side, each shown whole.
  *
- * WHY NOT THE USUAL DEVICE
- * ------------------------
- * The default before/after is a slider with a handle you drag across one
+ * NOT A SLIDER, AND NO LONGER A SCROLLING WINDOW
+ * ----------------------------------------------
+ * The default before/after is a wipe slider: a handle you drag across one
  * image to reveal another underneath. It is the wrong instrument here, and
- * for a reason worth writing down: a wipe slider only tells the truth when
+ * for a reason worth keeping on record — a wipe only tells the truth when
  * both halves are the same picture. These are two different sites with
- * different sections in a different order — wiping between them compares a
- * hero against a review block and invites the reader to conclude something
- * that is not there.
+ * different sections in a different order, so wiping between them compares a
+ * hero against a review block and invites a conclusion that is not there.
  *
- * What actually needs comparing is the whole of each page, so the whole of
- * each page is what is shown. Both frames pan from their top to their foot
- * as the section crosses the viewport, in PROPORTION rather than in pixels:
- * the two pages are 4,860 and 6,115px tall, so a shared pixel offset would
- * have one of them finished while the other was still in its middle. At
- * matched percentages the reader is always looking at the same DEPTH of both
- * sites, which is the only honest way to hold them next to each other.
+ * This shipped once as the other clever option: a fixed window per site with
+ * the screenshot panning through it on scroll, both in proportion so the
+ * reader was always at the same depth of each page. The user cut it on
+ * 2026-08-13 in favour of the plain thing, and the plain thing is better.
  *
- * NO SCROLL HIJACKING. There is no sticky stage and nothing is pinned. The
- * page scrolls at its own speed and the two images are read off that scroll
- * position; a reader who wants none of this can flick straight past and the
- * section behaves like two static screenshots, because that is all it is.
+ *  - A moving picture asks to be watched. These want to be READ, at whatever
+ *    pace the reader chooses. A pan takes that control away.
  *
- * REDUCED MOTION. The effect never starts. Both frames stay at the top of
- * their page, which is the state that carries the comparison anyway: the two
- * first screens are what the argument mostly rests on, and the section under
- * this one quotes the specific differences rather than leaving them to be
- * spotted.
+ *  - The window was 4:3, so at any instant about a seventh of each site was
+ *    visible. What is actually persuasive is the LENGTH: that one page keeps
+ *    going where the other stops. A window hides exactly that.
  *
- * ONE LISTENER, NOT TWO. The panes do not each watch the scroll position.
- * The host measures once per frame and writes both transforms, so adding a
- * third pane later costs nothing.
+ *  - It cost a scroll listener and a layout read per frame, on a page whose
+ *    entire content is pictures.
+ *
+ * So: two pictures at their natural height, in the site's browser frame, and
+ * nothing else. No client boundary, no JavaScript, and it degrades to
+ * precisely itself.
+ *
+ * THE HEIGHTS DO NOT MATCH, AND ARE NOT MADE TO
+ * ---------------------------------------------
+ * Both render at the column's width and keep their own ratio, so the taller
+ * page runs on after the shorter one has ended. Nothing pads the short one to
+ * meet it and nothing crops the tall one back — on Vatti's category pages the
+ * new one is half as long again, and that is one of the findings.
  */
 
 export default function BeforeAfter({
-  before,
-  after,
+  pair,
   beforeNote,
   afterNote,
+  eager = false,
 }: {
-  before: Shot;
-  after: Shot;
+  pair: PagePair;
   beforeNote: string;
   afterNote: string;
+  /**
+   * Only the first pair on the page. The rest are lazy: there are twelve
+   * full-page captures in this document and eagerly fetching all of them
+   * would be several megabytes before the reader has scrolled anywhere.
+   */
+  eager?: boolean;
 }) {
-  const hostRef = useRef<HTMLDivElement>(null);
-  const panRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const host = hostRef.current;
-    if (!host) return;
-
-    /* rAF-coalesced. A passive scroll listener fires far more often than the
-       compositor can paint, and getBoundingClientRect inside every one of
-       those is a layout read per event. */
-    let queued = 0;
-
-    const apply = () => {
-      queued = 0;
-      const box = host.getBoundingClientRect();
-      const vh = window.innerHeight;
-      /* `crossing` runs 0 to 1 over the whole distance the block travels
-         through the viewport: 0 the instant its top edge reaches the bottom
-         of the screen, 1 the instant its foot leaves the top. */
-      const crossing = (vh - box.top) / (vh + box.height);
-
-      /* The pan uses the middle 55% of that and holds still either side, and
-         the lead-in is the important half. Panning straight from `crossing`
-         meant the two sites were already a third of the way down by the time
-         the block was properly on screen — so the one comparison the page
-         most rests on, the two first screens, only existed during the moment
-         the block was half off the bottom of the display. Now both frames sit
-         at the top of their page while it arrives, start moving once the
-         reader is looking at it, and are at the foot before it leaves.
-
-         Expressed as a window on `crossing` rather than as a measurement
-         against the viewport, so it behaves the same whether the block is
-         two frames wide and half the screen tall or one column on a phone
-         that is taller than the screen — where anything solved for
-         `vh - height` divides by roughly nothing. */
-      const p = Math.min(1, Math.max(0, (crossing - 0.3) / 0.55));
-
-      for (const pan of panRefs.current) {
-        const win = pan?.parentElement;
-        if (!pan || !win) continue;
-        /* Measured from the DOM rather than from the file's intrinsic size:
-           the image is rendered at whatever width the column happens to be,
-           and the window's height is an aspect-ratio the CSS owns. */
-        const travel = pan.offsetHeight - win.clientHeight;
-        if (travel <= 0) continue;
-        pan.style.transform = `translate3d(0, ${-(travel * p).toFixed(1)}px, 0)`;
-      }
-    };
-
-    const onScroll = () => {
-      if (!queued) queued = requestAnimationFrame(apply);
-    };
-
-    /* Images decode after this effect runs, and offsetHeight is wrong until
-       they do. The load listener catches that; resize catches the column
-       changing width, which changes both heights at once. */
-    apply();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    window.addEventListener("load", onScroll);
-    return () => {
-      if (queued) cancelAnimationFrame(queued);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      window.removeEventListener("load", onScroll);
-    };
-  }, []);
-
-  const panes: { tag: string; shot: Shot; note: string }[] = [
-    { tag: "Before", shot: before, note: beforeNote },
-    { tag: "After", shot: after, note: afterNote },
+  const panes = [
+    { tag: "Before", shot: pair.before, note: beforeNote },
+    { tag: "After", shot: pair.after, note: afterNote },
   ];
 
   return (
-    <div className="ba" ref={hostRef}>
-      {panes.map((pane, i) => (
+    <div className="ba">
+      {panes.map((pane) => (
         <figure className="ba-pane" key={pane.tag}>
           <div className="ba-tag">
             <span className="ba-tag-word">{pane.tag}</span>
@@ -146,27 +81,17 @@ export default function BeforeAfter({
               <span className="dot" />
               <span className="frame-url small">{pane.shot.url}</span>
             </div>
-            <div className="ba-window">
-              <div
-                className="ba-pan"
-                ref={(el) => {
-                  panRefs.current[i] = el;
-                }}
-              >
-                <Image
-                  src={pane.shot.src}
-                  alt={pane.shot.alt}
-                  width={pane.shot.width}
-                  height={pane.shot.height}
-                  sizes="(min-width: 900px) 560px, 92vw"
-                  /* Both are above the fold of a page whose entire point is
-                     that you can see them, and a lazy full-page screenshot
-                     fading in halfway through the pan is worse than the
-                     bytes it saves. */
-                  priority={i === 1}
-                />
-              </div>
-            </div>
+            {/* `.frame img` already sets width 100% and height auto, so the
+                file's own ratio decides how tall this ends up. */}
+            <Image
+              src={pane.shot.src}
+              alt={pane.shot.alt}
+              width={pane.shot.width}
+              height={pane.shot.height}
+              sizes="(min-width: 900px) 560px, 92vw"
+              priority={eager}
+              loading={eager ? undefined : "lazy"}
+            />
           </div>
         </figure>
       ))}
