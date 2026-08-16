@@ -7,14 +7,21 @@ export const SITE = {
   name: "Blueprint",
   legalName: "Blueprint Agency",
   /**
-   * NOT CONFIRMED — no domain is recorded in PRODUCT.md.
+   * CONFIRMED 2026-08-17. The site serves from this address on Vercel, so
+   * it is no longer a guess.
    *
    * This value feeds metadataBase, every canonical URL, sitemap.xml and
-   * robots.txt. It deliberately falls back to localhost rather than a
-   * guessed domain, so nothing ships pointing search engines at an address
-   * that may not be yours. Set NEXT_PUBLIC_SITE_URL before deploying.
+   * robots.txt. It used to fall back to localhost, on the reasoning that a
+   * guessed domain was worse than an obviously wrong one. That was right
+   * while the domain was unknown and wrong once it was not: with the
+   * variable unset in the host environment, the live robots.txt was
+   * publishing "Sitemap: http://localhost:4310/sitemap.xml" and every
+   * canonical on the production site resolved against localhost.
+   *
+   * NEXT_PUBLIC_SITE_URL still wins where it is set, which is what a
+   * preview deployment on its own hostname needs.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:4310",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.blueprintdigital.my",
   email: "askblueprintagency@gmail.com",
   /** Confirmed 2026-07-26. Digits only, no plus, no spaces. */
   whatsappNumber: "60126286586",

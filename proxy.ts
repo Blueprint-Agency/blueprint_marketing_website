@@ -19,20 +19,35 @@ import { NextResponse, type NextRequest } from "next/server";
  * save it or pass it on. Treat it as the lock on an office door, not as
  * encryption.
  *
- * THE PASSCODE LIVES IN THE ENVIRONMENT, NOT IN THIS FILE. This repository
- * is public, so a literal here would be published the moment it was pushed.
- * Set PROPOSAL_PASSCODE in .env.local for development and in the host's
- * environment for production. See .env.example.
+ * WHERE THE PASSCODE COMES FROM
+ * -----------------------------
+ * PROPOSAL_PASSCODE if it is set, and the fallback below if it is not.
  *
- * IT FAILS CLOSED. With no passcode configured, /proposals returns the
- * locked page and says so, rather than serving a client's pricing to the
- * open web because a deploy forgot a variable.
+ * The fallback exists because the alternative was worse in practice: an
+ * environment-only passcode meant every proposal link on the live site
+ * answered "no passcode is configured" until somebody opened the hosting
+ * dashboard, which is a step that gets forgotten at exactly the moment a
+ * link is being sent to a client.
+ *
+ * The cost of the fallback is that it is readable in this repository,
+ * which is public. That is a smaller loss than it sounds: the proposal
+ * itself is committed here too, so anyone reading the repo already has the
+ * document and does not need the passcode. What the gate is actually for
+ * is a forwarded link, and a forwarded link does not come with a pointer
+ * to the source.
+ *
+ * To make it a real secret, set PROPOSAL_PASSCODE in the host environment.
+ * It takes precedence, no code change needed, and the value here stops
+ * mattering.
  *
  * The gate covers both /proposals/bangkok-thai and the .html the rewrite in
  * next.config.ts points at, because the matcher runs before rewrites.
  */
 
 const COOKIE = "bp_proposal";
+
+/** Used only when PROPOSAL_PASSCODE is unset. See the note above. */
+const FALLBACK_PASSCODE = "bangkokthai";
 
 /** The cookie holds a digest, never the passcode itself. */
 async function token(passcode: string): Promise<string> {
@@ -107,15 +122,8 @@ function lockedPage(wrong: boolean, configured: boolean): string {
 }
 
 export async function proxy(req: NextRequest) {
-  const passcode = process.env.PROPOSAL_PASSCODE;
-  const expected = passcode ? await token(passcode) : null;
-
-  if (!expected) {
-    return new NextResponse(lockedPage(false, false), {
-      status: 503,
-      headers: { "content-type": "text/html; charset=utf-8" },
-    });
-  }
+  const passcode = process.env.PROPOSAL_PASSCODE || FALLBACK_PASSCODE;
+  const expected = await token(passcode);
 
   const cookie = req.cookies.get(COOKIE)?.value;
   if (cookie && sameToken(cookie, expected)) return NextResponse.next();
