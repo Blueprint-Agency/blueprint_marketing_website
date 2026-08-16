@@ -54,6 +54,10 @@
  *
  * WHAT THIS GIVES UP, RECORDED SO IT IS NOT REDISCOVERED AS A SURPRISE
  * -------------------------------------------------------------------
+ * (Both figures below were computed against Group at RM 999. The
+ * 2026-08-16 repricing to RM 1,499 narrows the five-location give-up by
+ * exactly RM 500 a month.)
+ *
  * Against the per-location version this collects RM 290 a month less from
  * a two-location studio and RM 3,162 less from a five-location group. That
  * is revenue from deals the per-location structure was losing, which is
@@ -126,6 +130,44 @@
  * is the kind of promise that cannot be taken back from a customer who
  * already bought on it.
  *
+ * GROUP REPRICED, RM 999 TO RM 1,499 (2026-08-16)
+ * ------------------------------------------------
+ * Confirmed by the user on 2026-08-16, which also makes it the one figure
+ * in this file that is no longer merely a proposal. Three reasons, in the
+ * order they matter.
+ *
+ * FIRST, the ladder was regressive at exactly one step. Per location the
+ * published rates ran RM 149.00 at Solo, RM 274.50 at Studio, and then
+ * RM 199.80 at Group: five locations cost less each than two did. Nothing
+ * justifies that dip. Group adds capability, it does not remove any.
+ *
+ * SECOND, the two things only Group grants are the two that cost real
+ * money to serve. A customer's own domain is a DNS entry, a certificate
+ * and a routing rule that somebody maintains; API access is an unbounded
+ * read path that a five-site operator will point a dashboard at and leave
+ * running. RM 199.80 a location priced neither.
+ *
+ * THIRD, and the reason it moved on this date: a negotiated chain quote
+ * must not be undercut by naive multiples of a published tier. Bangkok
+ * Thai, 23 outlets, is quoted at RM 6,588 a month. A buyer with a
+ * calculator divides 23 by 5, reads five Group plans at RM 4,995, and the
+ * quote looks like a premium. That is not a purchase anyone can actually
+ * make, because a plan carries a location ALLOWANCE per account and the
+ * plans do not stack, which is exactly why anything past five locations
+ * is an Enterprise quote. But the arithmetic is the first thing a buyer
+ * does and the structure argument is only the second. At RM 1,499 the
+ * same calculator returns RM 7,495 and the quote reads as the discount it
+ * actually is.
+ *
+ * Per location this is RM 299.80, which sits on Aoikumo's RM 298 per
+ * outlet and at roughly a third of Rezerv's Team tier (USD 190 per
+ * location, about RM 836 at 4.40). The Bangkok Thai chain rate works out
+ * at RM 286.43 a location, so scale is now cheaper per outlet than the
+ * largest published tier, which is the shape a price list is meant to
+ * have.
+ *
+ * Solo and Studio did not move. Both are quoted in a live proposal.
+ *
  * THE ORDER OF THE PLANS IS LOAD-BEARING. Each plan's `list` after the
  * first says what it ADDS to the one before it, so the array reads as a
  * ladder. Reordering it silently makes every list wrong.
@@ -194,7 +236,11 @@ export const PLANS: Plan[] = [
   {
     id: "group",
     name: "Group",
-    monthly: 999,
+    /* Was 999 until 2026-08-16. See the repricing note in the header
+       before moving it again: the figure is set against Studio's
+       per-location rate below it and against the Bangkok Thai chain
+       quote above it, and it stops being defensible if either moves. */
+    monthly: 1499,
     locations: "Up to five locations",
     fits: "Multi-site operators who need one set of numbers to reconcile across every studio.",
     listLabel: "Everything in Studio, plus",
@@ -239,7 +285,9 @@ export type Addon = { name: string; price: string; note: string };
  *    per-location price on a page whose headline is that your second
  *    studio does not double the bill. It also undercut its own ladder:
  *    Studio plus two extras came to RM 947 against Group at RM 999, so
- *    Group only won at exactly five locations. Past five is an Enterprise
+ *    Group only won at exactly five locations. (That was the Group price
+ *    at the time; it is RM 1,499 since 2026-08-16, which would have made
+ *    the same comparison worse rather than better.) Past five is an Enterprise
  *    quote now, which is what it always was in practice.
  *  - YOUR OWN DOMAIN at RM 39 is now simply a Group feature, listed in
  *    that plan and nowhere else.
