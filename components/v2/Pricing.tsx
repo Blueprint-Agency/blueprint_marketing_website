@@ -199,7 +199,8 @@ export default function Pricing({ ctaHref }: { ctaHref: string }) {
           Prices exclude payment processing, which goes to the card provider
           rather than to us. Every plan starts with a demo rather than a free
           trial, so you see it running against your own timetable before you
-          decide.
+          decide. Nothing is ever deleted on any plan: the reporting window is
+          how far back one report can reach, not how long we keep your records.
         </p>
 
         {/* ---------- add-ons ---------- */}

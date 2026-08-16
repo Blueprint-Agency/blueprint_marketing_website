@@ -93,6 +93,39 @@
  * five locations instead of two, unlimited roles instead of three, full
  * reporting history, export, and support.
  *
+ * REPORTING WINDOW IS NOT RETENTION (2026-08-16)
+ * -----------------------------------------------
+ * Group used to say "unlimited reporting history" and now says reports
+ * reach back two years. Nothing is deleted any sooner — the two are
+ * separate promises and the old wording sold them as one.
+ *
+ * Retention is cheap and is now a universal promise, stated once in the
+ * note under the plans. The arithmetic is not close: a five-location
+ * group at capacity writes roughly 274,000 bookings a year, which at a
+ * generous 1 KB all-in for the row, its indexes, its audit entries and
+ * its send-log lines is about 274 MB a year. Five years of that is 1.4 GB.
+ * Managed Postgres storage is cents at that size and CSV egress is less.
+ * Storage was never the thing to be afraid of.
+ *
+ * The unbounded promise was the compute. An all-time aggregate across
+ * five locations and five years is a slow scan that degrades every other
+ * studio sharing the instance — and if the database is billed by
+ * compute-seconds or rows read rather than by provisioned size, that same
+ * report is a line item rather than just a slow page. WE DO NOT CURRENTLY
+ * KNOW WHICH, because the platform's code is not in this repository. That
+ * is a good reason to publish a bounded window until somebody has checked.
+ *
+ * Two years is not a retreat from the field, either. Rezerv's own matrix
+ * caps its Business tier at a twelve-month filter over two years of
+ * history and offers unlimited only on Enterprise, which is sales-led and
+ * flat-priced — exactly where an unbounded query promise belongs, since
+ * that is the one tier whose price can be set against the customer who
+ * actually uses it. Reserve Today now draws the line in the same place.
+ *
+ * If a bounded window is ever widened, widen it for new contracts. This
+ * is the kind of promise that cannot be taken back from a customer who
+ * already bought on it.
+ *
  * THE ORDER OF THE PLANS IS LOAD-BEARING. Each plan's `list` after the
  * first says what it ADDS to the one before it, so the array reads as a
  * ladder. Reordering it silently makes every list wrong.
@@ -137,7 +170,7 @@ export const PLANS: Plan[] = [
       "Card, FPX, DuitNow and Touch 'n Go checkout",
       "QR check-in and attendance",
       "Email notifications on 21 events",
-      "Three months of reporting history",
+      "Reports reaching back three months",
     ],
   },
   {
@@ -154,7 +187,7 @@ export const PLANS: Plan[] = [
       "Payroll and commission",
       "Private sessions, 1-on-1 and 2-on-1",
       "Retail store, up to 100 products",
-      "Twelve months of reporting history",
+      "Reports reaching back twelve months",
     ],
     popular: true,
   },
@@ -171,7 +204,7 @@ export const PLANS: Plan[] = [
       "Unlimited retail products",
       "Your own domain, included",
       "CSV export and API access",
-      "Unlimited reporting history",
+      "Reports reaching back two years",
       "Priority support",
     ],
   },
@@ -184,6 +217,7 @@ export const PLANS: Plan[] = [
     listLabel: "Everything in Group, plus",
     list: [
       "Flat price across every outlet",
+      "Reports across your whole history",
       "Super-admin impersonation and multi-brand",
       "Dedicated onboarding and migration",
       "A response-time SLA in writing",
