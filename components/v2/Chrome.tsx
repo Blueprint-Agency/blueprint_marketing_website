@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SERVICES, serviceHref } from "@/lib/services";
 import { SITE, WA } from "@/lib/site";
+import MobileMenu from "./MobileMenu";
 import ServicesMenu from "./ServicesMenu";
 
 /**
@@ -73,6 +74,9 @@ export function Nav({ overHero }: { overHero?: boolean } = {}) {
           >
             WhatsApp us
           </a>
+          {/* Below 860px this is the only way into the site from the bar:
+              ServicesMenu hides itself and .hide-md drops the rest. */}
+          <MobileMenu />
         </nav>
       </div>
     </header>

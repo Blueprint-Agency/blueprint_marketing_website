@@ -6478,6 +6478,151 @@ html {
    white the way the footer wordmark once went.
    ============================================================ */
 
+/* ============================================================
+   MOBILE CHROME
+   The other half of the bar. Above 860px this is all display:none
+   and ServicesMenu takes over; below it, this is the only way into
+   the site from the top of the page.
+   ============================================================ */
+
+/* The control. Two bars that become a cross, drawn rather than iconised:
+   the site ships no icon font and one glyph is not worth one. 44px square
+   is the smallest target a thumb finds reliably. */
+.v2 .nav-burger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--on-brand);
+  cursor: pointer;
+}
+@media (min-width: 860px) {
+  .v2 .nav-burger {
+    display: none;
+  }
+}
+.v2 .nav-burger-bars {
+  position: relative;
+  display: block;
+  width: 21px;
+  height: 13px;
+}
+.v2 .nav-burger-bars span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transition:
+    transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    top 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2 .nav-burger-bars span:first-child {
+  top: 0;
+}
+.v2 .nav-burger-bars span:last-child {
+  top: 11.5px;
+}
+.v2 .nav-burger.is-open .nav-burger-bars span:first-child {
+  top: 5.75px;
+  transform: rotate(45deg);
+}
+.v2 .nav-burger.is-open .nav-burger-bars span:last-child {
+  top: 5.75px;
+  transform: rotate(-45deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2 .nav-burger-bars span {
+    transition: none;
+  }
+}
+
+/* The sheet. It starts under the bar rather than over it, so the control
+   that opened it stays visible and can close it, and it takes the bar's
+   own ground so the two read as one surface rather than as a panel laid
+   over a page. */
+.v2 .nav-sheet {
+  position: fixed;
+  top: 62px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 49;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--hero-ground, #000);
+  border-top: 1px solid var(--on-brand-line);
+  animation: navSheetIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes navSheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2 .nav-sheet {
+    animation: none;
+  }
+}
+.v2 .nav-sheet-inner {
+  padding-top: 26px;
+  padding-bottom: 40px;
+}
+.v2 .nav-sheet-group + .nav-sheet-group {
+  margin-top: 30px;
+}
+.v2 .nav-sheet-head {
+  margin: 0 0 4px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-brand-mute);
+}
+.v2 .nav-sheet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* One rule per row, and the row is the target: 52px so a thumb does not
+   have to find the words inside it. */
+.v2 .nav-sheet-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 52px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--on-brand-line);
+  color: var(--on-brand);
+  font-size: 1.0625rem;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.v2 .nav-sheet-item:active {
+  color: var(--on-brand-mute);
+}
+.v2 .nav-sheet-flag {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brand-lift);
+}
+.v2 .nav-sheet-act {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
 /* Desktop chrome. The bar drops its links below 860px (.hide-md) and this
    goes with them — it is not a mobile menu and must not pretend to be one.
    Hidden by its own rule rather than by .hide-md, whose `display: inline`
