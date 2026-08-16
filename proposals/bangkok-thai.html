@@ -244,7 +244,15 @@ em{font-style:italic;font-weight:800}
 }
 .tbl th:first-child,.tbl td:first-child{padding-left:0}
 .tbl th:last-child,.tbl td:last-child{padding-right:0;text-align:right}
-.tbl .amt{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:15px}
+/* One pricing cell, two registers: the figure is machine-set and the
+   basis it is charged on runs straight after it in the reading face, on
+   the same line at every width. */
+.tbl .amt{white-space:nowrap;font-size:15px}
+.tbl .amt b{
+  font-family:var(--mono);font-variant-numeric:tabular-nums;
+  font-weight:600;letter-spacing:-.02em;
+}
+.tbl .amt span{color:var(--ink-mute);font-size:.92em}
 .tbl tbody th{font-weight:600;color:var(--ink)}
 .tbl tbody td{color:var(--ink-soft)}
 .tbl .row-note{display:block;font-size:13px;color:var(--ink-mute);margin-top:4px;font-weight:400}
@@ -277,7 +285,10 @@ em{font-style:italic;font-weight:800}
   .tbl tbody th{font-size:1.18rem;letter-spacing:-.015em}
   .tbl tbody td{margin-top:11px;font-size:16px}
   .tbl tbody td.amt{
-    margin-top:14px;text-align:left;font-size:1.25rem;color:var(--ink);
+    margin-top:14px;text-align:left;color:var(--ink);
+    /* Sized so the longest of them, "RM 1,500 per brand, monthly", holds
+       one line at 390px rather than being cut in half. */
+    font-size:1.05rem;
   }
   .tbl .amt .row-note{margin-bottom:10px}
   .tbl .amt .row-note:last-child{margin-bottom:0}
@@ -320,22 +331,24 @@ em{font-style:italic;font-weight:800}
   padding:12px 0;border-bottom:1px solid var(--line);
 }
 .sum-row .k{font-size:16.5px;color:var(--ink-soft)}
-.sum-row .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:17px;color:var(--ink);font-weight:500}
+.sum-row .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:17px;color:var(--ink);font-weight:500;white-space:nowrap;flex:none}
 .sum-total{
   display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
   margin-top:20px;padding-top:18px;border-top:2px solid var(--ink);
 }
-.sum-total .k{font-size:16px;color:var(--ink-mute);max-width:16ch;line-height:1.35}
+.sum-total .k{font-size:16px;color:var(--ink-mute);max-width:16ch;line-height:1.35;flex:1 1 auto}
 .sum-total .v{
   font-family:var(--mono);font-variant-numeric:tabular-nums;
   font-size:2.35rem;font-weight:600;letter-spacing:-.035em;line-height:1;
+  /* The figure is the point of the card: it never wraps and never shrinks. */
+  white-space:nowrap;flex:none;
 }
 .per-outlet{
   margin-top:18px;padding:14px 16px;background:var(--brand-deep);color:var(--on-brand);
   display:flex;justify-content:space-between;align-items:baseline;gap:14px;
 }
 .per-outlet .k{font-size:15px;color:var(--on-brand-soft)}
-.per-outlet .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.2rem;font-weight:600}
+.per-outlet .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.2rem;font-weight:600;text-align:right}
 
 /* ---------- demo cards ----------
    The cover is the top of each site's real home page, cropped to the hero
@@ -544,13 +557,11 @@ em{font-style:italic;font-weight:800}
         <tr lang="en">
           <th scope="col">Part</th>
           <th scope="col">What it is</th>
-          <th scope="col">Priced by</th>
-          <th scope="col">Rate</th>
+          <th scope="col">Pricing</th>
         </tr>
         <tr lang="zh">
           <th scope="col">项目</th>
           <th scope="col">内容</th>
-          <th scope="col">计费方式</th>
           <th scope="col">价格</th>
         </tr>
       </thead>
@@ -559,57 +570,49 @@ em{font-style:italic;font-weight:800}
           <th scope="row">Website</th>
           <td>Unlimited pages covering every treatment, package and outlet, for one brand
             <span class="row-note">Design, build, copy, launch · English, Bahasa Malaysia and Chinese</span></td>
-          <td>Per brand, once</td>
-          <td class="amt">RM 8,000</td>
+          <td class="amt"><b>RM 8,000</b> <span>per brand, once</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">网站</th>
           <td>页面不限，涵盖每一个项目、配套与分店，适用于一个品牌
             <span class="row-note">设计、开发、文案、上线 · 英文、马来文、中文</span></td>
-          <td>每品牌，一次性</td>
-          <td class="amt">RM 8,000</td>
+          <td class="amt"><b>RM 8,000</b> <span>每品牌，一次性</span></td>
         </tr>
         <tr lang="en">
           <th scope="row">SEO &amp; maintenance</th>
           <td>Keeping the site ranking, current, fast and safe
             <span class="row-note">Ongoing, month to month</span></td>
-          <td>Per brand, monthly</td>
-          <td class="amt">RM 1,500</td>
+          <td class="amt"><b>RM 1,500</b> <span>per brand, monthly</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">SEO 与网站维护</th>
           <td>维持网站排名，内容更新，速度与安全
             <span class="row-note">持续进行，按月</span></td>
-          <td>每品牌，每月</td>
-          <td class="amt">RM 1,500</td>
+          <td class="amt"><b>RM 1,500</b> <span>每品牌，每月</span></td>
         </tr>
         <tr lang="en">
           <th scope="row">Booking system</th>
           <td>Guest-facing appointments plus the admin panel behind them
             <span class="row-note">One booking calendar and one admin panel per branch</span></td>
-          <td>Per branch, monthly</td>
-          <td class="amt">RM 250</td>
+          <td class="amt"><b>RM 250</b> <span>per branch, monthly</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">预约系统</th>
           <td>顾客端预约，加上后台管理系统
             <span class="row-note">每家分店一个预约表、一个后台</span></td>
-          <td>每分店，每月</td>
-          <td class="amt">RM 250</td>
+          <td class="amt"><b>RM 250</b> <span>每分店，每月</span></td>
         </tr>
         <tr lang="en">
           <th scope="row">AI review system</th>
           <td>QR-code instant AI generated reviews in three languages, for Google, Facebook, XiaoHongShu and TripAdvisor
             <span class="row-note">One QR code and one dashboard per outlet</span></td>
-          <td>Per outlet, monthly</td>
-          <td class="amt">RM 99</td>
+          <td class="amt"><b>RM 99</b> <span>per branch, monthly</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">AI 评论系统</th>
           <td>扫码即时生成三语 AI 评论，发布到 Google、Facebook、小红书与 TripAdvisor
             <span class="row-note">每家分店一个二维码、一个后台</span></td>
-          <td>每分店，每月</td>
-          <td class="amt">RM 99</td>
+          <td class="amt"><b>RM 99</b> <span>每分店，每月</span></td>
         </tr>
       </tbody>
     </table>
@@ -640,22 +643,22 @@ em{font-style:italic;font-weight:800}
         <ul class="lines">
           <li>
             <span class="l-name"><span lang="en">Website design</span><span lang="zh">网站设计</span><small><span lang="en">One-time · unlimited pages · three languages</span><span lang="zh">一次性 · 页面不限 · 三种语言</span></small></span>
-            <span class="l-amt">RM 8,000<small><span lang="en">once</span><span lang="zh">一次性</span></small></span>
+            <span class="l-amt">RM 8,000<small><span lang="en">once</span><span lang="zh">一次性</span></small></span>
           </li>
           <li>
             <span class="l-name"><span lang="en">SEO &amp; web maintenance</span><span lang="zh">SEO 与网站维护</span><small><span lang="en">Whole brand, every outlet</span><span lang="zh">整个品牌，所有分店</span></small></span>
-            <span class="l-amt">RM 1,500<small><span lang="en">/ month</span><span lang="zh">／月</span></small></span>
+            <span class="l-amt">RM 1,500<small><span lang="en">/ month</span><span lang="zh">／月</span></small></span>
           </li>
         </ul>
 
         <div class="sum">
           <div class="sum-row">
             <span class="k"><span lang="en">Website, one-time on signing</span><span lang="zh">网站，签约时一次性</span></span>
-            <span class="v">RM 8,000</span>
+            <span class="v">RM 8,000</span>
           </div>
           <div class="sum-total">
             <span class="k"><span lang="en">Monthly, from launch</span><span lang="zh">上线后每月</span></span>
-            <span class="v">RM 1,500</span>
+            <span class="v">RM 1,500</span>
           </div>
         </div>
       </article>
@@ -670,24 +673,24 @@ em{font-style:italic;font-weight:800}
         <ul class="lines">
           <li>
             <span class="l-name"><span lang="en">Booking system</span><span lang="zh">预约系统</span><small><span lang="en">Customer end and admin panel together</span><span lang="zh">顾客端与后台管理一套</span></small></span>
-            <span class="l-amt">RM 250<small><span lang="en">/ branch / month</span><span lang="zh">／分店／月</span></small></span>
+            <span class="l-amt">RM 250<small><span lang="en">/ branch / month</span><span lang="zh">／分店／月</span></small></span>
           </li>
           <li>
             <span class="l-name"><span lang="en">AI review system</span><span lang="zh">AI 评论系统</span><small><span lang="en">One QR code and one dashboard per branch</span><span lang="zh">每家分店一个二维码、一个后台</span></small></span>
-            <span class="l-amt">RM 99<small><span lang="en">/ branch / month</span><span lang="zh">／分店／月</span></small></span>
+            <span class="l-amt">RM 99<small><span lang="en">/ branch / month</span><span lang="zh">／分店／月</span></small></span>
           </li>
         </ul>
 
         <div class="sum">
           <div class="sum-total">
             <span class="k"><span lang="en">Per branch, per month</span><span lang="zh">每家分店，每月</span></span>
-            <span class="v">RM 349</span>
+            <span class="v">RM 349</span>
           </div>
           <div class="per-outlet">
             <span class="k" lang="en">Minimum, five branches</span>
             <span class="k" lang="zh">最低五家分店</span>
-            <span class="v" lang="en">RM 1,745 a month</span>
-            <span class="v" lang="zh">每月 RM 1,745</span>
+            <span class="v" lang="en">RM 1,745 a month</span>
+            <span class="v" lang="zh">每月 RM 1,745</span>
           </div>
         </div>
       </article>
