@@ -3180,80 +3180,12 @@ html {
   align-self: stretch;
 }
 
-/* ---------- 04 Funnels: one page, one decision ---------- */
+/* The Funnels illustration lived here — a landing page beside a three-step
+   drop-off bar. It went with the service on 2026-08-17. Its rules are not
+   kept "in case it comes back": every one of them was drawn from the tokens
+   above and would be quicker to rewrite than to find. */
 
-.v2 .sa-lp {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4em;
-  padding: 0.6em;
-  border: 1px solid var(--line);
-  border-radius: 0.7em;
-  min-width: 0;
-}
-.v2 .sa-lp-bar {
-  height: 0.35em;
-  border-radius: 2px;
-  background: var(--line);
-}
-.v2 .sa-lp-h {
-  width: 80%;
-  height: 0.7em;
-  border-radius: 3px;
-  background: var(--ink);
-  margin: 0.2em 0;
-}
-.v2 .sa-lp .sa-cta {
-  margin: 0.4em 0;
-}
-.v2 .sa-lp-strip {
-  display: flex;
-  gap: 0.3em;
-  margin-top: auto;
-}
-.v2 .sa-lp-strip i {
-  flex: 1;
-  height: 1.1em;
-  border-radius: 0.35em;
-  background: var(--paper-sunk);
-}
-.v2 .sa-funnel {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.55em;
-  min-width: 0;
-}
-.v2 .sa-fun-step {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2em;
-}
-.v2 .sa-fun-step i {
-  display: block;
-  height: 0.95em;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--brand), var(--brand-lift));
-}
-.v2 .sa-fun-step i.is-act {
-  background: var(--act);
-}
-.v2 .sa-fun-step em {
-  font-style: normal;
-  font-size: 0.85em;
-  color: var(--ink-mute);
-}
-.v2 .sa-fun-end {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35em;
-  margin-top: 0.2em;
-  font-size: 0.9em;
-  font-weight: 800;
-  color: var(--act-text);
-}
-
-/* ---------- 05 Video: the shoot, cut down ---------- */
+/* ---------- 04 Video: the shoot, cut down ---------- */
 
 .v2 .sa-phone {
   position: relative;
@@ -3322,7 +3254,7 @@ html {
   background: var(--line);
 }
 
-/* ---------- 06 Branding: the sheet ---------- */
+/* ---------- 05 Web design: the site and the sheet ---------- */
 
 .v2 .sa-brand {
   display: flex;
@@ -3402,7 +3334,7 @@ html {
   background: linear-gradient(135deg, var(--violet), var(--brand-lift));
 }
 
-/* ---------- 07 Booking: the calendar ---------- */
+/* ---------- 06 Booking: the calendar ---------- */
 
 .v2 .sa-week {
   display: grid;
@@ -3440,7 +3372,7 @@ html {
   border-color: var(--act);
 }
 
-/* ---------- 08 WhatsApp: the reply ---------- */
+/* ---------- 07 WhatsApp: the reply ---------- */
 
 .v2 .sa-wa-head {
   display: flex;
@@ -3489,7 +3421,7 @@ html {
   font-weight: 700;
 }
 
-/* ---------- 09 CRM: the pipeline ---------- */
+/* ---------- 08 CRM: the pipeline ---------- */
 
 .v2 .sa-board {
   display: grid;
@@ -3533,7 +3465,7 @@ html {
   color: var(--brand-text);
 }
 
-/* ---------- 10 Apps: the devices ---------- */
+/* ---------- 09 Apps: the devices ---------- */
 
 .v2 .sa-devices {
   display: grid;
@@ -3630,7 +3562,7 @@ html {
   align-self: stretch;
 }
 
-/* ---------- 11 AI: the flow ---------- */
+/* ---------- 10 AI: the flow ---------- */
 
 .v2 .sa-flow {
   display: flex;
@@ -3685,7 +3617,7 @@ html {
   min-width: 0;
 }
 
-/* ---------- 12 Custom software: the operation ---------- */
+/* ---------- 11 Custom software: the operation ---------- */
 
 .v2 .sa-tiles-lg {
   gap: 0.45em;

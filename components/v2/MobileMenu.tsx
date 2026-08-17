@@ -19,11 +19,11 @@ import { WA } from "@/lib/site";
  *
  * WHAT IT SHOWS
  * -------------
- * The same twelve services in the same two groups the desktop menu and the
+ * The same eleven services in the same two groups the desktop menu and the
  * footer use, from the same array, so the three cannot drift apart. Then
  * the two links the bar drops, then the action. Nothing is curated down
  * for the small screen: a phone reader is not a lesser reader, and a menu
- * that lists eight of twelve services is a menu that hides four.
+ * that lists eight of eleven services is a menu that hides three.
  *
  * BEHAVIOUR
  * ---------

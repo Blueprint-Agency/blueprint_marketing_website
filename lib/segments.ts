@@ -74,7 +74,7 @@ export const SEGMENTS: Segment[] = [
     pain: "The decision takes months and involves quotations. Leads go cold in the gap between the first enquiry and the follow up nobody made.",
     builds: [
       "SEO for the questions people ask while they are deciding",
-      "Quotation and enquiry funnels",
+      "Quotation and enquiry flows built into the site",
       "A CRM so long deals do not go cold",
       "Follow up automation across the whole decision window",
     ],

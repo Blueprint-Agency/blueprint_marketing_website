@@ -277,21 +277,27 @@ function bump(w: Weights, id: string, n: number) {
 /**
  * The leaks she names do most of the work; everything else adjusts them.
  * Weights are deliberately small and legible — this is a priority ordering
- * over twelve real capabilities, not a scoring model pretending to be one.
+ * over eleven real capabilities, not a scoring model pretending to be one.
+ *
+ * `web-design` carries the weight that used to be split between `funnels` and
+ * `branding`, which were merged into it on 2026-08-17. Where both scored the
+ * same leak — `nobite`, the visitor who arrives and leaves — the higher of the
+ * two is kept rather than the sum: adding them would have made one service
+ * outrank everything on the list by arithmetic rather than by judgement.
  */
 const BY_LEAK: Record<string, Weights> = {
-  unseen: { seo: 6, sem: 5, meta: 3, funnels: 2 },
-  nobite: { funnels: 6, branding: 4, video: 3, seo: 1 },
+  unseen: { seo: 6, sem: 5, meta: 3, "web-design": 2 },
+  nobite: { "web-design": 6, video: 3, seo: 1 },
   slow: { whatsapp: 6, booking: 5, ai: 2 },
-  cold: { crm: 6, whatsapp: 4, ai: 2, funnels: 1 },
+  cold: { crm: 6, whatsapp: 4, ai: 2, "web-design": 1 },
   admin: { ai: 6, software: 4, apps: 3, crm: 2 },
-  unsure: { seo: 2, funnels: 2, whatsapp: 2, crm: 2 },
+  unsure: { seo: 2, "web-design": 2, whatsapp: 2, crm: 2 },
 };
 
 const BY_SECTOR: Record<string, Weights> = {
   clinic: { booking: 3, whatsapp: 3, seo: 2 },
-  product: { sem: 3, meta: 2, crm: 1, branding: 1 },
-  considered: { crm: 3, seo: 2, funnels: 2 },
+  product: { sem: 3, meta: 2, crm: 1, "web-design": 1 },
+  considered: { crm: 3, seo: 2, "web-design": 2 },
   studio: { booking: 3, meta: 2, apps: 1 },
   other: {},
 };
@@ -311,7 +317,7 @@ const BY_BRANCHES: Record<string, Weights> = {
 const BY_TEAM: Record<string, Weights> = {
   none: { ai: 3, whatsapp: 3, booking: 2 },
   one: { ai: 2, crm: 2, whatsapp: 1, booking: 1 },
-  small: { crm: 2, funnels: 1, software: 1 },
+  small: { crm: 2, "web-design": 1, software: 1 },
   big: { software: 2, apps: 2, crm: 1 },
   agency: { booking: 3, crm: 3, whatsapp: 2 },
 };
@@ -446,7 +452,7 @@ export function diagnose(a: Answers, business?: string): Diagnosis {
     (running.includes("sem") || running.includes("meta")) &&
     a.leak.includes("nobite")
   ) {
-    bump(w, "funnels", 3);
+    bump(w, "web-design", 3);
   }
 
   const caught = a.capture.includes("none") ? [] : a.capture;
@@ -475,7 +481,7 @@ export function diagnose(a: Answers, business?: string): Diagnosis {
   /* Every path through the engine scores at least four services, but a
      recommendation list is not a place to trust arithmetic blindly. */
   if (services.length === 0) {
-    for (const id of ["funnels", "whatsapp", "crm"]) {
+    for (const id of ["web-design", "whatsapp", "crm"]) {
       const s = byId.get(id);
       if (s) services.push(s);
     }
@@ -535,10 +541,9 @@ function buildMoves(
   const moves: Move[] = [];
 
   /* Keyed on whether the top service is a DEMAND channel, not on its group.
-     Funnels, branding and video are grouped under "attract" but they are
-     conversion work — telling someone whose complaint is "they visit and
-     leave" that not enough people are arriving contradicts the answer she
-     just gave us. */
+     Web design and video are grouped under "attract" but they are conversion
+     work — telling someone whose complaint is "they visit and leave" that not
+     enough people are arriving contradicts the answer she just gave us. */
   const isDemand = (CHANNELS as readonly string[]).includes(top.id);
   moves.push({
     kind: "fix",

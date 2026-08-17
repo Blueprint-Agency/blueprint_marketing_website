@@ -258,47 +258,6 @@ function ArtMeta() {
   );
 }
 
-/* Funnels — a page with exactly one thing to do. */
-function ArtFunnels() {
-  return (
-    <Frame tone={3} caption="One page, one decision">
-      <div className="sa-split">
-        <div className="sa-lp">
-          <span className="sa-lp-bar" />
-          <span className="sa-lp-h" />
-          <span className="sa-line" />
-          <span className="sa-line sa-short" />
-          <span className="sa-cta is-act">
-            <WhatsAppMark size={11} />
-            Message us
-          </span>
-          <span className="sa-lp-strip">
-            <i />
-            <i />
-            <i />
-          </span>
-        </div>
-        <div className="sa-funnel">
-          {[
-            ["Lands on the page", "92%"],
-            ["Reads one offer", "70%"],
-            ["Taps the button", "48%"],
-          ].map(([label, w], n) => (
-            <span className="sa-fun-step" key={label}>
-              <i style={{ width: w }} className={n === 2 ? "is-act" : ""} />
-              <em>{label}</em>
-            </span>
-          ))}
-          <span className="sa-fun-end">
-            <WhatsAppMark size={12} />
-            Conversation started
-          </span>
-        </div>
-      </div>
-    </Frame>
-  );
-}
-
 /* Video — the shoot, cut for every placement. */
 function ArtVideo() {
   return (
@@ -340,10 +299,13 @@ function ArtVideo() {
   );
 }
 
-/* Branding — the sheet the whole business gets held to. */
-function ArtBranding() {
+/* Web design — the site, and the sheet the rest of the business is held to.
+   Was ArtBranding until the service was renamed on 2026-08-17. The drawing
+   did not need redrawing: it already put the website first among the things
+   the identity is applied to, which is the order the service now argues for. */
+function ArtWebDesign() {
   return (
-    <Frame tone={5} caption="One identity, everywhere">
+    <Frame tone={5} caption="The site, and the rules that hold it">
       <div className="sa-split">
         <div className="sa-brand">
           <span className="sa-lockup">
@@ -615,9 +577,8 @@ const ART: Record<string, () => React.JSX.Element> = {
   seo: ArtSeo,
   sem: ArtSem,
   meta: ArtMeta,
-  funnels: ArtFunnels,
   video: ArtVideo,
-  branding: ArtBranding,
+  "web-design": ArtWebDesign,
   booking: ArtBooking,
   whatsapp: ArtWhatsapp,
   crm: ArtCrm,

@@ -271,13 +271,13 @@ export default function HomePage() {
                 two whose proof is a thing you look at rather than a paragraph:
                 a film you press play on, and a website you can open. Sits
                 under the tabs rather than inside a panel: ServiceTabs renders
-                all twelve panels into the document, and a link that only
-                exists for two of them belongs outside the set.
+                every panel into the document, and a link that only exists for
+                two of them belongs outside the set.
 
                 Both are named by what the reader gets to see, not by the
-                service. "Branding" is on the tab above and in the nav; nobody
-                clicks a second button that repeats a word they have just
-                read. */}
+                service. "Web Design" is on the tab above and in the nav;
+                nobody clicks a second button that repeats a word they have
+                just read. */}
             <div className="cta-row" style={{ marginTop: 30 }}>
               <Link className="btn btn-line" href="/services/video-production">
                 Watch the films we make

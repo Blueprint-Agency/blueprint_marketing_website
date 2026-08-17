@@ -7,16 +7,18 @@ import { REBUILDS, type Rebuild } from "@/lib/rebuilds";
 import { SITE, WA } from "@/lib/site";
 
 /**
- * /services/web-design — the branding service, shown as the thing it is
- * actually bought as.
+ * /services/web-design — the web design service, and the branding work that
+ * comes with it.
  *
- * WHY THE URL DISAGREES WITH THE NAV
- * ----------------------------------
- * The nav row and the footer say "Branding" and land here. That substitution
- * is the page's opening argument rather than an accident of routing: for a
- * clinic in Cheras, the brand is not a logo sheet, it is the page a stranger
- * lands on at 11pm. lib/services.ts holds the link in SERVICE_PAGES, and the
- * first section below is what earns it.
+ * THE NAV USED TO DISAGREE WITH THE URL
+ * -------------------------------------
+ * Until 2026-08-17 the nav row and the footer said "Branding" and landed
+ * here, and the first argument section existed to earn that substitution.
+ * The service has since been renamed to Web Design, so the two now agree and
+ * the argument stands on its own: for a clinic in Cheras the brand is not a
+ * logo sheet, it is the page a stranger lands on at 11pm. Keep that section.
+ * It is no longer explaining a link, but it is still the reason a reader who
+ * came for a logo should be looking at screenshots of websites.
  *
  * THE SHAPE
  * ---------
@@ -196,9 +198,9 @@ export default function WebDesignPage() {
             Narrow column, no eyebrow: the heading is its own label and the
             hero's eyebrow is the page's only one.
 
-            This is where the URL earns itself. It has to make the case that
-            branding, for this kind of business, is mostly the website —
-            otherwise the nav says one word and the page shows another. */}
+            It makes the case that branding, for this kind of business, is
+            mostly the website — which is what tells a reader who arrived
+            wanting a logo why he is being shown sites. */}
         <section className="band">
           <div className="shell">
             <div className="col">

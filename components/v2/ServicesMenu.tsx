@@ -17,13 +17,13 @@ import { SERVICES, SERVICE_PAGES, serviceHref } from "@/lib/services";
  * learn that we do booking systems without scrolling a page they had already
  * decided to leave.
  *
- * WHY IT LISTS ALL TWELVE
+ * WHY IT LISTS ALL ELEVEN
  * -----------------------
  * The two columns are the site's own taxonomy — the same `group` split the
  * home page's two tab sets and the footer already use. A curated "core four"
- * would have to decide which eight services are not core, and that decision
+ * would have to decide which seven services are not core, and that decision
  * is not recorded anywhere; the honest version is the list we actually sell.
- * Twelve names in two columns of six is one glance, not a wall.
+ * Eleven names in two short columns is one glance, not a wall.
  *
  * EVERY ROW LANDS SOMEWHERE
  * -------------------------
@@ -150,7 +150,7 @@ export default function ServicesMenu() {
       {/* Rendered always and hidden with the `hidden` attribute, so every
           service name is in the document for a crawler and for a reader
           whose JavaScript has not run — the same rule ServiceTabs follows
-          with its twelve panels. */}
+          with its panels. */}
       <div
         ref={panelRef}
         id="nav-services-panel"

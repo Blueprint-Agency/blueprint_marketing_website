@@ -75,21 +75,6 @@ export const SERVICES: Service[] = [
     group: "attract",
   },
   {
-    id: "funnels",
-    name: "Funnel Building",
-    tagline: "One obvious next step, not a phone number",
-    body: "Most ad budget dies on the page it lands on. A funnel gives the visitor exactly one thing to do next, and makes doing it feel easy rather than like a commitment.",
-    does: [
-      "Landing pages written around one decision",
-      "Consultation and enquiry flows",
-      "Every path ending in a real WhatsApp conversation",
-      "Testing what actually gets the message sent",
-    ],
-    idealFor:
-      "Anyone spending on traffic that arrives and then does nothing.",
-    group: "attract",
-  },
-  {
     id: "video",
     name: "Video Production",
     tagline: "The thing that makes people stop",
@@ -104,17 +89,29 @@ export const SERVICES: Service[] = [
     group: "attract",
   },
   {
-    id: "branding",
-    name: "Branding",
-    tagline: "Look like the business you want to be",
-    body: "A buyer decides whether you are credible before they read a word. When you are asking someone to trust you with their face, their home or their money, looking established is not vanity.",
+    /* Was "Branding" until 2026-08-17, when the user renamed it to what it is
+       actually bought as. The page it links to has argued that substitution
+       from the day it was written — for a local business the brand is met as
+       a website first — so the nav row and the URL now agree, and the page's
+       opening section reads as the argument rather than as an apology for a
+       mismatched link.
+
+       It also absorbed the deleted "Funnel Building" service, removed on the
+       same day. The one-obvious-next-step point was the only thing that
+       service said that this one does not, so it moved into `does` below
+       rather than being dropped. */
+    id: "web-design",
+    name: "Web Design",
+    tagline: "The page is what people mean by your brand",
+    body: "Almost nobody meets your logo on its own. They meet one page, at eleven at night, on a phone, deciding whether a stranger should be trusted with their face, their home or their money. That page is the brand, and everything else is how it stays consistent.",
     does: [
-      "Identity, mark and the rules that keep it consistent",
-      "How it applies across the website, the ads and the shop itself",
+      "Sites built around what a customer actually arrives wanting to know",
+      "One obvious next step on every page, rather than a phone number",
+      "Identity, mark and the rules that keep it consistent across the ads and the shop itself",
       "Messaging that says what you do without jargon",
     ],
     idealFor:
-      "Businesses that have outgrown how they look, or are entering a more premium market.",
+      "Businesses whose site was built years ago, and anyone paying for traffic that lands somewhere that undoes it.",
     group: "attract",
   },
   {
@@ -216,12 +213,7 @@ export const SERVICES: Service[] = [
  */
 export const SERVICE_PAGES: Record<string, string> = {
   video: "/services/video-production",
-  /* Branding's page is at /web-design, not /branding, and that is deliberate.
-     The page argues that for a local business the brand is met as a website
-     first, and the whole of its proof is one site rebuilt end to end — so the
-     URL names what is actually on it. A reader clicking "Branding" in the nav
-     lands on a page whose first section explains the substitution. */
-  branding: "/services/web-design",
+  "web-design": "/services/web-design",
   booking: "/services/booking-system",
 };
 
@@ -234,8 +226,8 @@ export const SERVICE_PAGES: Record<string, string> = {
  * section into view. Deliberately NOT an element id: no element carries it,
  * so the browser jumps nowhere and ServiceTabs owns the whole behaviour.
  *
- * This is what keeps the nav's Services menu honest. Twelve rows that all
- * scroll to the same band is a menu that lies about being a menu; twelve rows
+ * This is what keeps the nav's Services menu honest. Eleven rows that all
+ * scroll to the same band is a menu that lies about being a menu; eleven rows
  * that each land on the thing they name is navigation, and each one upgrades
  * to a real page by adding a line to SERVICE_PAGES above.
  */
@@ -354,7 +346,7 @@ export const FAQ: Faq[] = [
   {
     q: "What exactly do you offer?",
     a: [
-      "Two halves of one job. The marketing that brings people in: SEO, Google Ads, Meta ads, funnels, video and branding. And the systems that stop you losing them once they arrive: booking, WhatsApp automation, CRM, apps and custom software.",
+      "Two halves of one job. The marketing that brings people in: SEO, Google Ads, Meta ads, video and web design. And the systems that stop you losing them once they arrive: booking, WhatsApp automation, CRM, apps and custom software.",
       "You can start with one and add the other later. Most businesses need both eventually, because the leak is usually on the side they were not looking at.",
     ],
   },

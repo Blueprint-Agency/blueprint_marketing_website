@@ -11,9 +11,9 @@ import ServiceArt from "./ServiceArt";
  *
  * WHY IT IS BUILT THIS WAY
  * ------------------------
- * - The deck of twelve equal cards asked the reader to compare twelve things
- *   at once and gave no room for a picture of any of them. One at a time,
- *   with the interface beside it, is the same information at a readable pace.
+ * - The deck of equal cards asked the reader to compare every service at once
+ *   and gave no room for a picture of any of them. One at a time, with the
+ *   interface beside it, is the same information at a readable pace.
  *
  * - Autoplay only runs while the block is on screen, stops the moment the
  *   reader touches anything, and never starts at all under
@@ -21,9 +21,9 @@ import ServiceArt from "./ServiceArt";
  *   reading it is a carousel that gets scrolled past.
  *
  * - Every panel is rendered into the HTML and hidden with the `hidden`
- *   attribute rather than dropped, so all twelve services stay in the
- *   document for crawlers, and the tab list names every one of them even
- *   before JavaScript runs.
+ *   attribute rather than dropped, so every service stays in the document
+ *   for crawlers, and the tab list names every one of them even before
+ *   JavaScript runs.
  */
 
 const DWELL = 7000;
@@ -216,7 +216,7 @@ export default function ServiceTabs({
             its foot without living inside any one panel. Hidden from
             assistive tech and skipped by Tab: the tab list already offers
             every service, and arrows here would only be a second, worse
-            route to the same six. */}
+            route to the same list. */}
         <div className="svt-nav" aria-hidden="true">
           <button
             type="button"
