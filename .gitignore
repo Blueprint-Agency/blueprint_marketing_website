@@ -16,3 +16,6 @@ tsconfig.tsbuildinfo
 .DS_Store
 Thumbs.db
 *.log
+
+# impeccable — local per-session edit cache, machine paths only
+.impeccable/hook.cache.json
