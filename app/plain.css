@@ -6982,6 +6982,121 @@ html {
   outline-offset: -3px;
 }
 
+/* ---------- the three jobs ----------
+   The home page's numbered list with a drawing beside every row.
+   The list half is the "Why Blueprint" device, hairline rows and a
+   mono numeral in brand blue; the drawing half is ServiceArt's
+   gradient tile, scaling off its own column. See JobArt.tsx.
+
+   340px is not a round number, it is the width the artwork was
+   designed down to: .svt-stage's note records that the mock has to
+   stay legible in a 340px column, and its type is clamped to stop
+   shrinking at exactly that point. Narrower and the interface
+   becomes texture. */
+
+.v2 .jb {
+  margin-top: 40px;
+}
+.v2 .jb-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  padding: 30px 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.v2 .jb-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.v2 .jb-n {
+  color: var(--brand-text);
+  font-size: 0.875rem;
+  padding-top: 5px;
+}
+/* Under 900px the drawing sits below its paragraph, in the copy's
+   column rather than under the numeral. Placed explicitly: auto
+   placement would drop it into column one, beneath the number. */
+.v2 .jb-art {
+  grid-column: 2;
+  margin-top: 22px;
+  container-type: inline-size;
+  --sa-aspect: 16 / 10;
+}
+@media (min-width: 900px) {
+  .v2 .jb-item {
+    grid-template-columns: auto minmax(0, 1fr) 340px;
+    column-gap: 36px;
+  }
+  .v2 .jb-art {
+    grid-column: 3;
+    grid-row: 1;
+    margin-top: 0;
+  }
+}
+
+/* Parts that only these three drawings use. Everything else in them
+   is a ServiceArt primitive, unchanged. */
+
+/* The picture at the top of a page, standing in for the photograph
+   that is actually there. Brand values rather than a grey block:
+   at this size a neutral rectangle reads as a missing image. */
+.v2 .ja-hero {
+  /* Takes the slack in the card, because on the page it stands for
+     it is the picture that takes the slack. Left to its minimum it
+     left a band of empty paper under the chips, which reads as a
+     drawing that ran out rather than as a page. */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.3em;
+  min-height: 3.6em;
+  padding: 0.6em;
+  border-radius: 0.4em;
+  background: linear-gradient(150deg, var(--brand-deep), var(--brand-mid));
+}
+.v2 .ja-hero-h {
+  width: 74%;
+  height: 0.55em;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.92);
+}
+.v2 .ja-hero-s {
+  width: 46%;
+  height: 0.35em;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.5);
+}
+.v2 .ja-who {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+/* One block of a page: what it says, then the same action again.
+   The blocks share the card's height evenly and each pushes its
+   button to its own foot, so the two actions land at a regular
+   interval down the page. That interval is the whole picture. */
+.v2 .ja-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  padding-bottom: 0.7em;
+  border-bottom: 1px solid var(--line);
+}
+.v2 .ja-block .sa-cta {
+  margin-top: auto;
+}
+.v2 .ja-block:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+/* The window fills the card rather than sitting in the top of it. */
+.v2 .ja-fill {
+  flex: 1;
+  min-height: 0;
+}
+
 /* ---------- the client switch ----------
    Three rebuilds through one stage. The row is a tablist and
    nothing else: client names, a hairline under all of them, and

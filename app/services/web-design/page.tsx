@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CTASection } from "@/components/ui/hero-dithering-card";
 import { Nav, Footer } from "@/components/v2/Chrome";
+import JobArt from "@/components/v2/JobArt";
 import RebuildTabs from "@/components/v2/RebuildTabs";
 import { REBUILDS } from "@/lib/rebuilds";
 import { SITE, WA } from "@/lib/site";
@@ -125,16 +126,19 @@ export const metadata: Metadata = {
  * reaches for "+38% conversion" and "3x more leads". PRODUCT.md records no
  * such figure, so there is none here. See the hard rules in lib/rebuilds.ts.
  */
-const MINDSET: { title: string; body: string }[] = [
+const MINDSET: { art: string; title: string; body: string }[] = [
   {
+    art: "trust",
     title: "It has to look like the safe choice",
     body: "A stranger decides whether you are credible before reading a word, on a phone, usually at night. That judgement is design doing its job, and it is the half most people mean by a website. On its own it produces a site that gets compliments and no enquiries.",
   },
   {
+    art: "step",
     title: "It has to make the next step obvious",
     body: "Every page is built around one thing to do next, put where the decision actually happens, with nothing standing between the reader and doing it. Conversion work, or CRO, is mostly the removal of reasons to hesitate. On its own it produces a page that converts the few people who happen to find it.",
   },
   {
+    art: "found",
     title: "It has to be there when someone looks",
     body: "The pages are built around what people actually type into Google, and built to stay fast and legible to a crawler long after launch. That is the SEO half, and it is the one that keeps paying. On its own it produces visitors who arrive, do not believe what they see, and go back.",
   },
@@ -297,10 +301,10 @@ export default function WebDesignPage() {
               that are absent go unnoticed until the enquiries do not come.
             </p>
 
-            <div className="why">
+            <div className="jb">
               {MINDSET.map((m, i) => (
-                <div className="why-item" key={m.title}>
-                  <span className="why-n mono" aria-hidden="true">
+                <div className="jb-item" key={m.title}>
+                  <span className="jb-n mono" aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
@@ -308,6 +312,12 @@ export default function WebDesignPage() {
                     <p className="prose" style={{ marginTop: 8 }}>
                       {m.body}
                     </p>
+                  </div>
+                  {/* The drawing is the claim, not decoration. See the note
+                      at the top of JobArt.tsx for what each one shows and
+                      why it would be wrong beside either of the others. */}
+                  <div className="jb-art">
+                    <JobArt id={m.art} />
                   </div>
                 </div>
               ))}
