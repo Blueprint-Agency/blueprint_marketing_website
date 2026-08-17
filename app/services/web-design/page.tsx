@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CTASection } from "@/components/ui/hero-dithering-card";
-import BeforeAfter from "@/components/v2/BeforeAfter";
 import { Nav, Footer } from "@/components/v2/Chrome";
-import { REBUILDS, type Rebuild } from "@/lib/rebuilds";
+import RebuildTabs from "@/components/v2/RebuildTabs";
+import { REBUILDS } from "@/lib/rebuilds";
 import { SITE, WA } from "@/lib/site";
 
 /**
@@ -22,8 +22,8 @@ import { SITE, WA } from "@/lib/site";
  *
  * THE SHAPE
  * ---------
- * Proof first, on the dark ground, before a word of argument — the same
- * decision /services/video-production makes and for the same reason. A reader
+ * Proof first, on the dark ground, before a word of argument. The same
+ * decision /services/video-production makes and for the same reason: a reader
  * who wants to know whether we can build a site can look at one we built and
  * leave, and that is the correct outcome.
  *
@@ -39,17 +39,17 @@ import { SITE, WA } from "@/lib/site";
  *    per treatment. The rebuild is organised around what a patient turns up
  *    with, which is a concern and not a treatment name.
  *
- * Between them they answer the three questions a reader arrives with — will
+ * Between them they answer the three questions a reader arrives with: will
  * you rewrite what I say, will you break what already works, and do you
- * understand my customers — and none of those is answerable without the
- * others there to contrast it against. Do not collapse them into one list of
- * improvements.
+ * understand my customers. None of those is answerable without the others
+ * there to contrast it against, which is why the three are one control with
+ * three settings rather than three unrelated case studies.
  *
  * COLOUR follows the site's rule that the ends are dark and the middle is
- * paper, with one exception this page earns: the screenshot bands are dark
- * wherever they fall, because a screenshot reads as a lit screen only when
- * it is the only lit thing in the frame. That is the same argument the film
- * screens make on the video page.
+ * paper, with one exception this page earns: the screenshot band is dark,
+ * because a screenshot reads as a lit screen only when it is the only lit
+ * thing in the frame. That is the same argument the film screens make on the
+ * video page.
  *
  * WHAT IS DELIBERATELY ABSENT
  * ---------------------------
@@ -59,89 +59,75 @@ import { SITE, WA } from "@/lib/site";
  * writing one is that there is nowhere in the codebase to put it: see the
  * hard rules at the top of lib/rebuilds.ts.
  *
- * A NOTE ON LENGTH
- * ----------------
- * This page has been too long twice, for the same reason both times: the
- * captures are whole websites, and the Vatti kitchen hood one is nearly ten
- * thousand pixels on its own. It ran to seven pairs and 33,000px on
- * 2026-08-15 before the user cut Vatti's four remaining category pages. It
- * still ran to about 15,000px of screenshot after that, and the user called
- * it long again on 2026-08-17.
+ * WHAT WAS CUT ON 2026-08-17, AND WHAT IT COST
+ * --------------------------------------------
+ * This page has been too long three times. It ran to seven pairs and
+ * 33,000px before Vatti's four remaining category pages came out. It still
+ * ran to about 15,000px of screenshot after that, which is what putting each
+ * capture in a scrolling window of its own fixed. Then the user cut two
+ * things at once: the three stacked rebuild sections became one tabbed stage,
+ * and the three Was / Now lists went entirely.
  *
- * The fix was not to show less. Each capture now scrolls inside a window of
- * its own, so four pairs occupy about 2,600px instead of 15,000, and every
- * pixel of every capture is still in the document. See BeforeAfter.tsx, in
- * particular the note on why the two windows in a pair are different
- * heights, which is the one detail an edit here is most likely to flatten.
- *
- * The other thing that keeps it navigable: a rebuild with more than one page
- * carries an index that jumps to its pairs.
+ * The Was / Now lists were the page's only checkable claims. Hard rule 2 in
+ * lib/rebuilds.ts exists to make every one of them point at something a
+ * reader can see in the capture above it, and eighteen rows of that is a lot
+ * of argument to remove. The `changes` data is still on every rebuild in that
+ * file, unrendered, and putting the lists back is a matter of mapping over it
+ * again. The screenshots now carry the whole case on their own.
  *
  * If pages are ever added or removed, check the counted nouns. "Three
- * rebuilds, four pages between them" in the lead, and "the two pages above"
- * in each change list, are counted off REBUILDS by hand and are the first
- * things to go stale.
+ * rebuilds, four pages between them" in the lead is counted off REBUILDS by
+ * hand and is the first thing here to go stale.
  */
 
 export const metadata: Metadata = {
   title: "Web design & branding",
   description:
-    "Branding for a local business is mostly the website. Three rebuilds shown in full — a chiropractic clinic, a kitchen appliance brand and a nine-branch aesthetic clinic — every page before and after, top to bottom, nothing cropped.",
+    "Branding for a local business is mostly the website. Three rebuilds shown in full: a chiropractic clinic, a kitchen appliance brand and a nine-branch aesthetic clinic, every page before and after, top to bottom, nothing cropped.",
   alternates: { canonical: "/services/web-design" },
   openGraph: {
     title: "Web design & branding · Blueprint",
     description:
-      "Two client sites rebuilt, shown before and after, top to bottom, with the differences you can check against them.",
+      "Client sites rebuilt, shown before and after, top to bottom, with nothing cropped out.",
     url: "/services/web-design",
     type: "article",
   },
 };
 
-/** The pairs for one rebuild, plus its index when there is more than one. */
-function Pairs({ rebuild, eager }: { rebuild: Rebuild; eager?: boolean }) {
-  const many = rebuild.pages.length > 1;
-
-  return (
-    <>
-      {/* Only when there is something to index. One page does not need a
-          contents list pointing at itself. */}
-      {many && (
-        <nav className="pg-index" aria-label={`${rebuild.client} pages`}>
-          <span className="pg-index-label small">
-            {rebuild.pages.length} pages
-          </span>
-          <ul>
-            {rebuild.pages.map((p) => (
-              <li key={p.slug}>
-                <a href={`#${rebuild.slug}-${p.slug}`}>{p.name}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-
-      {rebuild.pages.map((pair, i) => (
-        <section
-          className="pg"
-          id={`${rebuild.slug}-${pair.slug}`}
-          key={pair.slug}
-          aria-label={`${rebuild.client}, ${pair.name}`}
-        >
-          {many && <h4 className="pg-name">{pair.name}</h4>}
-          <BeforeAfter
-            pair={pair}
-            beforeNote="The site we were handed"
-            afterNote="The rebuild"
-            eager={eager && i === 0}
-          />
-        </section>
-      ))}
-    </>
-  );
-}
-
 export default function WebDesignPage() {
   const [clinic, brand, aesthetic] = REBUILDS;
+
+  /* One line per rebuild, saying what that one demonstrates. Two of the three
+     are the headings the deleted Was / Now bands used to carry; the clinic's
+     is the same point its band made, which was that a rewrite is not a coat
+     of paint. The italic word in each carries no descender, per the display
+     rule the rest of the site follows. */
+  const tabs = [
+    {
+      rebuild: clinic,
+      finding: (
+        <>
+          The words changed, not just the <em>look</em>.
+        </>
+      ),
+    },
+    {
+      rebuild: brand,
+      finding: (
+        <>
+          Sometimes the words are already <em>right</em>.
+        </>
+      ),
+    },
+    {
+      rebuild: aesthetic,
+      finding: (
+        <>
+          People arrive with a problem, not a treatment <em>name</em>.
+        </>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -149,8 +135,9 @@ export default function WebDesignPage() {
 
       <main id="main">
         {/* ---------------- the opening ----------------
-            One claim, one action, and then the work itself, on the ground
-            the nav is already painted. */}
+            One claim and one action. The work itself follows in the band
+            below rather than inside this one, so the headline and the
+            WhatsApp button own the first screen. */}
         <section className="svc-open">
           <div className="shell">
             <Link className="back-link" href="/#services">
@@ -168,8 +155,8 @@ export default function WebDesignPage() {
                 contain the words anybody searches for, and an H1 is the one
                 line on a page that is read by a person and a crawler at the
                 same time. "Web design" now opens it, and the argument the old
-                line made survives in the section below, which is where it was
-                always doing the real work.
+                line made survives in the section below the proof, which is
+                where it was always doing the real work.
 
                 The eyebrow above lost "web design" in the same edit, so the
                 two lines do not say it twice in a row. It still carries the
@@ -195,24 +182,14 @@ export default function WebDesignPage() {
               </a>
             </div>
           </div>
+        </section>
 
+        {/* ---------------- the proof ----------------
+            One stage, three clients. See RebuildTabs.tsx for what a tab
+            costs a page like this one and why it was taken anyway. */}
+        <section className="band band-shots" id="rebuilds">
           <div className="shell">
-            <div className="ba-head">
-              <h2 className="h3">{clinic.client}</h2>
-              <p className="small ba-meta">
-                {clinic.sector} · {clinic.place}
-              </p>
-              <p className="prose ba-brief">{clinic.brief}</p>
-            </div>
-
-            {/* Two static captures at their full length — see the note at the
-                top of BeforeAfter.tsx for what this replaced and why.
-
-                The notes under BEFORE and AFTER are the only labelling the
-                pair gets. They name what each screen is and stop: a caption
-                explaining what the reader is supposed to conclude from a
-                picture is a caption doing the picture's job badly. */}
-            <Pairs rebuild={clinic} eager />
+            <RebuildTabs tabs={tabs} />
           </div>
         </section>
 
@@ -249,97 +226,11 @@ export default function WebDesignPage() {
           </div>
         </section>
 
-        {/* ---------------- what changed, clinic ----------------
-            Every row is quoted or pointed at rather than described, and each
-            one is visible in the screenshots above. That constraint is
-            enforced in lib/rebuilds.ts and it is what keeps this section from
-            becoming the usual list of adjectives — "modern", "clean",
-            "user-friendly" — that could be written without looking at either
-            site. */}
-        <Changes rebuild={clinic} eyebrow="What actually changed">
-          <h2 className="h2" style={{ maxWidth: "20ch" }}>
-            Not a new coat of <em>paint</em>.
-          </h2>
-          <p className="prose" style={{ marginTop: 22 }}>
-            Six differences you can check against the two screens above. None
-            of them are about taste.
-          </p>
-        </Changes>
-
-        {/* ---------------- the second rebuild ----------------
-            Its own dark band rather than a second helping of the opening.
-            The screens want the dark ground wherever they land; the band
-            around them is a plain one. */}
-        <section className="band band-shots">
-          <div className="shell">
-            <div className="ba-head ba-head-lead">
-              <h2 className="h2" style={{ maxWidth: "22ch" }}>
-                Sometimes the words are already <em>right</em>.
-              </h2>
-              <p className="prose ba-brief" style={{ marginTop: 20 }}>
-                {brand.brief}
-              </p>
-              <p className="small ba-meta" style={{ marginTop: 18 }}>
-                {brand.client} · {brand.sector} · {brand.place}
-              </p>
-            </div>
-
-            <Pairs rebuild={brand} />
-          </div>
-        </section>
-
-        {/* ---------------- what changed, brand ---------------- */}
-        <Changes rebuild={brand}>
-          <h2 className="h2" style={{ maxWidth: "24ch" }}>
-            The titles stayed. Everything under them <em>moved</em>.
-          </h2>
-          <p className="prose" style={{ marginTop: 22 }}>
-            Six differences you can check against the two pages above. The
-            first one is that nothing changed at all.
-          </p>
-        </Changes>
-
-        {/* ---------------- the third rebuild ----------------
-            The third distinct shape, and the reason it is worth a section
-            of its own rather than a third set of screenshots: this one is
-            an information architecture job. The old site was a hand-built
-            static file per treatment, so it was organised around the
-            clinic's own vocabulary. What changed is the question the page
-            asks first. */}
-        <section className="band band-shots">
-          <div className="shell">
-            <div className="ba-head ba-head-lead">
-              <h2 className="h2" style={{ maxWidth: "24ch" }}>
-                People arrive with a problem, not a treatment <em>name</em>.
-              </h2>
-              <p className="prose ba-brief" style={{ marginTop: 20 }}>
-                {aesthetic.brief}
-              </p>
-              <p className="small ba-meta" style={{ marginTop: 18 }}>
-                {aesthetic.client} · {aesthetic.sector} · {aesthetic.place}
-              </p>
-            </div>
-
-            <Pairs rebuild={aesthetic} />
-          </div>
-        </section>
-
-        {/* ---------------- what changed, aesthetic ---------------- */}
-        <Changes rebuild={aesthetic}>
-          <h2 className="h2" style={{ maxWidth: "22ch" }}>
-            Same clinic. Different <em>question</em>.
-          </h2>
-          <p className="prose" style={{ marginTop: 22 }}>
-            Six differences you can check against the two screens above. Most
-            of them are about what the page asks you first.
-          </p>
-        </Changes>
-
         {/* ---------------- the position ----------------
             The same commitment as WHY[1] on the home page, pointed at this
             service. A framed inset across the full shell so it does not read
-            as a third helping of the 780px column above it. */}
-        <section className="band">
+            as a second helping of the column above it. */}
+        <section className="band band-sunk">
           <div className="shell">
             <div className="note svc-claim">
               <h2 className="h2" style={{ maxWidth: "22ch" }}>
@@ -371,56 +262,5 @@ export default function WebDesignPage() {
 
       <Footer />
     </>
-  );
-}
-
-/**
- * The Was / Now list for one rebuild.
- *
- * The eyebrow is optional and only the first of the three carries one. Three
- * bands that each open "WHAT ACTUALLY CHANGED" above a heading is a label
- * printed for the layout rather than for the reader: by the second one she
- * knows what a Was / Now list is, and the heading over it already says what
- * this particular one is about.
- */
-function Changes({
-  rebuild,
-  eyebrow,
-  children,
-}: {
-  rebuild: Rebuild;
-  eyebrow?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="band band-sunk">
-      <div className="shell">
-        <div className="col">
-          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-          {children}
-        </div>
-
-        <ol className="chg">
-          {rebuild.changes.map((c, i) => (
-            <li className="chg-row" key={c.label}>
-              <span className="chg-n mono" aria-hidden="true">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="chg-label">{c.label}</h3>
-              <div className="chg-pair">
-                <p className="chg-side chg-was">
-                  <span className="chg-tag">Was</span>
-                  {c.before}
-                </p>
-                <p className="chg-side chg-now">
-                  <span className="chg-tag">Now</span>
-                  {c.after}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
   );
 }

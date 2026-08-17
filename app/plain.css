@@ -6765,6 +6765,14 @@ html {
 .v2 .band-shots :focus-visible {
   outline-color: var(--act);
 }
+/* The proof band sits directly under the dark opening, on the same
+   ground. Both paddings would put a quarter of a screen of black
+   between the hero's action and the first capture, and no edge in
+   the middle of it to explain the gap. The opening's own bottom
+   padding is the whole separation. */
+.v2 .svc-open + .band-shots {
+  padding-top: 0;
+}
 
 .v2 .ba-head {
   margin-top: 64px;
@@ -6968,86 +6976,89 @@ html {
   outline-offset: -3px;
 }
 
-/* ---------- what changed ----------
-   A numbered list whose every row is a pair. "Was" is set in the
-   muted ink and "Now" in the full one, so the eye lands on the
-   right-hand half first and the left reads as the thing being
-   left behind. The blue rule on the "Now" side is the brand
-   colour, not the action green: green is reserved for the
-   WhatsApp button and never appears as decoration. */
+/* ---------- the client switch ----------
+   Three rebuilds through one stage. The row is a tablist and
+   nothing else: client names, a hairline under all of them, and
+   two pixels of the type colour under the one that is showing.
+   No pill, no fill, no box. The captures below are the only lit
+   objects in this band and a decorated control would compete
+   with them for the same attention.
 
-.v2 .chg {
-  margin: 44px 0 0;
-  padding: 0;
-  list-style: none;
+   The Was / Now lists that used to follow each rebuild were cut
+   on 2026-08-17 and their rules went with them. The data is
+   still on every rebuild in lib/rebuilds.ts, so the markup and
+   these rules are the only things that would need writing again.
+
+   The line that used to sit under the head is gone too: with the
+   tablist's own hairline directly above it, the head sat between
+   two rules a few lines apart and read as a boxed row. */
+
+.v2 .rbt-bar {
   border-bottom: 1px solid var(--line);
 }
-
-.v2 .chg-row {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 18px;
-  row-gap: 14px;
-  padding: 26px 0;
-  border-top: 1px solid var(--line);
+/* Long client names on a narrow screen scroll rather than wrap:
+   a wrapped tablist puts the hairline through the middle of the
+   control. The scrollbar is hidden because the row is three items
+   and the third is always partly visible, which says more than a
+   bar would. */
+.v2 .rbt-list {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.v2 .rbt-list::-webkit-scrollbar {
+  display: none;
 }
 
-.v2 .chg-n {
-  grid-column: 1;
-  grid-row: 1;
-  color: var(--brand-text);
-  padding-top: 3px;
-}
-
-.v2 .chg-label {
-  grid-column: 2;
-  grid-row: 1;
-  margin: 0;
+.v2 .rbt-tab {
+  flex: none;
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  /* Sits the tab's own rule on top of the bar's hairline rather
+     than one pixel under it. */
+  margin-bottom: -1px;
+  padding: 0 0 13px;
+  font: inherit;
   font-size: 1.0625rem;
-  font-weight: 700;
+  font-weight: 550;
   letter-spacing: -0.012em;
+  line-height: 1.3;
+  color: var(--ink-mute);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.14s ease-out,
+    border-color 0.14s ease-out;
+}
+.v2 .rbt-tab:hover {
   color: var(--ink);
 }
-
-.v2 .chg-pair {
-  grid-column: 2;
-  grid-row: 2;
-  display: grid;
-  gap: 16px;
+.v2 .rbt-tab.is-on {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
 }
-@media (min-width: 860px) {
-  .v2 .chg-pair {
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+.v2 .rbt-tab:focus-visible {
+  outline-offset: 3px;
+}
+
+.v2 .rbt-panel .ba-head {
+  margin-top: 30px;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+/* The first pair follows the head directly, so it does not need
+   the 56px a second pair inside the same panel does. */
+.v2 .rbt-panel .pg:first-of-type {
+  margin-top: 34px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .rbt-tab {
+    transition: none;
   }
-}
-
-.v2 .chg-side {
-  margin: 0;
-  padding-left: 15px;
-  border-left: 2px solid var(--line-strong);
-  font-size: 0.9375rem;
-  line-height: 1.6;
-}
-.v2 .chg-was {
-  color: var(--ink-mute);
-}
-.v2 .chg-now {
-  color: var(--ink);
-  border-left-color: var(--brand-text);
-}
-
-.v2 .chg-tag {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 0.625rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-.v2 .chg-now .chg-tag {
-  color: var(--brand-text);
 }
 
 /* ============================================================
