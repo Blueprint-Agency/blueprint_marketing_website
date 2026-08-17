@@ -314,11 +314,11 @@ export default function WebDesignPage() {
                     </p>
                   </div>
                   {/* The drawing is the claim, not decoration. See the note
-                      at the top of JobArt.tsx for what each one shows and
-                      why it would be wrong beside either of the others. */}
-                  <div className="jb-art">
-                    <JobArt id={m.art} />
-                  </div>
+                      at the top of JobArt.tsx for what each one shows, why
+                      it would be wrong beside either of the others, and why
+                      it renders its own column wrapper: the wrapper carries
+                      the class its observer sets. */}
+                  <JobArt id={m.art} />
                 </div>
               ))}
             </div>

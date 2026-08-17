@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 /**
  * One illustration per job in the three-jobs section of /services/web-design.
  *
@@ -40,6 +44,27 @@
  *    decision might be made, not one button on a contact page.
  *  - FOUND draws the search result, because being found is not a property
  *    of your site, it is a position on somebody else's page.
+ *
+ * EACH ONE BUILDS ITSELF WHEN THE READER REACHES IT
+ * -------------------------------------------------
+ * ServiceArt's tiles already animate on arrival, and the mechanism is free
+ * there: its panels are hidden with the `hidden` attribute, which is
+ * display:none, and an element that is display:none restarts its animations
+ * when it is shown. These three are never hidden, so all of that motion was
+ * playing at load, four thousand pixels below the fold, and was finished
+ * before anybody could see it.
+ *
+ * So this is a client component for one reason: an IntersectionObserver that
+ * says when the tile is on screen. `is-armed` holds the shared entry
+ * animations, `is-in` releases them and starts the highlight this tile is
+ * for. Three states rather than two, because the holding class is what makes
+ * the degradation correct: without JavaScript nothing is ever armed, the
+ * animations play at load exactly as they did before, and the reader who
+ * scrolls down finds a drawn tile rather than an empty one. Never gate the
+ * animations on the absence of `is-in` alone.
+ *
+ * A tile already on screen at mount skips straight to `is-in`, so nothing
+ * paints in the held state on a short viewport.
  */
 
 import { GoogleG, WhatsAppMark } from "./Marks";
@@ -179,5 +204,42 @@ const ART: Record<string, () => React.JSX.Element> = {
 
 export default function JobArt({ id }: { id: string }) {
   const Art = ART[id];
-  return Art ? <Art /> : null;
+  const ref = useRef<HTMLDivElement>(null);
+  const [phase, setPhase] = useState<"" | "is-armed" | "is-in">("");
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    /* Already up the page when this runs, so there is nothing to wait for
+       and arming it would only paint a held frame. */
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+      setPhase("is-in");
+      return;
+    }
+
+    setPhase("is-armed");
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          setPhase("is-in");
+          io.disconnect();
+        }
+      },
+      /* A third of the tile. Less fires while it is still a sliver at the
+         bottom edge and the build happens off screen again. */
+      { threshold: 0.34 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  if (!Art) return null;
+
+  return (
+    <div className={`jb-art ${phase}`} ref={ref}>
+      <Art />
+    </div>
+  );
 }

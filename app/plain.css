@@ -7097,6 +7097,107 @@ html {
   min-height: 0;
 }
 
+/* ---------- the three tiles building themselves ----------
+   ServiceArt's tiles animate on arrival for free: its panels are
+   hidden with the `hidden` attribute, and display:none restarts an
+   animation when the element comes back. These three are never
+   hidden, so all of that motion used to run at page load, four
+   thousand pixels below the fold, and was over before anybody could
+   see it.
+
+   `is-armed` holds it, `is-in` releases it. Both come from the
+   observer in JobArt.tsx, and the holding class is what keeps the
+   no-JavaScript case right: nothing is ever armed, so the shared
+   animations play at load exactly as they did before and the tile
+   is drawn by the time it is reached. Do not rewrite these as
+   :not(.is-in).
+
+   HELD WITH animation-name, NOT play-state. A paused animation
+   holds its `both` fill, which for these elements is the invisible
+   first frame; if the observer never ran, the tile would be an
+   empty white card. Dropping the name leaves every element in its
+   own natural state, which is the finished one. */
+.v2 .jb-art.is-armed .sa-line,
+.v2 .jb-art.is-armed .sa-chip,
+.v2 .jb-art.is-armed .sa-hit,
+.v2 .jb-art.is-armed .sa-pill {
+  animation-name: none;
+}
+
+/* 01, TRUST. The picture, then the facts, then the people: the order
+   the page is read in, and the order a stranger checks it in. The
+   chips between them are ServiceArt's own stagger, unchanged. */
+.v2 .jb-art.is-in .ja-hero {
+  animation: sa-item 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.08s;
+}
+.v2 .jb-art.is-in .ja-who {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.74s;
+}
+
+/* 02, THE STEP. The two buttons land in sequence, and the ring says
+   which element the paragraph is about. ONE PASS, NOT A LOOP: the
+   only looping motion in this world is the live dot, and it means
+   the campaign is running. A pulsing CTA would claim that and mean
+   nothing.
+
+   The green is the action green at the alpha the other three green
+   rings on this site use. It is not decoration here either: the
+   thing being ringed is a WhatsApp button. */
+.v2 .ja-block .sa-cta {
+  position: relative;
+}
+.v2 .jb-art.is-in .ja-block .sa-cta {
+  animation: sa-pop 0.44s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.46s;
+}
+.v2 .jb-art.is-in .ja-block:nth-child(2) .sa-cta {
+  animation-delay: 0.72s;
+}
+.v2 .jb-art.is-in .ja-block .sa-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: ja-ring 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.68s;
+}
+.v2 .jb-art.is-in .ja-block:nth-child(2) .sa-cta::after {
+  animation-delay: 0.94s;
+}
+@keyframes ja-ring {
+  from {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+  }
+  to {
+    box-shadow: 0 0 0 0.95em rgba(37, 211, 102, 0);
+  }
+}
+
+/* 03, FOUND. The results rank in on ServiceArt's own stagger and the
+   tag lands after the first one has arrived, because the tag is the
+   claim: that position is yours. */
+.v2 .jb-art.is-in .sa-tag {
+  animation: sa-pop 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.68s;
+}
+
+/* The world's rule collapses duration but not delay, so a staggered
+   set would still arrive in sequence over a second and a half. */
+@media (prefers-reduced-motion: reduce) {
+  .v2 .jb-art.is-in .ja-hero,
+  .v2 .jb-art.is-in .ja-who,
+  .v2 .jb-art.is-in .ja-block .sa-cta,
+  .v2 .jb-art.is-in .sa-tag {
+    animation-delay: 0s !important;
+  }
+  .v2 .jb-art.is-in .ja-block .sa-cta::after {
+    animation: none !important;
+  }
+}
+
 /* ---------- the client switch ----------
    Three rebuilds through one stage. The row is a tablist and
    nothing else: client names, a hairline under all of them, and
