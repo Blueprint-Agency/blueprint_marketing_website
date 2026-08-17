@@ -49,7 +49,16 @@ import { SITE, WA } from "@/lib/site";
  * paper, with one exception this page earns: the screenshot band is dark,
  * because a screenshot reads as a lit screen only when it is the only lit
  * thing in the frame. That is the same argument the film screens make on the
- * video page.
+ * video page. The two sunk bands at the foot are the middle's only ground
+ * change and they carry the argument sections, so nothing between the proof
+ * and the close is a second lit object competing with the captures.
+ *
+ * THE ORDER OF THE ARGUMENT SECTIONS
+ * ----------------------------------
+ * What a website is (the brand is the page), then what makes one work (the
+ * three jobs), then who does the work (the position). Each answers the
+ * question the one before it raises, so they do not survive being reordered
+ * or read as three separate opinions.
  *
  * WHAT IS DELIBERATELY ABSENT
  * ---------------------------
@@ -93,6 +102,43 @@ export const metadata: Metadata = {
     type: "article",
   },
 };
+
+/**
+ * The three jobs a site has to do at once.
+ *
+ * Added 2026-08-17. The user asked for the mindset stated on the page: that
+ * we build design, conversion and search as one job, and that the point of
+ * the site is enquiries rather than compliments.
+ *
+ * WHY EACH ONE CARRIES ITS OWN FAILURE
+ * ------------------------------------
+ * "We do all three" is what every agency says, and said on its own it is
+ * unfalsifiable and therefore worth nothing. What is checkable is what each
+ * discipline produces when it is the only one present, and every reader has
+ * seen at least one of the three: the beautiful site nobody enquires
+ * through, the sharp landing page nobody finds, the page that ranks and is
+ * not believed. Naming the failure is what turns the claim into an argument,
+ * so the second half of each item is the load-bearing half. Do not trim it
+ * back to a description of the discipline.
+ *
+ * NO NUMBERS. This is the section of a web design page where the genre
+ * reaches for "+38% conversion" and "3x more leads". PRODUCT.md records no
+ * such figure, so there is none here. See the hard rules in lib/rebuilds.ts.
+ */
+const MINDSET: { title: string; body: string }[] = [
+  {
+    title: "It has to look like the safe choice",
+    body: "A stranger decides whether you are credible before reading a word, on a phone, usually at night. That judgement is design doing its job, and it is the half most people mean by a website. On its own it produces a site that gets compliments and no enquiries.",
+  },
+  {
+    title: "It has to make the next step obvious",
+    body: "Every page is built around one thing to do next, put where the decision actually happens, with nothing standing between the reader and doing it. Conversion work, or CRO, is mostly the removal of reasons to hesitate. On its own it produces a page that converts the few people who happen to find it.",
+  },
+  {
+    title: "It has to be there when someone looks",
+    body: "The pages are built around what people actually type into Google, and built to stay fast and legible to a crawler long after launch. That is the SEO half, and it is the one that keeps paying. On its own it produces visitors who arrive, do not believe what they see, and go back.",
+  },
+];
 
 export default function WebDesignPage() {
   const [clinic, brand, aesthetic] = REBUILDS;
@@ -223,6 +269,58 @@ export default function WebDesignPage() {
                 in a form.
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* ---------------- the three jobs ----------------
+            The mindset, in the home page's own device: the numbered hairline
+            list the "Why Blueprint" band uses, down to the mono numeral in
+            brand blue. Reused rather than reinvented, so the two pages read
+            as one site and this section adds no CSS of its own.
+
+            It is a list and the section above it is a prose column, which is
+            what separates them; the sunk ground separates the pair from the
+            paper band above. Three cards in a row would have been the easy
+            version and it would have said "three services" when the whole
+            argument is that they are one job.
+
+            Sits after the brand argument and before the position: what a
+            website is, then what makes one work, then who does the work. */}
+        <section className="band band-sunk">
+          <div className="shell">
+            <h2 className="h2" style={{ maxWidth: "18ch" }}>
+              Looking good is one of <em>three</em> jobs.
+            </h2>
+            <p className="prose" style={{ marginTop: 22, maxWidth: "62ch" }}>
+              A site earns its keep when three things are true at the same
+              time. Most are built by people who do one of them, and the two
+              that are absent go unnoticed until the enquiries do not come.
+            </p>
+
+            <div className="why">
+              {MINDSET.map((m, i) => (
+                <div className="why-item" key={m.title}>
+                  <span className="why-n mono" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="h3">{m.title}</h3>
+                    <p className="prose" style={{ marginTop: 8 }}>
+                      {m.body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* The payoff line, and the reason the section exists. Sits under
+                the list rather than in the lead above it: the three failures
+                have to be read before "all three" means anything. */}
+            <p className="prose" style={{ marginTop: 34, maxWidth: "62ch" }}>
+              Done together they have one job, and it is not decoration.
+              Somebody looking for what you sell finds you, believes you, and
+              sends the message.
+            </p>
           </div>
         </section>
 

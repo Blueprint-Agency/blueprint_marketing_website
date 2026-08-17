@@ -137,6 +137,12 @@ html {
   background: var(--paper-sunk);
   border-block: 1px solid var(--line);
 }
+/* Two sunk bands in a row would meet border to border and draw a 2px seam,
+   which is the one weight this system does not use anywhere else. The first
+   band's own bottom edge is the separator. */
+.v2 .band-sunk + .band-sunk {
+  border-top: 0;
+}
 
 .v2 .rule {
   border: 0;
