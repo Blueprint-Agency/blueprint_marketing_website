@@ -152,10 +152,24 @@ export default function WebDesignPage() {
             {/* The italic phrase carries no descenders, which is the rule
                 every display line on this site follows: the display
                 line-heights are 0.98 and 1.04 and a true italic at this
-                weight hangs its g / y / p below the box they leave. */}
-            <p className="eyebrow svc-eyebrow">Branding &amp; web design</p>
+                weight hangs its g / y / p below the box they leave.
+
+                THE H1 NAMES THE SERVICE, ON PURPOSE (2026-08-17)
+                It used to read "Nobody meets your brand. They meet your
+                website." — a better sentence and a worse heading. It did not
+                contain the words anybody searches for, and an H1 is the one
+                line on a page that is read by a person and a crawler at the
+                same time. "Web design" now opens it, and the argument the old
+                line made survives in the section below, which is where it was
+                always doing the real work.
+
+                The eyebrow above lost "web design" in the same edit, so the
+                two lines do not say it twice in a row. It still carries the
+                branding half, because that work is real and the H1 no longer
+                mentions it. */}
+            <p className="eyebrow svc-eyebrow">Websites &amp; branding</p>
             <h1 className="h1" style={{ maxWidth: "17ch" }}>
-              Nobody meets your brand. They meet your <em>website</em>.
+              Web design for the page people <em>decide</em> on.
             </h1>
             <p className="lead svc-lead">
               Identity, messaging and the site all of it lands on. Below are
