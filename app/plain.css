@@ -7124,6 +7124,10 @@ html {
   animation-name: none;
 }
 
+/* ---------- the build ----------
+   One pass each, on arrival, in the order the tile's own argument
+   runs in. */
+
 /* 01, TRUST. The picture, then the facts, then the people: the order
    the page is read in, and the order a stranger checks it in. The
    chips between them are ServiceArt's own stagger, unchanged. */
@@ -7135,19 +7139,7 @@ html {
   animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 0.74s;
 }
-
-/* 02, THE STEP. The two buttons land in sequence, and the ring says
-   which element the paragraph is about. ONE PASS, NOT A LOOP: the
-   only looping motion in this world is the live dot, and it means
-   the campaign is running. A pulsing CTA would claim that and mean
-   nothing.
-
-   The green is the action green at the alpha the other three green
-   rings on this site use. It is not decoration here either: the
-   thing being ringed is a WhatsApp button. */
-.v2 .ja-block .sa-cta {
-  position: relative;
-}
+/* 02, THE STEP. The two buttons land in sequence. */
 .v2 .jb-art.is-in .ja-block .sa-cta {
   animation: sa-pop 0.44s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 0.46s;
@@ -7155,37 +7147,109 @@ html {
 .v2 .jb-art.is-in .ja-block:nth-child(2) .sa-cta {
   animation-delay: 0.72s;
 }
+/* 03, FOUND. The tag lands after the first result has, because the
+   tag is the claim: that position is yours. */
+.v2 .jb-art.is-in .sa-tag {
+  animation: sa-pop 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.68s;
+}
+
+/* ---------- the loops ----------
+   The user asked for looping motion on 2026-08-17, over the note
+   that used to sit here saying these were one-pass on purpose. So
+   the rule this world had, that the only loop is the live dot and it
+   means a campaign is running, now has these three next to it. What
+   keeps them from becoming wallpaper is that each one points at the
+   single element its paragraph is about, and nothing else in the
+   tile moves:
+
+     01  the three facts, checked one after another, which is what a
+         stranger deciding about you actually does
+     02  the action, twice, because the claim is that it is at the
+         foot of every block rather than on a contact page
+     03  the position, because the position is the claim
+
+   THREE THINGS KEEP THEM QUIET, AND ALL THREE ARE LOAD-BEARING:
+
+   1. They run only while the tile is on screen. `is-in` comes off
+      when it leaves, which stops every loop below. See the note in
+      JobArt.tsx about why the observer no longer disconnects.
+   2. Every cycle is mostly rest. The ring itself takes under a third
+      of the period; the remainder is the element sitting still.
+   3. The three periods are 5s, 3.6s and 4.4s. Nothing divides into
+      anything else, so the tiles never fall into step and start
+      reading as one pulsing block.
+
+   They begin after the build has finished rather than over it. */
+
+/* A ring, in the colour of whatever it is pointing at. Both values
+   are the ones already written into this file: the action green of
+   .btn-act's focus ring, and the brand blue .sa-hit.is-you tints
+   itself with. */
+@keyframes ja-ring-act {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.62);
+  }
+  30%,
+  100% {
+    box-shadow: 0 0 0 1.15em rgba(37, 211, 102, 0);
+  }
+}
+@keyframes ja-ring-brand {
+  0% {
+    box-shadow: 0 0 0 0 rgba(30, 79, 224, 0.5);
+  }
+  16%,
+  100% {
+    box-shadow: 0 0 0 0.75em rgba(30, 79, 224, 0);
+  }
+}
+
+.v2 .jb-art .sa-chip,
+.v2 .jb-art .sa-hit.is-you,
+.v2 .ja-block .sa-cta {
+  position: relative;
+}
+.v2 .jb-art.is-in .sa-chip::after,
+.v2 .jb-art.is-in .sa-hit.is-you::after,
 .v2 .jb-art.is-in .ja-block .sa-cta::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  animation: ja-ring 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 0.68s;
+}
+
+/* 01. Each fact in turn, then four seconds of nothing. */
+.v2 .jb-art.is-in .sa-chip::after {
+  animation: ja-ring-brand 5s cubic-bezier(0.16, 1, 0.3, 1) 1.25s infinite;
+}
+.v2 .jb-art.is-in .sa-chip:nth-child(2)::after {
+  animation-delay: 1.6s;
+}
+.v2 .jb-art.is-in .sa-chip:nth-child(3)::after {
+  animation-delay: 1.95s;
+}
+
+/* 02. The first ring lands with the button rather than after it, so
+   the build hands straight over to the loop. */
+.v2 .jb-art.is-in .ja-block .sa-cta::after {
+  animation: ja-ring-act 3.6s cubic-bezier(0.16, 1, 0.3, 1) 0.68s infinite;
 }
 .v2 .jb-art.is-in .ja-block:nth-child(2) .sa-cta::after {
-  animation-delay: 0.94s;
-}
-@keyframes ja-ring {
-  from {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
-  }
-  to {
-    box-shadow: 0 0 0 0.95em rgba(37, 211, 102, 0);
-  }
+  animation-delay: 0.96s;
 }
 
-/* 03, FOUND. The results rank in on ServiceArt's own stagger and the
-   tag lands after the first one has arrived, because the tag is the
-   claim: that position is yours. */
-.v2 .jb-art.is-in .sa-tag {
-  animation: sa-pop 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 0.68s;
+/* 03. The row rather than the tag: at this size a ring around three
+   words is a smudge, and the row is the thing that ranked. */
+.v2 .jb-art.is-in .sa-hit.is-you::after {
+  animation: ja-ring-brand 4.4s cubic-bezier(0.16, 1, 0.3, 1) 1.3s infinite;
 }
 
-/* The world's rule collapses duration but not delay, so a staggered
-   set would still arrive in sequence over a second and a half. */
+/* The world's rule collapses duration and iteration count but not
+   delay, so a staggered set would still arrive in sequence over a
+   second and a half. The rings go entirely: a loop is the one thing
+   somebody asking for less motion is asking about. */
 @media (prefers-reduced-motion: reduce) {
   .v2 .jb-art.is-in .ja-hero,
   .v2 .jb-art.is-in .ja-who,
@@ -7193,6 +7257,8 @@ html {
   .v2 .jb-art.is-in .sa-tag {
     animation-delay: 0s !important;
   }
+  .v2 .jb-art.is-in .sa-chip::after,
+  .v2 .jb-art.is-in .sa-hit.is-you::after,
   .v2 .jb-art.is-in .ja-block .sa-cta::after {
     animation: none !important;
   }

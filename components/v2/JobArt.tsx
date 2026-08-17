@@ -56,15 +56,28 @@ import { useEffect, useRef, useState } from "react";
  *
  * So this is a client component for one reason: an IntersectionObserver that
  * says when the tile is on screen. `is-armed` holds the shared entry
- * animations, `is-in` releases them and starts the highlight this tile is
- * for. Three states rather than two, because the holding class is what makes
- * the degradation correct: without JavaScript nothing is ever armed, the
- * animations play at load exactly as they did before, and the reader who
- * scrolls down finds a drawn tile rather than an empty one. Never gate the
- * animations on the absence of `is-in` alone.
+ * animations, `is-in` releases them, starts the highlight this tile is for,
+ * and then runs its loop. Three states rather than two, because the holding
+ * class is what makes the degradation correct: without JavaScript nothing is
+ * ever armed, the animations play at load exactly as they did before, and
+ * the reader who scrolls down finds a drawn tile rather than an empty one.
+ * Never gate the animations on the absence of `is-in` alone.
  *
  * A tile already on screen at mount skips straight to `is-in`, so nothing
  * paints in the held state on a short viewport.
+ *
+ * THE OBSERVER RUNS BOTH WAYS, AND THAT IS LOAD-BEARING NOW
+ * ---------------------------------------------------------
+ * It used to disconnect on the first sighting. It no longer does, because
+ * the tiles carry looping animations and a loop that runs while its tile is
+ * three screens away is a battery cost with no reader. Leaving view returns
+ * the tile to `is-armed`, which stops every loop it owns; coming back plays
+ * the whole build again.
+ *
+ * The rebuild on re-entry is deliberate rather than tolerated. It is what
+ * ServiceTabs already does on every tab switch, for the same reason: a
+ * drawing that assembles itself is worth more than a drawing that is simply
+ * there, and it costs nothing to give it again.
  */
 
 import { GoogleG, WhatsAppMark } from "./Marks";
@@ -221,14 +234,12 @@ export default function JobArt({ id }: { id: string }) {
     setPhase("is-armed");
     const io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue;
-          setPhase("is-in");
-          io.disconnect();
-        }
+        for (const e of entries) setPhase(e.isIntersecting ? "is-in" : "is-armed");
       },
       /* A third of the tile. Less fires while it is still a sliver at the
-         bottom edge and the build happens off screen again. */
+         bottom edge and the build happens off screen again. Note this is
+         also the threshold it stops at on the way out, so a tile does not
+         flicker between the two states while it is half on screen. */
       { threshold: 0.34 },
     );
     io.observe(el);
