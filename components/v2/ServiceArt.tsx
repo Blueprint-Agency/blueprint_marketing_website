@@ -299,7 +299,7 @@ function ArtVideo() {
   );
 }
 
-/* Web design — the site, and the sheet the rest of the business is held to.
+/* Web design: the site, and the sheet the rest of the business is held to.
    Was ArtBranding until the service was renamed on 2026-08-17. The drawing
    did not need redrawing: it already put the website first among the things
    the identity is applied to, which is the order the service now argues for. */

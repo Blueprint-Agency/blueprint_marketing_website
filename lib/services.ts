@@ -91,8 +91,8 @@ export const SERVICES: Service[] = [
   {
     /* Was "Branding" until 2026-08-17, when the user renamed it to what it is
        actually bought as. The page it links to has argued that substitution
-       from the day it was written — for a local business the brand is met as
-       a website first — so the nav row and the URL now agree, and the page's
+       from the day it was written, since for a local business the brand is
+       met as a website first, so the nav row and the URL now agree and the
        opening section reads as the argument rather than as an apology for a
        mismatched link.
 

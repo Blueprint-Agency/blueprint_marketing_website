@@ -7,7 +7,7 @@ import { REBUILDS, type Rebuild } from "@/lib/rebuilds";
 import { SITE, WA } from "@/lib/site";
 
 /**
- * /services/web-design — the web design service, and the branding work that
+ * /services/web-design: the web design service, and the branding work that
  * comes with it.
  *
  * THE NAV USED TO DISAGREE WITH THE URL
@@ -61,13 +61,21 @@ import { SITE, WA } from "@/lib/site";
  *
  * A NOTE ON LENGTH
  * ----------------
- * Full-length pairs make a long document — the Vatti kitchen hood capture is
- * nearly ten thousand pixels on its own. It ran to seven pairs and 33,000px
- * on 2026-08-15 before the user cut Vatti's four remaining category pages;
- * three pairs is the current shape and roughly half that. Two things keep it
- * navigable and both must survive any edit here: the BEFORE / AFTER labels
- * are sticky, and a rebuild with more than one page carries an index that
- * jumps to its pairs.
+ * This page has been too long twice, for the same reason both times: the
+ * captures are whole websites, and the Vatti kitchen hood one is nearly ten
+ * thousand pixels on its own. It ran to seven pairs and 33,000px on
+ * 2026-08-15 before the user cut Vatti's four remaining category pages. It
+ * still ran to about 15,000px of screenshot after that, and the user called
+ * it long again on 2026-08-17.
+ *
+ * The fix was not to show less. Each capture now scrolls inside a window of
+ * its own, so four pairs occupy about 2,600px instead of 15,000, and every
+ * pixel of every capture is still in the document. See BeforeAfter.tsx, in
+ * particular the note on why the two windows in a pair are different
+ * heights, which is the one detail an edit here is most likely to flatten.
+ *
+ * The other thing that keeps it navigable: a rebuild with more than one page
+ * carries an index that jumps to its pairs.
  *
  * If pages are ever added or removed, check the counted nouns. "Three
  * rebuilds, four pages between them" in the lead, and "the two pages above"
@@ -156,7 +164,7 @@ export default function WebDesignPage() {
 
                 THE H1 NAMES THE SERVICE, ON PURPOSE (2026-08-17)
                 It used to read "Nobody meets your brand. They meet your
-                website." — a better sentence and a worse heading. It did not
+                website.", a better sentence and a worse heading. It did not
                 contain the words anybody searches for, and an H1 is the one
                 line on a page that is read by a person and a crawler at the
                 same time. "Web design" now opens it, and the argument the old
@@ -213,7 +221,7 @@ export default function WebDesignPage() {
             hero's eyebrow is the page's only one.
 
             It makes the case that branding, for this kind of business, is
-            mostly the website — which is what tells a reader who arrived
+            mostly the website, which is what tells a reader who arrived
             wanting a logo why he is being shown sites. */}
         <section className="band">
           <div className="shell">
@@ -265,7 +273,6 @@ export default function WebDesignPage() {
         <section className="band band-shots">
           <div className="shell">
             <div className="ba-head ba-head-lead">
-              <p className="eyebrow">The second one</p>
               <h2 className="h2" style={{ maxWidth: "22ch" }}>
                 Sometimes the words are already <em>right</em>.
               </h2>
@@ -282,7 +289,7 @@ export default function WebDesignPage() {
         </section>
 
         {/* ---------------- what changed, brand ---------------- */}
-        <Changes rebuild={brand} eyebrow="What actually changed">
+        <Changes rebuild={brand}>
           <h2 className="h2" style={{ maxWidth: "24ch" }}>
             The titles stayed. Everything under them <em>moved</em>.
           </h2>
@@ -302,7 +309,6 @@ export default function WebDesignPage() {
         <section className="band band-shots">
           <div className="shell">
             <div className="ba-head ba-head-lead">
-              <p className="eyebrow">The third one</p>
               <h2 className="h2" style={{ maxWidth: "24ch" }}>
                 People arrive with a problem, not a treatment <em>name</em>.
               </h2>
@@ -319,7 +325,7 @@ export default function WebDesignPage() {
         </section>
 
         {/* ---------------- what changed, aesthetic ---------------- */}
-        <Changes rebuild={aesthetic} eyebrow="What actually changed">
+        <Changes rebuild={aesthetic}>
           <h2 className="h2" style={{ maxWidth: "22ch" }}>
             Same clinic. Different <em>question</em>.
           </h2>
@@ -368,21 +374,29 @@ export default function WebDesignPage() {
   );
 }
 
-/** The Was / Now list for one rebuild. */
+/**
+ * The Was / Now list for one rebuild.
+ *
+ * The eyebrow is optional and only the first of the three carries one. Three
+ * bands that each open "WHAT ACTUALLY CHANGED" above a heading is a label
+ * printed for the layout rather than for the reader: by the second one she
+ * knows what a Was / Now list is, and the heading over it already says what
+ * this particular one is about.
+ */
 function Changes({
   rebuild,
   eyebrow,
   children,
 }: {
   rebuild: Rebuild;
-  eyebrow: string;
+  eyebrow?: string;
   children: React.ReactNode;
 }) {
   return (
     <section className="band band-sunk">
       <div className="shell">
         <div className="col">
-          <p className="eyebrow">{eyebrow}</p>
+          {eyebrow && <p className="eyebrow">{eyebrow}</p>}
           {children}
         </div>
 

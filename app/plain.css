@@ -3180,7 +3180,7 @@ html {
   align-self: stretch;
 }
 
-/* The Funnels illustration lived here — a landing page beside a three-step
+/* The Funnels illustration lived here: a landing page beside a three-step
    drop-off bar. It went with the service on 2026-08-17. Its rules are not
    kept "in case it comes back": every one of them was drawn from the tokens
    above and would be quicker to rewrite than to find. */
@@ -6727,12 +6727,13 @@ html {
 /* ============================================================
    WEB DESIGN  (/services/web-design)
 
-   The branding service's page. It borrows the dark opening from
+   The web design service's page. It borrows the dark opening from
    the block above and the browser frame from the top of this
    file, and adds almost nothing: two client sites side by side,
-   each shown whole, at whatever height its own capture is. See
+   each shown whole, inside a window the reader scrolls. See
    components/v2/BeforeAfter.tsx for why it is neither a wipe
-   slider nor the scrolling window it briefly was.
+   slider nor the machine-driven pan it briefly was, and why the
+   two windows in a pair are deliberately different heights.
 
    COLOUR. The pair sits inside the dark opening band, which is
    the same decision the film screens make: a screenshot reads as
@@ -6840,13 +6841,19 @@ html {
 }
 
 .v2 .ba {
+  /* The stage. Every window on the page is a fraction of this, and the
+     taller capture in each pair gets all of it. Held below two thirds
+     of the viewport so a pair is a thing you look INTO on the page,
+     not a thing that replaces the page. */
+  --ba-stage: clamp(300px, 52vh, 430px);
+
   margin-top: 26px;
   display: grid;
   gap: 44px;
-  /* Top, not stretch. The two captures are different heights and the
-     grid's default would stretch each cell to match the taller one,
-     which does nothing visible to the picture but leaves the shorter
-     pane's box hanging below its own frame. */
+  /* Top, not stretch. The two windows are deliberately different
+     heights, for the reason set out in BeforeAfter.tsx, and
+     stretching them to match would delete the one thing their
+     difference says. */
   align-items: start;
 }
 /* Two up from 900px. Below that they stack, and stacked is not a
@@ -6854,6 +6861,7 @@ html {
    on a phone is the only version that is legible at all. */
 @media (min-width: 900px) {
   .v2 .ba {
+    --ba-stage: clamp(400px, 68vh, 660px);
     grid-template-columns: 1fr 1fr;
     gap: 28px;
   }
@@ -6863,23 +6871,13 @@ html {
   margin: 0;
 }
 
-/* Sticky, and the only reason there is any position work left in
-   this block. The frames are 2,300 and 2,900px tall on a desktop
-   column, so a reader a third of the way down a side-by-side has
-   scrolled the labels off the top of the screen and is looking at
-   two anonymous slabs of website. The tag rides down with her and
-   is still there to say which is which.
-
-   72px clears the sticky nav, which is 63px plus a little air. */
+/* Was sticky, and no longer needs to be. It rode down a 2,900px
+   frame so that a reader halfway through a capture still knew which
+   slab of website she was looking at. The windows are now shorter
+   than the screen, so both labels are visible for as long as either
+   picture is, and a sticky label would be a thing pinned to the top
+   of the viewport for no reason. */
 .v2 .ba-tag {
-  position: sticky;
-  top: 72px;
-  z-index: 1;
-  /* The band's own ground, so the label is legible where it
-     overlaps a screenshot rather than sitting on a see-through
-     strip of somebody's homepage. Literal because the frames sit
-     inside .svc-open, where --paper has been inverted to black. */
-  background: var(--hero-ground, #000);
   padding-block: 10px;
   display: flex;
   align-items: baseline;
@@ -6920,14 +6918,55 @@ html {
   color: #5f646c;
 }
 
-/* There is no rule here sizing the picture, and that is the whole
-   of the change made on 2026-08-13. `.frame img` at the top of
-   this file already sets width 100% and height auto, so each
-   capture arrives at its own full length and the two panes end
-   where their sites end. What used to be here — a fixed 4:3
-   window, an overflow clip and a transformed inner element the
-   component panned on scroll — is gone with the JavaScript that
-   drove it. */
+/* ---------- the window ----------
+   Each capture arrives at its own full length, as it did before,
+   and this is the box it runs inside. Nothing scales it and
+   nothing crops it: the whole picture is in the document and the
+   reader reaches all of it by scrolling the pane.
+
+   `--ba-share` is set per pane by BeforeAfter.tsx: 1 for the taller
+   capture in the pair, and its own fraction of that height for the
+   shorter one. So the two windows end at different heights, in the
+   proportion the two sites differ by, which is the argument the
+   full-length layout used to make with 15,000px of page.
+
+   THE SCROLLBAR IS THE ONLY AFFORDANCE, so it is drawn rather than
+   left at the browser default, which on macOS is invisible until
+   the pointer is already moving. Dark on the capture's own white
+   rather than the band's white on black: this scrollbar belongs to
+   the page inside the frame, not to the page around it. */
+.v2 .ba-view {
+  height: max(200px, calc(var(--ba-stage) * var(--ba-share, 1)));
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* The frame's own radius does the clipping; this is here so the
+     scroll position is the frame's rather than the document's. */
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(11, 12, 14, 0.32) rgba(11, 12, 14, 0.07);
+}
+.v2 .ba-view::-webkit-scrollbar {
+  width: 10px;
+}
+.v2 .ba-view::-webkit-scrollbar-track {
+  background: rgba(11, 12, 14, 0.07);
+}
+.v2 .ba-view::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background: rgba(11, 12, 14, 0.32);
+  background-clip: content-box;
+}
+.v2 .ba-view::-webkit-scrollbar-thumb:hover {
+  background: rgba(11, 12, 14, 0.5);
+  background-clip: content-box;
+}
+/* Keyboard focus lands on the window, because the window is what
+   scrolls. Inset so the ring is not eaten by the frame's clip. */
+.v2 .ba-view:focus-visible {
+  outline: 2px solid var(--act);
+  outline-offset: -3px;
+}
 
 /* ---------- what changed ----------
    A numbered list whose every row is a pair. "Was" is set in the

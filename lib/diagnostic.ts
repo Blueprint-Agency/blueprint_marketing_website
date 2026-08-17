@@ -281,7 +281,7 @@ function bump(w: Weights, id: string, n: number) {
  *
  * `web-design` carries the weight that used to be split between `funnels` and
  * `branding`, which were merged into it on 2026-08-17. Where both scored the
- * same leak — `nobite`, the visitor who arrives and leaves — the higher of the
+ * same leak (`nobite`, the visitor who arrives and leaves), the higher of the
  * two is kept rather than the sum: adding them would have made one service
  * outrank everything on the list by arithmetic rather than by judgement.
  */
@@ -542,7 +542,7 @@ function buildMoves(
 
   /* Keyed on whether the top service is a DEMAND channel, not on its group.
      Web design and video are grouped under "attract" but they are conversion
-     work — telling someone whose complaint is "they visit and leave" that not
+     work. Telling someone whose complaint is "they visit and leave" that not
      enough people are arriving contradicts the answer she just gave us. */
   const isDemand = (CHANNELS as readonly string[]).includes(top.id);
   moves.push({
