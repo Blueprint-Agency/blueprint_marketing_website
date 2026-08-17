@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check } from "lucide-react";
+import PlanMatrix from "./PlanMatrix";
 import {
   ADDONS,
   MONTHS_FREE,
@@ -202,6 +203,14 @@ export default function Pricing({ ctaHref }: { ctaHref: string }) {
           decide. Nothing is ever deleted on any plan: the reporting window is
           how far back one report can reach, not how long we keep your records.
         </p>
+
+        {/* ---------- the full comparison ----------
+            Sits between the cards and the add-ons: it answers "which one am
+            I", which is the question a reader has immediately after the
+            cards and long before she cares what a migration costs. See the
+            note over MATRIX in lib/pricing.ts for why four cards are not
+            enough on their own. */}
+        <PlanMatrix />
 
         {/* ---------- add-ons ---------- */}
         <div className="pr-addons">

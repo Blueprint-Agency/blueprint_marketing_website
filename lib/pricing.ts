@@ -308,6 +308,289 @@ export const ADDONS: Addon[] = [
   },
 ];
 
+/* ============================================================
+   THE FEATURE MATRIX
+   ============================================================ */
+
+/**
+ * A cell. `true` is a plain tick, `false` is a plain dash, a string is a
+ * limit or a qualifier.
+ *
+ * There is deliberately no "add-on available" value, which is the cell
+ * Rezerv's own matrix uses most. Every one of those is a meter, and the
+ * note over ADDONS above records why this price list has exactly one
+ * add-on and why it is one-off. If a row here ever needs an "available as
+ * an extra" value, the extra is the thing to question, not the cell type.
+ */
+export type Cell = boolean | string;
+
+export type MatrixRow = {
+  label: string;
+  /** What the row actually means, where the label alone would be read two
+      ways. Rendered under the label at caption scale. Optional. */
+  note?: string;
+  /** One per plan, in PLANS order. The array length is checked below. */
+  cells: [Cell, Cell, Cell, Cell];
+};
+
+export type MatrixGroup = { group: string; rows: MatrixRow[] };
+
+/**
+ * The full comparison, added 2026-08-17.
+ *
+ * WHY A PAGE WITH FOUR CARDS ALSO NEEDS A TABLE
+ * ---------------------------------------------
+ * The cards answer "what does it cost". They cannot answer "which one am
+ * I", because each card's list says only what that plan ADDS to the one
+ * before it, which is the right shape for a ladder and the wrong shape for
+ * a decision. A reader on Studio cannot see from the cards whether Solo
+ * would have done, and a reader who needs one specific thing has to hold
+ * three lists in her head to find out which plan first contains it.
+ *
+ * Every competitor in this category ships this table. Rezerv's runs to
+ * about sixty rows across eight groups. That length is itself a tactic and
+ * not a good one: past a screenful it stops being read and starts being
+ * counted. This one is deliberately shorter, and it is grouped by the
+ * question a buyer is asking rather than by the software's own modules.
+ *
+ * THE TABLE AND THE CARDS MUST NOT DRIFT
+ * --------------------------------------
+ * Both are generated from this file but they are separate arrays, so a
+ * feature added to a plan's `list` and not to a row here makes the page
+ * contradict itself in two places a reader can see at once. When either
+ * changes, change both. The plan order is the same in both, and
+ * MatrixRow.cells is a fixed four-tuple so a plan cannot be added without
+ * the type failing on every row.
+ *
+ * NOTHING IN HERE IS A CAPABILITY THE PLATFORM DOES NOT HAVE. The two
+ * recorded absences, the member app and the website builder, are not rows
+ * with four dashes in them. A row that no plan satisfies is an
+ * advertisement for a competitor. They are answered in the FAQ instead,
+ * in words, which is where an absence can be explained rather than merely
+ * scored. See BOOKING_FAQ in lib/booking.ts.
+ */
+export const MATRIX: MatrixGroup[] = [
+  {
+    group: "Scale",
+    rows: [
+      {
+        label: "Locations covered",
+        note: "Included in the plan, not billed per outlet.",
+        cells: ["One", "Two", "Five", "Unlimited"],
+      },
+      {
+        label: "Staff accounts",
+        cells: ["1", "Unlimited", "Unlimited", "Unlimited"],
+      },
+      {
+        label: "Permission roles",
+        note: "Who can see the takings, who can only see their own classes.",
+        cells: ["Owner only", "3 roles", "Unlimited", "Unlimited"],
+      },
+      {
+        label: "Classes, bookings and members",
+        cells: ["Unlimited", "Unlimited", "Unlimited", "Unlimited"],
+      },
+      {
+        label: "Overlapping schedules and room assignment",
+        note: "Two classes at once, in different rooms, without double-booking either.",
+        cells: [false, true, true, true],
+      },
+      {
+        label: "Multi-brand and super-admin",
+        cells: [false, false, false, true],
+      },
+    ],
+  },
+  {
+    group: "Selling",
+    rows: [
+      {
+        label: "Credit bundles and memberships",
+        note: "Unlimited memberships on every plan, including Solo.",
+        cells: [true, true, true, true],
+      },
+      {
+        label: "Workshops with tiered pricing",
+        cells: [true, true, true, true],
+      },
+      {
+        label: "Card, FPX, DuitNow and Touch 'n Go checkout",
+        cells: [true, true, true, true],
+      },
+      {
+        label: "Private sessions, 1-on-1 and 2-on-1",
+        cells: [false, true, true, true],
+      },
+      {
+        label: "Retail store",
+        cells: [false, "100 products", "Unlimited", "Unlimited"],
+      },
+    ],
+  },
+  {
+    group: "Running the day",
+    rows: [
+      {
+        label: "QR check-in and attendance",
+        cells: [true, true, true, true],
+      },
+      {
+        label: "Email notifications on 21 events",
+        cells: [true, true, true, true],
+      },
+      {
+        label: "Leave management",
+        note: "Approved leave blocks the scheduler before a member can book it.",
+        cells: [false, true, true, true],
+      },
+      {
+        label: "Payroll and commission",
+        cells: [false, true, true, true],
+      },
+      {
+        label: "The unified request inbox",
+        note: "Every leave, refund and enquiry across all locations in one queue.",
+        cells: [false, false, true, true],
+      },
+    ],
+  },
+  {
+    group: "Reporting and data",
+    rows: [
+      {
+        label: "How far back one report can reach",
+        note: "A query window, not a retention limit. Nothing is deleted on any plan.",
+        cells: ["3 months", "12 months", "2 years", "All of it"],
+      },
+      {
+        label: "CSV export",
+        cells: [false, false, true, true],
+      },
+      {
+        label: "API access",
+        cells: [false, false, true, true],
+      },
+    ],
+  },
+  {
+    group: "Your address and support",
+    rows: [
+      {
+        label: "Runs on your own address",
+        cells: [true, true, true, true],
+      },
+      {
+        label: "Your own domain",
+        note: "Certificate and routing maintained by us.",
+        cells: [false, false, true, true],
+      },
+      {
+        label: "Dedicated onboarding and migration",
+        cells: [false, false, false, true],
+      },
+      {
+        label: "Priority support",
+        cells: [false, false, true, true],
+      },
+      {
+        label: "A response-time SLA in writing",
+        cells: [false, false, false, true],
+      },
+    ],
+  },
+];
+
+/* ============================================================
+   THE COMPETITION
+   ============================================================ */
+
+export type Competitor = {
+  name: string;
+  /** Where the company is based. Not where it sells. */
+  where: string;
+  /** The published entry rate, already converted. Blank for us. */
+  entry: string;
+  /** How that platform bills a second outlet. The actual comparison. */
+  billing: string;
+  /** True only for Reserve Today, which is styled as the held row. */
+  ours?: boolean;
+};
+
+/**
+ * The comparison table, added 2026-08-17.
+ *
+ * READ THIS BEFORE THE PAGE GOES LIVE
+ * -----------------------------------
+ * Every competitor figure below is RESEARCH, gathered on 2026-08-15 and
+ * recorded in the header of this file. It has not been re-checked since,
+ * and published SaaS pricing moves. Two obligations follow and both are
+ * discharged on the page rather than here: the date is printed under the
+ * table, and so is the conversion rate, because a ringgit figure for a
+ * platform that publishes in dollars is our arithmetic and not their
+ * price. Do not remove either line. If the date under the table is more
+ * than a few months old, re-check the four sites before defending it.
+ *
+ * WHY THIS TABLE IS ABOUT BILLING AND NOT ABOUT FEATURES
+ * ------------------------------------------------------
+ * Rezerv's own home page runs a tick grid against four named competitors,
+ * and the temptation is to answer it in kind. That would be a mistake
+ * here, for a reason recorded in the header above: this platform has no
+ * member mobile app and no website builder, and Rezerv and Vibefam both
+ * do. A feature grid written by us would either include those two rows and
+ * lose, or omit them and be the kind of comparison a reader stops
+ * believing the moment she opens the other tab.
+ *
+ * What is true, checkable and ours is the STRUCTURE. Locations are an
+ * allowance here and a multiplier almost everywhere else, and that is the
+ * single line that decides the bill for the two-location boutique this
+ * product is aimed at. One column, one honest claim, no ticks.
+ *
+ * SO THE COLUMN IS "HOW A SECOND STUDIO IS BILLED", NOT "WHO IS CHEAPEST".
+ * We are not cheapest and the table does not say we are. Entry price is
+ * shown because leaving it out of a pricing comparison is conspicuous, and
+ * the header of this file already records where we land: fourth of five.
+ */
+export const COMPETITORS: Competitor[] = [
+  {
+    name: "Reserve Today",
+    where: "Malaysia",
+    entry: "RM 149",
+    billing: "Included. Two on Studio, five on Group, no per-outlet charge.",
+    ours: true,
+  },
+  {
+    name: "Vibefam",
+    where: "Singapore",
+    entry: "RM 480",
+    billing: "Two locations included on every plan.",
+  },
+  {
+    name: "Schedulah",
+    where: "Malaysia",
+    entry: "RM 250",
+    billing: "Per branch. Ten users free, then RM 10 each.",
+  },
+  {
+    name: "Aoikumo",
+    where: "Malaysia",
+    entry: "RM 298",
+    billing: "Per outlet.",
+  },
+  {
+    name: "Rezerv",
+    where: "Singapore",
+    entry: "RM 264",
+    billing: "Per location, and the entry plan covers one only.",
+  },
+];
+
+/** When the figures above were read off the four published price pages. */
+export const COMPETITORS_CHECKED = "15 August 2026";
+
+/** The rate the dollar-denominated ones were converted at. */
+export const COMPETITORS_FX = "RM 4.40 to the US dollar";
+
 /**
  * The effective monthly rate when the year is paid up front.
  *

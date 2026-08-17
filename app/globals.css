@@ -11,12 +11,47 @@
    relying on ("nothing from globals.css is relied on except the
    Tailwind reset"). Every visual decision now lives in plain.css.
 
-   Deliberately no @theme block. The Plain world declares its own
-   tokens as custom properties on .v2, and a second parallel token
-   system sitting here would be a trap for whoever edits this next.
+   THERE IS NOW AN @theme BLOCK, AND THE NOTE THAT USED TO SIT HERE
+   SAID THERE DELIBERATELY WAS NOT ONE. It warned that a second
+   parallel token system would be a trap for whoever edits this next,
+   which was right, so this replaces it rather than deleting it.
+
+   What changed on 2026-08-17: components/ui/feature-carousel.tsx was
+   brought in as a shadcn component built entirely on Tailwind utility
+   classes. It references bg-background, text-foreground, border-border
+   and bg-secondary, which are shadcn's token names. Without an @theme
+   declaring them those four utilities generate nothing at all and the
+   component renders unstyled.
+
+   The trap is defused the only way it can be: the four values below
+   are NOT shadcn's defaults, they are the Plain palette's own paper,
+   ink, hairline and sunk paper, copied from the .v2 block at the top
+   of plain.css. So there is one palette with two spellings rather than
+   two palettes. If a colour changes there, change it here too.
+
+   Do not grow this block to cover the rest of shadcn's tokens on the
+   assumption that it is now the site's theme. It is a shim for one
+   imported component.
    ============================================================ */
 
 @import "tailwindcss";
+
+@theme {
+  --color-background: #fcfcfd;
+  --color-foreground: #0b0c0e;
+  --color-border: #e4e6ea;
+  --color-secondary: #f4f5f7;
+
+  /* The two brand blues, added 2026-08-17 so the carousel's panel could
+     stop being a hardcoded #62B2FE and take the palette's own value
+     instead. Same figures as --brand-deep and --brand in plain.css.
+
+     brand-deep is the one in use: DESIGN.v2.md calls it the value that
+     "grounds", and that panel is a ground. brand is here as the lighter
+     alternative for the same slot. */
+  --color-brand-deep: #0a1b45;
+  --color-brand: #1e4fe0;
+}
 
 html {
   -webkit-text-size-adjust: 100%;

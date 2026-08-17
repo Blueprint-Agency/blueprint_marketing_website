@@ -7671,3 +7671,900 @@ html {
     margin-top: 0;
   }
 }
+
+/* ============================================================
+   THE BOOKING PAGE
+   Added 2026-08-17, when /services/booking-system stopped being an
+   opening and a price list and became a page. Everything below is
+   used by that one route.
+
+   Almost all of it is reused rather than written: the product tour
+   runs on .svt, the drawn screens on .sa-*, the FAQ on .faq, the
+   mid-page action on .midcta. What is here is the five things that
+   had nowhere to live: the hero's reassurance row, two list
+   devices, the drawn screens' own parts, the competitor table and
+   the plan matrix.
+   ============================================================ */
+
+/* ---------- the hero's reassurance row ----------
+   Three facts under the action, every one of which the page goes on to
+   demonstrate. Caption scale in the inverted mute, so it reads as a
+   footing under the buttons rather than as a fourth line of the lead.
+
+   Separated by a hairline rather than by a middot: a middot at this size
+   on a black ground reads as dirt on the screen, and the rule is the
+   separator this world already uses everywhere else. On a phone the row
+   wraps to a column and the rules go with it. */
+
+.v2 .svc-assure {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
+}
+.v2 .svc-assure li {
+  padding-inline: 16px;
+  border-left: 1px solid var(--line);
+}
+.v2 .svc-assure li:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+/* ---------- the problem list ----------
+   The numbered hairline rows the home page's "Why Blueprint" band and the
+   web design page's three jobs both use, with the artwork column removed.
+   Deliberately the same device: those three sections make the same kind
+   of move on three different pages, and a fourth list style invented for
+   this one would say they were different.
+
+   An <ol> here rather than the <div> those two use, because these five
+   are a sequence of one story escalating and the ordinals are not
+   decoration. */
+
+.v2 .pn {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+}
+.v2 .pn-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 20px;
+  padding: 26px 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.v2 .pn-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.v2 .pn-n {
+  color: var(--brand-text);
+  font-size: 0.875rem;
+  padding-top: 5px;
+}
+@media (min-width: 900px) {
+  .v2 .pn-item {
+    column-gap: 36px;
+  }
+  /* Held to the house measure rather than run to the full shell. Five
+     paragraphs at 1180px would be five very wide lines, and the ordinal
+     would be stranded a long way from the text it numbers. */
+  .v2 .pn-item .prose {
+    max-width: 68ch;
+  }
+}
+
+/* ============================================================
+   THE DRAWN SCREENS
+   Parts only components/v2/BookingArt.tsx uses. Everything else
+   in those four frames is a ServiceArt primitive, unchanged.
+
+   EVERY SIZE BELOW IS RELATIVE. The frames scale from
+   container-type: inline-size on .svt-stage, so a value in px
+   would be the one thing in the drawing that did not shrink with
+   the column it is in.
+   ============================================================ */
+
+/* The owner's week. Five columns at every width: fewer would be a working
+   week that ends on Thursday, and this has to read as a week rather than
+   as a sample of one. */
+.v2 .bk-week {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4em;
+  flex: 1;
+  min-height: 0;
+}
+.v2 .bk-day {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  min-width: 0;
+}
+.v2 .bk-day-name {
+  font-size: 0.85em;
+  font-weight: 800;
+  color: var(--ink-mute);
+  text-align: center;
+}
+/* A class block. Plain hairline box on all four sides.
+
+   IT USED TO CARRY A 2px BRAND BORDER-LEFT AND THAT WAS WRONG.
+   Two reasons, and the second is the one that settles it. Nothing in the
+   .sa-* artwork vocabulary marks state with a side accent: across every
+   drawing in this file, state is a full fill (.sa-slot.is-picked), a
+   border colour changed on all four sides (.sa-chip.is-on), opacity with
+   a strikethrough (.sa-slot.is-taken), or a change of text colour. A
+   coloured left edge was a device invented for this one component. And
+   this stylesheet already names it: see the note over .seg above, "a
+   gradient border-left would be the card cliché; a top rule is
+   structure."
+
+   Real schedulers do use a coloured left edge, which is what made it
+   tempting. But a drawing of a scheduler is not a scheduler, and at the
+   9-13px this artwork is set at, four states told by the colour of a
+   hairline is a distinction nobody can read anyway. The three states
+   below are told the way the rest of the artwork tells state. */
+.v2 .bk-class {
+  display: block;
+  min-width: 0;
+  padding: 0.4em 0.45em;
+  border: 1px solid var(--line);
+  border-radius: 0.35em;
+  overflow: hidden;
+}
+.v2 .bk-class b,
+.v2 .bk-class i,
+.v2 .bk-class u {
+  display: block;
+  font-style: normal;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.v2 .bk-class b {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--ink-mute);
+}
+.v2 .bk-class i {
+  font-weight: 700;
+  color: var(--ink);
+}
+.v2 .bk-class u {
+  font-size: 0.8em;
+  color: var(--ink-mute);
+}
+/* A private session: one person rather than a class. Told on the room
+   line, which is the element already saying who the block is for, in the
+   violet the artwork uses elsewhere for the same "a different kind of
+   thing" job (.sa-mini-mark.is-ai, .bk-av). */
+.v2 .bk-class.is-soft u {
+  color: var(--violet);
+  font-weight: 700;
+}
+/* Full. The border darkens on all four sides, which is exactly how
+   .sa-chip.is-on marks a chip as the current one.
+
+   Not red, and not green. Red would say a full class is a problem, and
+   green is reserved for the WhatsApp action and may not appear as a state
+   colour anywhere. Ink and weight carry it. */
+.v2 .bk-class.is-full {
+  border-color: var(--ink);
+}
+.v2 .bk-class.is-full u {
+  color: var(--ink);
+  font-weight: 700;
+}
+/* The leave block, and the reason this drawing exists at all. The ground
+   of a disabled slot, and the class name struck through: the same pair
+   .sa-slot.is-taken uses, so a closed slot looks the same in both
+   drawings.
+
+   The dimming is applied to the time and the class name rather than to
+   the block, which is where .sa-slot.is-taken puts its opacity. The word
+   underneath has to stay at full strength: "Blocked" in the warm value is
+   the one thing in this frame the whole section is pointing at. */
+.v2 .bk-class.is-off {
+  background: var(--paper-sunk);
+}
+.v2 .bk-class.is-off b {
+  opacity: 0.55;
+}
+.v2 .bk-class.is-off i {
+  color: var(--ink-mute);
+  text-decoration: line-through;
+}
+.v2 .bk-class.is-off u {
+  font-weight: 700;
+  color: var(--warm);
+}
+
+/* The member's balance. First thing on her screen because it is the first
+   thing she wants to know, and set at the scale a price is set at for the
+   same reason. */
+.v2 .bk-bal {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.55em 0.7em;
+  border-radius: 0.5em;
+  background: var(--paper-sunk);
+  flex: none;
+}
+.v2 .bk-bal-n {
+  font-size: 1.9em;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--brand-text);
+  font-variant-numeric: tabular-nums;
+}
+.v2 .bk-bal-l {
+  display: block;
+  min-width: 0;
+  font-weight: 700;
+}
+.v2 .bk-bal-l em {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.85em;
+  color: var(--ink-mute);
+}
+
+/* A class time in a member's list. Fixed width so three rows line up. */
+.v2 .bk-t {
+  flex: none;
+  width: 3.4em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-mute);
+}
+
+/* The leave request, and what approving it does. Two blocks with an arrow
+   between them; the arrow IS the product, so it is drawn rather than
+   implied by proximity. */
+.v2 .bk-req {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  padding: 0.6em;
+  border: 1px solid var(--line);
+  border-radius: 0.5em;
+  flex: none;
+}
+.v2 .bk-av {
+  flex: none;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.8em;
+  font-weight: 800;
+  color: var(--on-brand);
+  background: var(--violet);
+}
+.v2 .bk-req-who {
+  display: block;
+  min-width: 0;
+  margin-right: auto;
+}
+.v2 .bk-req-who b {
+  display: block;
+  font-weight: 700;
+}
+.v2 .bk-req-who em {
+  display: block;
+  font-style: normal;
+  font-size: 0.85em;
+  color: var(--ink-mute);
+}
+/* Drawn from borders rather than set as a glyph. A text arrow at this
+   scale inherits the body font's own idea of how big an arrow is, and
+   this one has to sit centred between the two blocks it joins. */
+.v2 .bk-arrow {
+  align-self: center;
+  width: 0.7em;
+  height: 0.7em;
+  flex: none;
+  border-right: 2px solid var(--line-strong);
+  border-bottom: 2px solid var(--line-strong);
+  transform: rotate(45deg);
+  margin-block: 0.1em;
+}
+.v2 .bk-after {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+  padding: 0.6em;
+  border-radius: 0.5em;
+  background: var(--paper-sunk);
+  flex: none;
+}
+.v2 .bk-after-l {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--ink-mute);
+}
+
+/* A teacher's pay for a fortnight. Tabular and right-aligned: three
+   figures in a column that do not line up read as a drawing of a
+   spreadsheet rather than as a payroll run. */
+.v2 .bk-pay {
+  margin-left: auto;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.v2 .bk-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45em;
+  flex: none;
+}
+.v2 .bk-tile {
+  display: block;
+  min-width: 0;
+  padding: 0.5em 0.55em;
+  border: 1px solid var(--line);
+  border-radius: 0.45em;
+}
+.v2 .bk-tile b {
+  display: block;
+  font-weight: 700;
+}
+.v2 .bk-tile i {
+  display: block;
+  font-style: normal;
+  font-size: 0.85em;
+  color: var(--ink-mute);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   THE COMPETITOR TABLE
+   Five platforms, one column that matters. Hairline rows on a
+   grid rather than a <table>: it has three fields and it has to
+   become three stacked lines on a phone, which is the one layout
+   a table cannot reach without either a scroll region or a
+   display:block override that throws the semantics away anyway.
+
+   The header row is aria-hidden and every cell carries its own
+   label instead; the labels are hidden at exactly the width where
+   the header row appears, so one of the two is readable at any
+   size and never both.
+   ============================================================ */
+
+.v2 .cmp {
+  margin-top: 40px;
+}
+
+.v2 .cmp-head,
+.v2 .cmp-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px 28px;
+}
+@media (min-width: 780px) {
+  .v2 .cmp-head,
+  .v2 .cmp-row {
+    grid-template-columns: minmax(0, 0.9fr) 150px minmax(0, 1.5fr);
+    align-items: baseline;
+    gap: 28px;
+  }
+}
+
+.v2 .cmp-head {
+  display: none;
+}
+@media (min-width: 780px) {
+  .v2 .cmp-head {
+    display: grid;
+    padding-bottom: 12px;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+}
+
+.v2 .cmp-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.v2 .cmp-row {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Our own row, held. A half-step of ground and nothing else, which is
+   what .pm-cell.is-pick does to mark the recommended column in the matrix
+   further down the same page.
+
+   THIS CARRIED AN `inset 3px 0 0` LEFT BAR UNTIL 2026-08-17. It is the
+   same cliché taken off .bk-class above, drawn with a box-shadow rather
+   than a border, which is only a way of getting it past a linter.
+
+   AN INK HAIRLINE WAS TRIED INSTEAD AND IS WRONG HERE, which is worth
+   recording because it is the obvious second guess. .pr-card-pick can
+   darken its border because a card owns its enclosure. A row in a
+   hairline list does not: its edges are separators SHARED with the rows
+   above and below, so darkening one is ambiguous about which row it
+   belongs to, and on the first row it lands directly under the list's own
+   top rule and draws the 2px seam this system does not use anywhere (see
+   the note over .band-sunk + .band-sunk).
+
+   Not the reserved green under any circumstances. A held row is not an
+   action. */
+.v2 .cmp-row.is-ours {
+  background: var(--paper-sunk);
+  padding-inline: 16px;
+  margin-inline: -16px;
+}
+
+.v2 .cmp-name {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.016em;
+  color: var(--ink);
+}
+.v2 .cmp-where {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-mute);
+}
+
+.v2 .cmp-fig {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.v2 .cmp-per {
+  margin-left: 5px;
+  color: var(--ink-mute);
+}
+
+.v2 .cmp-bill {
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.v2 .cmp-label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+@media (min-width: 780px) {
+  .v2 .cmp-label {
+    display: none;
+  }
+}
+
+.v2 .cmp-foot {
+  margin-top: 20px;
+  max-width: 68ch;
+}
+
+/* ============================================================
+   THE PLAN MATRIX
+   The one real <table> in this world, because it is the one
+   piece of genuinely tabular data on the site. See the note at
+   the top of components/v2/PlanMatrix.tsx for why it is a table
+   and why it scrolls sideways rather than restacking.
+   ============================================================ */
+
+.v2 .pm {
+  margin-top: 56px;
+}
+.v2 .pm-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 20px;
+  margin-bottom: 18px;
+}
+.v2 .pm-hint {
+  color: var(--ink-mute);
+}
+@media (min-width: 860px) {
+  /* Above the width where it fits, the instruction is noise. */
+  .v2 .pm-hint {
+    display: none;
+  }
+}
+
+.v2 .pm-scroll {
+  overflow-x: auto;
+  /* A horizontal scroll inside a vertically scrolling page should not
+     hand its overscroll back to the page and jump the reader sideways
+     out of the table. */
+  overscroll-behavior-x: contain;
+}
+.v2 .pm-scroll:focus-visible {
+  outline-offset: 4px;
+}
+
+.v2 .pm-table {
+  width: 100%;
+  /* 700px is the width at which four plan columns still hold a two-word
+     value without breaking to three lines. Below it the table scrolls
+     rather than compressing, which is the whole reason for the region. */
+  min-width: 700px;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+/* Present rather than absent. The table announces what it is before its
+   first cell; a sighted reader already has the heading above it. */
+.v2 .pm-caption,
+.v2 .pm-vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.v2 .pm-table th,
+.v2 .pm-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+/* Pinned while the plan columns scroll under it. The ground is the band's
+   own, not paper: this table sits on .band-sunk, and a paper column would
+   read as a card edge that exists only while scrolling.
+
+   QUALIFIED BY .pm-table ON PURPOSE. The padding shorthand above is set on
+   `.v2 .pm-table th`, which carries an element selector and therefore
+   outweighs a bare `.v2 .pm-row-head`. Unqualified, the padding-left below
+   silently loses and the first column sits 16px inboard of every other
+   section's left edge, which is the one thing this world's layout rules
+   forbid outright. Same for .pm-plan under it. */
+.v2 .pm-table .pm-corner,
+.v2 .pm-table .pm-row-head {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--paper-sunk);
+  min-width: 220px;
+  max-width: 300px;
+  padding-left: 0;
+}
+
+/* ---------- the head ---------- */
+
+.v2 .pm-table .pm-plan {
+  padding-top: 0;
+  border-bottom: 1px solid var(--line-strong);
+  white-space: nowrap;
+}
+.v2 .pm-table .pm-corner {
+  border-bottom: 1px solid var(--line-strong);
+}
+.v2 .pm-plan-name {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.016em;
+  color: var(--ink);
+}
+.v2 .pm-plan-loc {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+/* ---------- the group headings ---------- */
+
+.v2 .pm-table .pm-group th {
+  padding: 26px 0 9px;
+  border-bottom: 1px solid var(--ink);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--paper-sunk);
+}
+
+/* ---------- the rows ---------- */
+
+.v2 .pm-row-label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  letter-spacing: -0.011em;
+  color: var(--ink);
+  white-space: normal;
+}
+.v2 .pm-row-note {
+  display: block;
+  margin-top: 3px;
+  color: var(--ink-mute);
+  white-space: normal;
+}
+
+.v2 .pm-cell {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+.v2 .pm-val {
+  font-weight: 650;
+  color: var(--ink);
+}
+
+/* The tick is the same affirmative mark .pr-list uses, in the same
+   reserved green, for the same reason: a column of twenty ink ticks reads
+   as a bulleted list rather than as a set of things you are getting. The
+   dash is quiet on purpose. An absence marked in red would be four
+   columns of alarm on a page whose argument is that nothing is missing
+   from the cheapest plan that decides whether a member trusts you. */
+.v2 .pm-yes {
+  color: var(--act-text);
+}
+.v2 .pm-no {
+  color: var(--line-strong);
+}
+
+/* The recommended plan's column, marked with the same restraint as its
+   card: a half-step of ground, no border, no lift. */
+.v2 .pm-plan.is-pick,
+.v2 .pm-cell.is-pick {
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+/* ---------- what a member does ----------
+   Six steps as a vertical timeline you can walk. See the head of
+   components/v2/JourneyTimeline.tsx for why this replaced a 3x2 grid and
+   why the rail runs down rather than across.
+
+   Not the .loop component the home page uses for "How it runs": that one
+   is hard-wired to four cards with four bespoke illustrations and a
+   closing line about Audit and Scale, and bending it to six would mean
+   gutting it.
+
+   THE RAIL IS THE ONLY ORNAMENT AND IT IS NOT ORNAMENT. It fills from the
+   first step down to the one being read, so the section shows a journey
+   part-completed rather than six features stacked. Everything else here
+   is a hairline, a dot and type, which is the whole vocabulary this world
+   allows.
+   ============================================================ */
+
+/* Wherever the timeline sits on a sunk band instead, the dot ground
+   follows without the component knowing which band it is in. */
+.v2 .band-sunk .tl-step {
+  --tl-ground: var(--paper-sunk);
+}
+
+.v2 .tl {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+}
+
+/* The dot column is 34px and the rail runs down its centre, so every
+   offset below is measured off that one number. --tl-dot-y is where a
+   dot's centre sits from the top of its own row; the first and last rail
+   segments are clipped to it so the line begins and ends on a dot rather
+   than running off into the band. */
+.v2 .tl-step {
+  --tl-col: 34px;
+  --tl-dot-y: 21px;
+  /* The dot and its halo are painted in the BAND's ground, not in a
+     fixed colour, so the dot reads as a gap in the rail rather than as a
+     grey disc. The journey section moved from a sunk band to a paper one
+     on 2026-08-17 when the section above it was deleted and the grounds
+     were re-alternated, which is exactly the move that would have left a
+     grey ring on near-white paper if this were hardcoded. */
+  --tl-ground: var(--paper);
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--tl-col) minmax(0, 1fr);
+  column-gap: 18px;
+}
+
+.v2 .tl-step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--tl-col) / 2 - 1px);
+  width: 2px;
+  background: var(--line-strong);
+}
+.v2 .tl-step:first-child::before {
+  top: var(--tl-dot-y);
+}
+/* Ends on the last dot rather than running past it. A journey with a real
+   final step should not have a tail. */
+.v2 .tl-step:last-child::before {
+  bottom: auto;
+  height: var(--tl-dot-y);
+}
+
+/* The progress fill. A segment belongs to the step it starts at, so
+   filling every step before the active one draws the line exactly as far
+   as the dot being read.
+
+   Brand blue rather than the reserved green: green on this site means
+   "message us on WhatsApp" and a progress rail is not an action. */
+.v2 .tl-step.is-done::before {
+  background: var(--brand-text);
+}
+
+/* ---------- the head ---------- */
+
+.v2 .tl-head {
+  display: contents;
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* display:contents on the button drops its own box, so the mark and the
+   copy land directly in the step's two grid columns. The focus ring has
+   nothing to draw around after that, so it is drawn on the copy instead. */
+.v2 .tl-head:focus-visible {
+  outline: none;
+}
+.v2 .tl-head:focus-visible .tl-copy {
+  outline: 3px solid var(--act-text);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+.v2 .tl-mark {
+  grid-column: 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding-top: calc(var(--tl-dot-y) - 7px);
+}
+
+.v2 .tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid var(--line-strong);
+  /* The band's own ground, not paper: this sits on .band-sunk, and a
+     paper dot would read as a hole punched in the rail. */
+  background: var(--tl-ground);
+  transition:
+    background-color 0.22s ease-out,
+    border-color 0.22s ease-out,
+    box-shadow 0.22s ease-out;
+}
+.v2 .tl-step.is-done .tl-dot {
+  background: var(--brand-text);
+  border-color: var(--brand-text);
+}
+/* The one being read. Ink rather than brand, so the step you are on is
+   the darkest thing on the rail and the ones behind it read as a trail
+   leading to it. The halo is the band's ground, which reads as a gap in
+   the rail rather than as a second ring. */
+.v2 .tl-step.is-on .tl-dot {
+  background: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 0 0 0 5px var(--tl-ground);
+}
+
+.v2 .tl-copy {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+  padding: 12px 0 4px;
+}
+
+.v2 .tl-n {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-text);
+}
+
+/* Every title stays fully legible whether its step is open or not. The
+   six titles are the journey, and dimming five of them to mark one would
+   cost the section the thing it is for. Weight moves, colour does not. */
+.v2 .tl-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.35;
+  color: var(--ink);
+  transition: font-weight 0.2s ease-out;
+}
+.v2 .tl-step.is-on .tl-title {
+  font-weight: 800;
+}
+.v2 .tl-head:hover .tl-title {
+  color: var(--brand-text);
+}
+
+/* ---------- the body ----------
+   0fr to 1fr rather than max-height: the body expands to whatever it
+   actually needs at any width, with no magic number to keep in sync. Same
+   mechanism .svt-tag-slot already uses for the tab taglines. */
+
+.v2 .tl-slot {
+  grid-column: 2;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2 .tl-step.is-on .tl-slot {
+  grid-template-rows: 1fr;
+}
+
+.v2 .tl-body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.v2 .tl-text {
+  margin: 0;
+  padding: 0 0 26px;
+  max-width: 62ch;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+/* A closed step still needs the rail to keep running past it, so the row
+   keeps a floor even with its body collapsed. */
+.v2 .tl-step:not(.is-on) .tl-slot {
+  min-height: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .tl-slot,
+  .v2 .tl-dot,
+  .v2 .tl-title {
+    transition: none;
+  }
+}
+
+/* The payoff. It has to be read after the six and not before them, so it
+   sits under the rail at prose measure rather than in the lead above it:
+   "nobody has to be awake" means nothing until you have seen what the six
+   things are. */
+.v2 .jn-close {
+  margin-top: 34px;
+  max-width: 62ch;
+}
