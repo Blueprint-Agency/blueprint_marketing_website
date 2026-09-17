@@ -36,22 +36,45 @@ import { NextResponse, type NextRequest } from "next/server";
  * is a forwarded link, and a forwarded link does not come with a pointer
  * to the source.
  *
- * To make it a real secret, set PROPOSAL_PASSCODE in the host environment.
- * It takes precedence, no code change needed, and the value here stops
- * mattering.
+ * To make it a real secret, set the document's env variable (named in
+ * DOCUMENTS below) in the host environment. It takes precedence, no code
+ * change needed, and the fallback here stops mattering.
  *
  * The gate covers both /proposals/bangkok-thai and the .html the rewrite in
  * next.config.ts points at, because the matcher runs before rewrites.
  */
 
-const COOKIE = "bp_proposal";
+/**
+ * ONE PASSCODE PER DOCUMENT (2026-09-17)
+ * --------------------------------------
+ * The gate began with a single passcode for everything under /proposals,
+ * which was fine while there was one document. The JNA Real Estate rate
+ * card made it two, and a code handed to one client must not open the
+ * other client's pricing. So each document names its own env variable and
+ * its own fallback, and the cookie is per document too.
+ *
+ * A file under public/proposals with no entry here is locked with no way
+ * in. That is the intended default: a new document should not be readable
+ * until someone has decided what unlocks it.
+ */
+const DOCUMENTS: Record<string, { env: string; fallback: string }> = {
+  "bangkok-thai": { env: "PROPOSAL_PASSCODE", fallback: "bangkokthai" },
+  "jna-real-estate": { env: "PROPOSAL_PASSCODE_JNA", fallback: "jnareels" },
+};
 
-/** Used only when PROPOSAL_PASSCODE is unset. See the note above. */
-const FALLBACK_PASSCODE = "bangkokthai";
+/** /proposals/bangkok-thai and /proposals/bangkok-thai.html are one document. */
+function slugOf(pathname: string): string | null {
+  const m = pathname.match(/^\/proposals\/([^/]+?)(?:\.html)?$/);
+  return m ? m[1] : null;
+}
+
+function cookieName(slug: string): string {
+  return `bp_proposal_${slug.replace(/[^a-z0-9]/gi, "_")}`;
+}
 
 /** The cookie holds a digest, never the passcode itself. */
-async function token(passcode: string): Promise<string> {
-  const data = new TextEncoder().encode(`bp:${passcode}`);
+async function token(slug: string, passcode: string): Promise<string> {
+  const data = new TextEncoder().encode(`bp:${slug}:${passcode}`);
   const digest = await crypto.subtle.digest("SHA-256", data);
   return [...new Uint8Array(digest)]
     .map((b) => b.toString(16).padStart(2, "0"))
@@ -122,8 +145,18 @@ function lockedPage(wrong: boolean, configured: boolean): string {
 }
 
 export async function proxy(req: NextRequest) {
-  const passcode = process.env.PROPOSAL_PASSCODE || FALLBACK_PASSCODE;
-  const expected = await token(passcode);
+  const slug = slugOf(req.nextUrl.pathname);
+  const doc = slug ? DOCUMENTS[slug] : undefined;
+  if (!slug || !doc) {
+    return new NextResponse(lockedPage(false, false), {
+      status: 401,
+      headers: { "content-type": "text/html; charset=utf-8" },
+    });
+  }
+
+  const passcode = process.env[doc.env] || doc.fallback;
+  const expected = await token(slug, passcode);
+  const COOKIE = cookieName(slug);
 
   const cookie = req.cookies.get(COOKIE)?.value;
   if (cookie && sameToken(cookie, expected)) return NextResponse.next();
