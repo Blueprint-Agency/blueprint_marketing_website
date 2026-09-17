@@ -220,10 +220,39 @@
   .term-value small { display: inline-block; white-space: nowrap; font-size: 0.55em; font-weight: 550; color: var(--ink-soft); letter-spacing: -0.01em; margin-left: 6px; }
   .term p { margin: 12px 0 0; font-size: 0.9375rem; line-height: 1.6; color: var(--ink-soft); max-width: 34ch; }
   .term p b { font-weight: 650; color: var(--ink); }
+  /* The handover row runs the full width: four things, side by side. */
+  .term-wide { grid-column: 1 / -1; }
+  .term-wide p { max-width: 62ch; }
+  .handover {
+    list-style: none; margin: 18px 0 0; padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px 24px;
+    counter-reset: item;
+  }
+  .handover li {
+    min-width: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-strong);
+    font-size: 0.9375rem; line-height: 1.55; color: var(--ink-soft);
+  }
+  .handover li::before {
+    counter-increment: item;
+    content: counter(item);
+    display: block;
+    font-family: var(--mono); font-size: 0.8125rem; letter-spacing: -0.01em;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .handover b { display: block; font-weight: 650; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 4px; }
   @media (max-width: 759px) {
     .band-sunk { padding-block: 48px 56px; }
     .terms { grid-template-columns: 1fr; gap: 0; }
     .term p { max-width: 58ch; }
+    .handover { grid-template-columns: 1fr 1fr; gap: 16px; }
+  }
+  @media (max-width: 479px) {
+    .handover { grid-template-columns: 1fr; }
   }
 
   /* ---------- the reels, lit on black ---------- */
@@ -389,9 +418,9 @@
     </div>
 
     <p class="rate-note">
-      All prices in Singapore dollars. Rates hold for the batch size you commit to. The 32-video
-      bundle is paid in full up front and delivered at 16 a month over 2 months, or spread
-      across 4 months by arrangement.
+      All prices in Singapore dollars. Every batch is paid in full before work starts, and the
+      rate holds for the batch size you commit to. The 32-video bundle is delivered at 16 a
+      month over 2 months, or spread across 4 months by arrangement.
     </p>
   </section>
 
@@ -400,7 +429,7 @@
       <p class="eyebrow">What each video includes</p>
       <h2 class="h2" id="terms-h">One reel, and what it comes with.</h2>
       <p class="prose">
-        Every video on this card is made to the same three terms, whether it is one on its own
+        Every video on this card is made to the same terms, whether it is one on its own
         or one of 32.
       </p>
       <ul class="terms">
@@ -426,6 +455,43 @@
           <p>
             Each video is produced and finalised within <b>one to two days</b> of us receiving
             the footage.
+          </p>
+        </li>
+        <li class="term term-wide">
+          <span class="term-label">Handover</span>
+          <span class="term-value">What you send us before we start</span>
+          <p>
+            Four things, and the turnaround clock starts once we have all of them.
+          </p>
+          <ol class="handover">
+            <li><b>Raw videos</b>The footage for each video, in full quality.</li>
+            <li><b>B-roll folder</b>Universal b-roll clips and candid shots we can draw on across every video.</li>
+            <li><b>Video brief</b>Topic ideas, a script or key pointers, plus any reference videos.</li>
+            <li><b>Branding guidelines</b>Font types and colour choices, so every reel looks like JNA.</li>
+          </ol>
+        </li>
+        <li class="term">
+          <span class="term-label">Delivery</span>
+          <span class="term-value">9:16 MP4</span>
+          <p>
+            One vertical video at <b>1080 by 1920</b>, sent by Google Drive. Other formats on
+            request.
+          </p>
+        </li>
+        <li class="term">
+          <span class="term-label">Ownership</span>
+          <span class="term-value">Yours</span>
+          <p>
+            The finished videos are yours. We may show them as examples of our work unless you
+            ask us not to.
+          </p>
+        </li>
+        <li class="term">
+          <span class="term-label">Payment</span>
+          <span class="term-value">Before we start</span>
+          <p>
+            All payment is made <b>in full before work begins</b>, for every batch size on this
+            card.
           </p>
         </li>
       </ul>
