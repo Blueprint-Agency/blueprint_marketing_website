@@ -391,6 +391,30 @@ em{font-style:italic;font-weight:800}
   font-size:2.6rem;font-weight:600;letter-spacing:-.035em;line-height:1;color:var(--ink);
 }
 .out-k{display:block;margin-top:10px;font-size:14.5px;line-height:1.4;color:var(--ink-mute)}
+/* The monthly figure is the one to remember, so it gets the brand ground
+   and the full width; the six-month counts sit under it as its sum. */
+.out-hero{
+  margin-top:26px;padding:26px 26px 24px;background:var(--brand-deep);color:var(--on-brand);
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;
+}
+.out-hero .out-n{color:var(--on-brand);font-size:4.2rem}
+.out-hero-k{display:flex;flex-direction:column;gap:6px;flex:1 1 260px}
+.out-hero-t{font-size:1.3rem;font-weight:640;letter-spacing:-.014em;line-height:1.2}
+.out-hero-s{font-size:15px;line-height:1.45;color:var(--on-brand-soft)}
+.out-hero + .out-grid{margin-top:16px}
+
+/* ---------- pillars ----------
+   A glossary, so each card reads term, what it stands for, what it is,
+   then the goal. Two by two on a desktop, one column on a phone. */
+.pillars{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:720px){.pillars{grid-template-columns:1fr 1fr}}
+.pillars li{background:var(--paper);border:1px solid var(--line-strong);padding:24px 24px 22px;display:flex;flex-direction:column}
+.pl-t{font-size:1.9rem;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pl-x{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-text)}
+[lang="zh"].pl-x,.pl-x [lang="zh"]{letter-spacing:.04em}
+.pl-d{margin-top:14px;font-size:15.5px;line-height:1.55;color:var(--ink-soft)}
+.pl-g{margin-top:auto;padding-top:16px;font-size:15px;line-height:1.5;color:var(--ink)}
+.pl-g b{font-weight:640}
 
 /* ---------- demo cards ----------
    The cover is the top of each site's real home page, cropped to the hero
@@ -621,13 +645,13 @@ em{font-style:italic;font-weight:800}
           <td class="amt"><b>RM 5,000</b> <span>一次性</span></td>
         </tr>
         <tr lang="en">
-          <th scope="row">SEO &amp; maintenance</th>
+          <th scope="row">SEO, AEO, GEO</th>
           <td>Keeping the site ranking, current, fast and safe
             <span class="row-note">From month 2, the second month of SEO onwards</span></td>
           <td class="amt"><b>RM 3,500</b> <span>monthly</span></td>
         </tr>
         <tr lang="zh">
-          <th scope="row">SEO 与网站维护</th>
+          <th scope="row">SEO、AEO、GEO</th>
           <td>维持网站排名，内容更新，速度与安全
             <span class="row-note">从第 2 个月起，即第二个月的 SEO 起</span></td>
           <td class="amt"><b>RM 3,500</b> <span>每月</span></td>
@@ -689,7 +713,7 @@ em{font-style:italic;font-weight:800}
           <li class="step">
             <span class="st-when"><span lang="en">Months 2 to 6</span><span lang="zh">第 2 至 6 个月</span></span>
             <span class="st-amt">RM 3,500<small><span lang="en">/ month</span><span lang="zh">／月</span></small></span>
-            <span class="st-what"><span lang="en">SEO &amp; web maintenance</span><span lang="zh">SEO 与网站维护</span></span>
+            <span class="st-what"><span lang="en">SEO, AEO, GEO, CRO, web maintenance and content updates</span><span lang="zh">SEO、AEO、GEO、CRO、网站维护与内容更新</span></span>
             <span class="st-note"><span lang="en">The second month of SEO onwards</span><span lang="zh">第二个月 SEO 起</span></span>
           </li>
         </ol>
@@ -700,13 +724,53 @@ em{font-style:italic;font-weight:800}
     <div class="out">
       <h3 class="h3" lang="en">Content output, 6 months</h3>
       <h3 class="h3" lang="zh">内容产出，六个月</h3>
-      <p class="out-lead" lang="en">10 pieces a month. Every piece goes live in English, Bahasa Malaysia and Chinese at the same time.</p>
-      <p class="out-lead" lang="zh">每月 10 篇内容。每一篇同时以英文、马来文与中文上线。</p>
+      <p class="out-lead" lang="en">Every piece goes live in English, Bahasa Malaysia and Chinese at the same time, and every translated version is optimised for SEO, AEO and GEO.</p>
+      <p class="out-lead" lang="zh">每一篇同时以英文、马来文与中文上线，每一个翻译版本都针对 SEO、AEO 与 GEO 进行优化。</p>
+      <div class="out-hero">
+        <span class="out-n">30</span>
+        <span class="out-hero-k">
+          <span class="out-hero-t"><span lang="en">published pieces, every month</span><span lang="zh">每月发布篇数</span></span>
+          <span class="out-hero-s"><span lang="en">10 pieces × 3 languages</span><span lang="zh">10 篇内容 × 3 种语言</span></span>
+        </span>
+      </div>
       <ul class="out-grid">
         <li><span class="out-n">60</span><span class="out-k"><span lang="en">content pieces</span><span lang="zh">篇内容</span></span></li>
         <li><span class="out-n">180</span><span class="out-k"><span lang="en">URLs (EN · BM · CN)</span><span lang="zh">个网址（英 · 马 · 中）</span></span></li>
         <li><span class="out-n">41</span><span class="out-k"><span lang="en">site pages</span><span lang="zh">个网站页面</span></span></li>
         <li><span class="out-n">19</span><span class="out-k"><span lang="en">blog articles</span><span lang="zh">篇博客文章</span></span></li>
+      </ul>
+    </div>
+
+    <div class="out">
+      <h3 class="h3" lang="en">The four pillars of the monthly work</h3>
+      <h3 class="h3" lang="zh">每月工作的四大支柱</h3>
+      <p class="out-lead" lang="en">What each term means, and what it is for. Web maintenance and content updates run underneath all four.</p>
+      <p class="out-lead" lang="zh">每个名词的意思，以及它的目的。网站维护与内容更新贯穿这四项。</p>
+      <ul class="pillars">
+        <li>
+          <span class="pl-t">SEO</span>
+          <span class="pl-x"><span lang="en">Search Engine Optimisation</span><span lang="zh">搜索引擎优化</span></span>
+          <span class="pl-d" lang="en">Making pages rank in Google's ordinary results: technical health, page speed, site structure, keywords and internal links.</span><span class="pl-d" lang="zh">让网页在 Google 一般搜索结果中排名：技术健康、页面速度、网站结构、关键词与内部链接。</span>
+          <span class="pl-g" lang="en"><b>Goal:</b> Be found when people search for what Sans offers.</span><span class="pl-g" lang="zh"><b>目标：</b>当人们搜索 Sans 提供的服务时，找得到你。</span>
+        </li>
+        <li>
+          <span class="pl-t">AEO</span>
+          <span class="pl-x"><span lang="en">Answer Engine Optimisation</span><span lang="zh">答案引擎优化</span></span>
+          <span class="pl-d" lang="en">Shaping content so it can be lifted as a direct answer: Google's featured snippets, People Also Ask and voice assistants. Clear questions, clear answers, FAQ markup.</span><span class="pl-d" lang="zh">把内容整理成可以直接被引用为答案的形式：Google 精选摘要、“其他人还问了”与语音助手。清楚的问题、清楚的答案、FAQ 结构化数据。</span>
+          <span class="pl-g" lang="en"><b>Goal:</b> Be the answer that is shown, not just one link among ten.</span><span class="pl-g" lang="zh"><b>目标：</b>成为被展示的答案，而不只是十个链接之一。</span>
+        </li>
+        <li>
+          <span class="pl-t">GEO</span>
+          <span class="pl-x"><span lang="en">Generative Engine Optimisation</span><span lang="zh">生成式引擎优化</span></span>
+          <span class="pl-d" lang="en">Making the brand understood and cited by AI assistants such as ChatGPT, Gemini, Perplexity and Google's AI Overviews: clear facts, consistent brand details, authoritative content.</span><span class="pl-d" lang="zh">让 ChatGPT、Gemini、Perplexity 与 Google AI 概览等 AI 助手正确理解并引用品牌：清晰的事实、一致的品牌信息、有权威的内容。</span>
+          <span class="pl-g" lang="en"><b>Goal:</b> Be the name that comes up when people ask an AI.</span><span class="pl-g" lang="zh"><b>目标：</b>当人们询问 AI 时，被提到的是你。</span>
+        </li>
+        <li>
+          <span class="pl-t">CRO</span>
+          <span class="pl-x"><span lang="en">Conversion Rate Optimisation</span><span lang="zh">转化率优化</span></span>
+          <span class="pl-d" lang="en">Improving the pages so more visitors take the next step: an enquiry, a WhatsApp message, a booking. Clearer calls to action, simpler forms, better layouts.</span><span class="pl-d" lang="zh">改进页面，让更多访客采取下一步：询问、发 WhatsApp、预约。更清楚的行动按钮、更简单的表单、更好的版面。</span>
+          <span class="pl-g" lang="en"><b>Goal:</b> Turn visits into customers.</span><span class="pl-g" lang="zh"><b>目标：</b>把访问变成顾客。</span>
+        </li>
       </ul>
     </div>
 
