@@ -254,6 +254,8 @@ em{font-style:italic;font-weight:800}
 }
 .tbl .amt span{color:var(--ink-mute);font-size:.92em}
 .tbl tbody th{font-weight:600;color:var(--ink)}
+/* Marks the two services a client can leave out. Quieter than the name. */
+.tbl tbody th .opt{font-weight:400;color:var(--ink-mute)}
 .tbl tbody td{color:var(--ink-soft)}
 .tbl .row-note{display:block;font-size:13px;color:var(--ink-mute);margin-top:4px;font-weight:400}
 /* The rate cell carries three figures now, each with its own label. The
@@ -349,6 +351,39 @@ em{font-style:italic;font-weight:800}
 }
 .per-outlet .k{font-size:15px;color:var(--on-brand-soft)}
 .per-outlet .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.2rem;font-weight:600;text-align:right}
+
+/* ---------- timeline ----------
+   Six months side by side on a desktop, so the contract reads as a length
+   and the one different month stands out by colour alone. Stacks on a
+   phone, month label left and figure right, one month to a row. */
+.tl{
+  list-style:none;margin:44px 0 0;padding:0;
+  display:grid;grid-template-columns:1fr;border-top:2px solid var(--ink);
+}
+.tl li{
+  display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:baseline;
+  padding:16px 0;border-bottom:1px solid var(--line);
+}
+.tl-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.tl-v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:600;letter-spacing:-.02em;white-space:nowrap}
+.tl-d{grid-column:1 / -1;font-size:14px;line-height:1.45;color:var(--ink-mute)}
+.tl .tl-first{background:var(--brand-deep);color:var(--on-brand);padding-inline:16px;border-bottom-color:var(--brand-deep)}
+.tl .tl-first .tl-k,.tl .tl-first .tl-d{color:var(--on-brand-soft)}
+@media (min-width:760px){
+  .tl{grid-template-columns:repeat(6,1fr)}
+  .tl li{
+    grid-template-columns:1fr;align-content:start;gap:10px;
+    padding:20px 16px 22px;border-bottom:0;border-right:1px solid var(--line);
+  }
+  .tl li:last-child{border-right:0}
+  .tl .tl-first{border-right-color:var(--brand-deep)}
+}
+.tl-foot{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px 24px;
+  margin-top:0;padding-top:18px;border-top:2px solid var(--ink);
+}
+.tl-foot .k{font-size:16px;color:var(--ink-soft)}
+.tl-foot .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.9rem;font-weight:600;letter-spacing:-.035em;white-space:nowrap}
 
 /* ---------- demo cards ----------
    The cover is the top of each site's real home page, cropped to the hero
@@ -591,25 +626,25 @@ em{font-style:italic;font-weight:800}
           <td class="amt"><b>RM 3,500</b> <span>每月</span></td>
         </tr>
         <tr lang="en">
-          <th scope="row">Booking system</th>
+          <th scope="row">Booking system <span class="opt">(optional)</span></th>
           <td>Guest-facing appointments plus the admin panel behind them
             <span class="row-note">One booking calendar and one admin panel per branch</span></td>
           <td class="amt"><b>RM 250</b> <span>per branch, monthly</span></td>
         </tr>
         <tr lang="zh">
-          <th scope="row">预约系统</th>
+          <th scope="row">预约系统<span class="opt">（可选）</span></th>
           <td>顾客端预约，加上后台管理系统
             <span class="row-note">每家分店一个预约表、一个后台</span></td>
           <td class="amt"><b>RM 250</b> <span>每分店，每月</span></td>
         </tr>
         <tr lang="en">
-          <th scope="row">AI review system</th>
+          <th scope="row">AI review system <span class="opt">(optional)</span></th>
           <td>QR-code instant AI generated reviews in three languages, for Google, Facebook, XiaoHongShu and TripAdvisor
             <span class="row-note">One QR code and one dashboard per outlet</span></td>
           <td class="amt"><b>RM 99</b> <span>per branch, monthly</span></td>
         </tr>
         <tr lang="zh">
-          <th scope="row">AI 评论系统</th>
+          <th scope="row">AI 评论系统<span class="opt">（可选）</span></th>
           <td>扫码即时生成三语 AI 评论，发布到 Google、Facebook、小红书与 TripAdvisor
             <span class="row-note">每家分店一个二维码、一个后台</span></td>
           <td class="amt"><b>RM 99</b> <span>每分店，每月</span></td>
@@ -634,7 +669,7 @@ em{font-style:italic;font-weight:800}
     <div class="deck">
 
       <!-- ---- fixed ---- -->
-      <article class="plan">
+      <article class="plan plan-b">
         <h3 class="plan-name" lang="en">Website re-design &amp; SEO</h3>
         <h3 class="plan-name" lang="zh">网站改版与 SEO</h3>
         <p class="plan-fits" lang="en">One site, one re-design, one monthly retainer.</p>
@@ -653,18 +688,18 @@ em{font-style:italic;font-weight:800}
 
         <div class="sum">
           <div class="sum-row">
-            <span class="k"><span lang="en">Website, one-time on signing</span><span lang="zh">网站，签约时一次性</span></span>
+            <span class="k"><span lang="en">Month 1, website rebuild</span><span lang="zh">第 1 个月，网站重建</span></span>
             <span class="v">RM 5,000</span>
           </div>
           <div class="sum-total">
-            <span class="k"><span lang="en">Monthly, from launch</span><span lang="zh">上线后每月</span></span>
+            <span class="k"><span lang="en">Monthly, months 2 to 6</span><span lang="zh">第 2 至 6 个月，每月</span></span>
             <span class="v">RM 3,500</span>
           </div>
         </div>
       </article>
 
       <!-- ---- per branch ---- -->
-      <article class="plan plan-b">
+      <article class="plan">
         <h3 class="plan-name" lang="en">Booking &amp; AI reviews</h3>
         <h3 class="plan-name" lang="zh">预约与 AI 评论</h3>
         <p class="plan-fits" lang="en">The two services that run inside each branch. Five branch minimum.</p>
@@ -680,30 +715,73 @@ em{font-style:italic;font-weight:800}
             <span class="l-amt">RM 99<small><span lang="en">/ branch / month</span><span lang="zh">／分店／月</span></small></span>
           </li>
         </ul>
-
-        <div class="sum">
-          <div class="sum-total">
-            <span class="k"><span lang="en">Per branch, per month</span><span lang="zh">每家分店，每月</span></span>
-            <span class="v">RM 349</span>
-          </div>
-          <div class="per-outlet">
-            <span class="k" lang="en">Minimum, five branches</span>
-            <span class="k" lang="zh">最低五家分店</span>
-            <span class="v" lang="en">RM 1,745 a month</span>
-            <span class="v" lang="zh">每月 RM 1,745</span>
-          </div>
-        </div>
       </article>
     </div>
 
   </div>
 </section>
 
-<!-- ============================ 03 DEMOS ============================ -->
-<section class="band band-sunk sec-block page-break">
+<!-- ============================ 03 TIMELINE ============================ -->
+<section class="band sec-block page-break">
   <div class="shell">
     <div class="sec-head">
       <span class="sec-no">03</span>
+      <div>
+        <h2 class="h2 h2-wide" lang="en">Payment timeline, <span class="ul">6 month contract</span></h2>
+        <h2 class="h2 h2-wide" lang="zh">付款时间表，<span class="ul">六个月合约</span></h2>
+      </div>
+    </div>
+
+    <p class="prose" lang="en">The contract runs six months. <strong>Month 1 is the website rebuild</strong>, which includes the first month of SEO content. <strong>The SEO retainer starts in month 2</strong> and runs to the end of month 6.</p>
+    <p class="prose" lang="zh">合约为期六个月。<strong>第 1 个月为网站重建</strong>，已包含第一个月的 SEO 内容制作。<strong>SEO 月费从第 2 个月开始</strong>，直到第 6 个月结束。</p>
+
+    <ol class="tl">
+      <li class="tl-first">
+        <span class="tl-k"><span lang="en">Month 1</span><span lang="zh">第 1 个月</span></span>
+        <span class="tl-v">RM 5,000</span>
+        <span class="tl-d"><span lang="en">Site migration, re-design, month 1 SEO content</span><span lang="zh">整站迁移、页面重新设计、第 1 个月 SEO 内容</span></span>
+      </li>
+      <li>
+        <span class="tl-k"><span lang="en">Month 2</span><span lang="zh">第 2 个月</span></span>
+        <span class="tl-v">RM 3,500</span>
+        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
+      </li>
+      <li>
+        <span class="tl-k"><span lang="en">Month 3</span><span lang="zh">第 3 个月</span></span>
+        <span class="tl-v">RM 3,500</span>
+        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
+      </li>
+      <li>
+        <span class="tl-k"><span lang="en">Month 4</span><span lang="zh">第 4 个月</span></span>
+        <span class="tl-v">RM 3,500</span>
+        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
+      </li>
+      <li>
+        <span class="tl-k"><span lang="en">Month 5</span><span lang="zh">第 5 个月</span></span>
+        <span class="tl-v">RM 3,500</span>
+        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
+      </li>
+      <li>
+        <span class="tl-k"><span lang="en">Month 6</span><span lang="zh">第 6 个月</span></span>
+        <span class="tl-v">RM 3,500</span>
+        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
+      </li>
+    </ol>
+
+    <div class="tl-foot">
+      <span class="k"><span lang="en">Website and SEO, six months in total</span><span lang="zh">网站与 SEO，六个月合计</span></span>
+      <span class="v">RM 22,500</span>
+    </div>
+    <p class="small" style="margin-top:14px" lang="en">Booking and AI reviews are optional and, if taken, are billed on top, per branch.</p>
+    <p class="small" style="margin-top:14px" lang="zh">预约与 AI 评论为可选项目，如采用，按分店另计。</p>
+  </div>
+</section>
+
+<!-- ============================ 04 DEMOS ============================ -->
+<section class="band band-sunk sec-block page-break">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
       <div>
         <h2 class="h2" lang="en">Live <em>examples</em>.</h2>
         <h2 class="h2" lang="zh"><em>实例</em>。</h2>
@@ -804,11 +882,11 @@ em{font-style:italic;font-weight:800}
   </div>
 </section>
 
-<!-- ============================ 04 NOTES ============================ -->
+<!-- ============================ 05 NOTES ============================ -->
 <section class="band sec-block">
   <div class="shell">
     <div class="sec-head">
-      <span class="sec-no">04</span>
+      <span class="sec-no">05</span>
       <div>
         <h2 class="h2" lang="en">Other notes</h2>
         <h2 class="h2" lang="zh">其他说明</h2>
@@ -816,12 +894,10 @@ em{font-style:italic;font-weight:800}
     </div>
 
     <ol class="notes">
-      <li lang="en"><b>All figures are in Malaysian ringgit</b> and exclude any applicable tax. Monthly fees begin at launch, not at signing.</li>
-      <li lang="zh"><b>所有金额均为马币</b>，不含任何适用税项。月费从上线开始，而不是签约当天。</li>
-      <li lang="en"><b>The website fee covers one site in three languages.</b> A re-design of sansgroup.com.my with unlimited pages, in English, Bahasa Malaysia and Chinese. A second site, such as sanswellness.com, or a fourth language, would be quoted separately.</li>
-      <li lang="zh"><b>网站费用涵盖一个网站的三种语言。</b>sansgroup.com.my 改版，页面不限，以英文、马来文与中文呈现。第二个网站（例如 sanswellness.com）或第四种语言另行报价。</li>
-      <li lang="en"><b>Booking and AI reviews are priced per branch.</b> Sans Wellness lists 15 branches today, 14 in Malaysia and one in Batam. Both systems at all 15 would be RM 5,235 a month.</li>
-      <li lang="zh"><b>预约与 AI 评论按分店计费。</b>Sans Wellness 目前共有 15 家分店，其中 14 家在马来西亚、1 家在巴淡岛。15 家分店全部使用两项系统，每月 RM 5,235。</li>
+      <li lang="en"><b>All figures are in Malaysian ringgit</b> and exclude any applicable tax. The SEO retainer begins in month 2; month 1 is covered by the website fee.</li>
+      <li lang="zh"><b>所有金额均为马币</b>，不含任何适用税项。SEO 月费从第 2 个月开始；第 1 个月已包含在网站费用内。</li>
+      <li lang="en"><b>The website fee covers a full rebuild of sansgroup.com.my:</b> migration of the entire site, a re-design of every existing page, and the first month of SEO content production. A second site, such as sanswellness.com, would be quoted separately.</li>
+      <li lang="zh"><b>网站费用涵盖 sansgroup.com.my 的完整重建：</b>整站迁移、所有现有页面重新设计，以及第一个月的 SEO 内容制作。第二个网站（例如 sanswellness.com）另行报价。</li>
       <li lang="en"><b>Not included:</b> advertising spend (Google or Meta), domain registration, photography and video production, printing of QR standees and signage, and any third-party licence you already hold. Each can be quoted on request.</li>
       <li lang="zh"><b>不包含：</b>广告投放费用（Google 或 Meta）、域名注册、摄影与视频制作、二维码展架与招牌印刷，以及你已持有的第三方授权。以上均可另行报价。</li>
       <li lang="en"><b>What we do not promise here:</b> no ranking guarantee, no traffic figure, no percentage lift. We do not publish numbers we cannot stand behind, and any figure quoted in a meeting will come with the account it came from.</li>
