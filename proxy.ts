@@ -60,6 +60,7 @@ import { NextResponse, type NextRequest } from "next/server";
 const DOCUMENTS: Record<string, { env: string; fallback: string }> = {
   "bangkok-thai": { env: "PROPOSAL_PASSCODE", fallback: "bangkokthai" },
   "jna-real-estate": { env: "PROPOSAL_PASSCODE_JNA", fallback: "jnareels" },
+  "sans-group": { env: "PROPOSAL_PASSCODE_SANS", fallback: "sanswellness" },
 };
 
 /** /proposals/bangkok-thai and /proposals/bangkok-thai.html are one document. */
