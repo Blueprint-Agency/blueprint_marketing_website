@@ -338,7 +338,7 @@ em{font-style:italic;font-weight:800}
   display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
   margin-top:20px;padding-top:18px;border-top:2px solid var(--ink);
 }
-.sum-total .k{font-size:16px;color:var(--ink-mute);max-width:16ch;line-height:1.35;flex:1 1 auto}
+.sum-total .k{font-size:16px;color:var(--ink-mute);max-width:24ch;line-height:1.35;flex:1 1 auto}
 .sum-total .v{
   font-family:var(--mono);font-variant-numeric:tabular-nums;
   font-size:2.35rem;font-weight:600;letter-spacing:-.035em;line-height:1;
@@ -351,34 +351,6 @@ em{font-style:italic;font-weight:800}
 }
 .per-outlet .k{font-size:15px;color:var(--on-brand-soft)}
 .per-outlet .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.2rem;font-weight:600;text-align:right}
-
-/* ---------- timeline ----------
-   Six months side by side on a desktop, so the contract reads as a length
-   and the one different month stands out by colour alone. Stacks on a
-   phone, month label left and figure right, one month to a row. */
-.tl{
-  list-style:none;margin:44px 0 0;padding:0;
-  display:grid;grid-template-columns:1fr;border-block:2px solid var(--ink);
-}
-.tl li:last-child{border-bottom:0}
-.tl li{
-  display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:baseline;
-  padding:16px 0;border-bottom:1px solid var(--line);
-}
-.tl-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
-.tl-v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.25rem;font-weight:600;letter-spacing:-.02em;white-space:nowrap}
-.tl-d{grid-column:1 / -1;font-size:14px;line-height:1.45;color:var(--ink-mute)}
-.tl .tl-first{background:var(--brand-deep);color:var(--on-brand);padding-inline:16px;border-bottom-color:var(--brand-deep)}
-.tl .tl-first .tl-k,.tl .tl-first .tl-d{color:var(--on-brand-soft)}
-@media (min-width:760px){
-  .tl{grid-template-columns:repeat(6,1fr)}
-  .tl li{
-    grid-template-columns:1fr;align-content:start;gap:10px;
-    padding:20px 16px 22px;border-bottom:0;border-right:1px solid var(--line);
-  }
-  .tl li:last-child{border-right:0}
-  .tl .tl-first{border-right-color:var(--brand-deep)}
-}font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.9rem;font-weight:600;letter-spacing:-.035em;white-space:nowrap}
 
 /* ---------- demo cards ----------
    The cover is the top of each site's real home page, cropped to the hero
@@ -598,26 +570,26 @@ em{font-style:italic;font-weight:800}
       <tbody>
         <tr lang="en">
           <th scope="row">Website re-design</th>
-          <td>A full re-design of sansgroup.com.my, unlimited pages
+          <td>Site migration and rebuild of sansgroup.com.my, plus the first month of SEO work
             <span class="row-note">Design, build, copy, launch · English, Bahasa Malaysia and Chinese</span></td>
           <td class="amt"><b>RM 5,000</b> <span>once</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">网站改版</th>
-          <td>sansgroup.com.my 全面改版，页面不限
+          <td>sansgroup.com.my 整站迁移与重建，加上第一个月的 SEO 工作
             <span class="row-note">设计、开发、文案、上线 · 英文、马来文、中文</span></td>
           <td class="amt"><b>RM 5,000</b> <span>一次性</span></td>
         </tr>
         <tr lang="en">
           <th scope="row">SEO &amp; maintenance</th>
           <td>Keeping the site ranking, current, fast and safe
-            <span class="row-note">Ongoing, month to month</span></td>
+            <span class="row-note">From month 2, the second month of SEO onwards</span></td>
           <td class="amt"><b>RM 3,500</b> <span>monthly</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">SEO 与网站维护</th>
           <td>维持网站排名，内容更新，速度与安全
-            <span class="row-note">持续进行，按月</span></td>
+            <span class="row-note">从第 2 个月起，即第二个月的 SEO 起</span></td>
           <td class="amt"><b>RM 3,500</b> <span>每月</span></td>
         </tr>
         <tr lang="en">
@@ -667,23 +639,23 @@ em{font-style:italic;font-weight:800}
       <article class="plan plan-b">
         <h3 class="plan-name" lang="en">Website re-design &amp; SEO</h3>
         <h3 class="plan-name" lang="zh">网站改版与 SEO</h3>
-        <p class="plan-fits" lang="en">One site, one re-design, one monthly retainer.</p>
-        <p class="plan-fits" lang="zh">一个网站、一次改版、一笔月费。</p>
+        <p class="plan-fits" lang="en">Month 1 covers the migration, the rebuild and the first month of SEO. From month 2, SEO work continues monthly.</p>
+        <p class="plan-fits" lang="zh">第 1 个月涵盖整站迁移、网站重建与第一个月的 SEO。从第 2 个月起，SEO 工作按月继续。</p>
 
         <ul class="lines">
           <li>
-            <span class="l-name"><span lang="en">Website re-design</span><span lang="zh">网站改版</span><small><span lang="en">One-time · unlimited pages · three languages</span><span lang="zh">一次性 · 页面不限 · 三种语言</span></small></span>
-            <span class="l-amt">RM 5,000<small><span lang="en">once</span><span lang="zh">一次性</span></small></span>
+            <span class="l-name"><span lang="en">Website rebuild &amp; first month of SEO</span><span lang="zh">网站重建与第一个月 SEO</span><small><span lang="en">Site migration, rebuild, first month of SEO work</span><span lang="zh">整站迁移、网站重建、第一个月 SEO 工作</span></small></span>
+            <span class="l-amt">RM 5,000<small><span lang="en">month 1</span><span lang="zh">第 1 个月</span></small></span>
           </li>
           <li>
-            <span class="l-name"><span lang="en">SEO &amp; web maintenance</span><span lang="zh">SEO 与网站维护</span><small><span lang="en">The whole site, every branch</span><span lang="zh">整个网站，所有分店</span></small></span>
+            <span class="l-name"><span lang="en">SEO &amp; web maintenance</span><span lang="zh">SEO 与网站维护</span><small><span lang="en">Second month of SEO onwards, months 2 to 6</span><span lang="zh">第二个月 SEO 起，第 2 至 6 个月</span></small></span>
             <span class="l-amt">RM 3,500<small><span lang="en">/ month</span><span lang="zh">／月</span></small></span>
           </li>
         </ul>
 
         <div class="sum">
           <div class="sum-row">
-            <span class="k"><span lang="en">Month 1, website rebuild</span><span lang="zh">第 1 个月，网站重建</span></span>
+            <span class="k"><span lang="en">Month 1, rebuild and SEO</span><span lang="zh">第 1 个月，重建与 SEO</span></span>
             <span class="v">RM 5,000</span>
           </div>
           <div class="sum-total">
@@ -697,8 +669,8 @@ em{font-style:italic;font-weight:800}
       <article class="plan">
         <h3 class="plan-name" lang="en">Booking &amp; AI reviews</h3>
         <h3 class="plan-name" lang="zh">预约与 AI 评论</h3>
-        <p class="plan-fits" lang="en">The two services that run inside each branch. Five branch minimum.</p>
-        <p class="plan-fits" lang="zh">这两项是在每家分店里运作的服务。最少五家分店起。</p>
+        <p class="plan-fits" lang="en">Optional. The two services that run inside each branch. Five branch minimum.</p>
+        <p class="plan-fits" lang="zh">可选。这两项是在每家分店里运作的服务。最少五家分店起。</p>
 
         <ul class="lines">
           <li>
@@ -716,62 +688,11 @@ em{font-style:italic;font-weight:800}
   </div>
 </section>
 
-<!-- ============================ 03 TIMELINE ============================ -->
-<section class="band sec-block page-break">
-  <div class="shell">
-    <div class="sec-head">
-      <span class="sec-no">03</span>
-      <div>
-        <h2 class="h2 h2-wide" lang="en">Payment timeline, <span class="ul">6 month contract</span></h2>
-        <h2 class="h2 h2-wide" lang="zh">付款时间表，<span class="ul">六个月合约</span></h2>
-      </div>
-    </div>
-
-    <p class="prose" lang="en">The contract runs six months. <strong>Month 1 is the website rebuild</strong>, which includes the first month of SEO content. <strong>The SEO retainer starts in month 2</strong> and runs to the end of month 6.</p>
-    <p class="prose" lang="zh">合约为期六个月。<strong>第 1 个月为网站重建</strong>，已包含第一个月的 SEO 内容制作。<strong>SEO 月费从第 2 个月开始</strong>，直到第 6 个月结束。</p>
-
-    <ol class="tl">
-      <li class="tl-first">
-        <span class="tl-k"><span lang="en">Month 1</span><span lang="zh">第 1 个月</span></span>
-        <span class="tl-v">RM 5,000</span>
-        <span class="tl-d"><span lang="en">Site migration, re-design, month 1 SEO content</span><span lang="zh">整站迁移、页面重新设计、第 1 个月 SEO 内容</span></span>
-      </li>
-      <li>
-        <span class="tl-k"><span lang="en">Month 2</span><span lang="zh">第 2 个月</span></span>
-        <span class="tl-v">RM 3,500</span>
-        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
-      </li>
-      <li>
-        <span class="tl-k"><span lang="en">Month 3</span><span lang="zh">第 3 个月</span></span>
-        <span class="tl-v">RM 3,500</span>
-        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
-      </li>
-      <li>
-        <span class="tl-k"><span lang="en">Month 4</span><span lang="zh">第 4 个月</span></span>
-        <span class="tl-v">RM 3,500</span>
-        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
-      </li>
-      <li>
-        <span class="tl-k"><span lang="en">Month 5</span><span lang="zh">第 5 个月</span></span>
-        <span class="tl-v">RM 3,500</span>
-        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
-      </li>
-      <li>
-        <span class="tl-k"><span lang="en">Month 6</span><span lang="zh">第 6 个月</span></span>
-        <span class="tl-v">RM 3,500</span>
-        <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
-      </li>
-    </ol>
-    <p class="small" style="margin-top:18px" lang="en">Booking and AI reviews are optional and, if taken, are billed on top, per branch.</p>
-    <p class="small" style="margin-top:18px" lang="zh">预约与 AI 评论为可选项目，如采用，按分店另计。</p>
-  </div>
-</section>
-
-<!-- ============================ 04 DEMOS ============================ -->
+<!-- ============================ 03 DEMOS ============================ -->
 <section class="band band-sunk sec-block page-break">
   <div class="shell">
     <div class="sec-head">
-      <span class="sec-no">04</span>
+      <span class="sec-no">03</span>
       <div>
         <h2 class="h2" lang="en">Live <em>examples</em>.</h2>
         <h2 class="h2" lang="zh"><em>实例</em>。</h2>
@@ -872,11 +793,11 @@ em{font-style:italic;font-weight:800}
   </div>
 </section>
 
-<!-- ============================ 05 NOTES ============================ -->
+<!-- ============================ 04 NOTES ============================ -->
 <section class="band sec-block">
   <div class="shell">
     <div class="sec-head">
-      <span class="sec-no">05</span>
+      <span class="sec-no">04</span>
       <div>
         <h2 class="h2" lang="en">Other notes</h2>
         <h2 class="h2" lang="zh">其他说明</h2>
@@ -886,8 +807,8 @@ em{font-style:italic;font-weight:800}
     <ol class="notes">
       <li lang="en"><b>All figures are in Malaysian ringgit</b> and exclude any applicable tax. The SEO retainer begins in month 2; month 1 is covered by the website fee.</li>
       <li lang="zh"><b>所有金额均为马币</b>，不含任何适用税项。SEO 月费从第 2 个月开始；第 1 个月已包含在网站费用内。</li>
-      <li lang="en"><b>The website fee covers a full rebuild of sansgroup.com.my:</b> migration of the entire site, a re-design of every existing page, and the first month of SEO content production. A second site, such as sanswellness.com, would be quoted separately.</li>
-      <li lang="zh"><b>网站费用涵盖 sansgroup.com.my 的完整重建：</b>整站迁移、所有现有页面重新设计，以及第一个月的 SEO 内容制作。第二个网站（例如 sanswellness.com）另行报价。</li>
+      <li lang="en"><b>The website fee covers a full rebuild of sansgroup.com.my:</b> migration of the entire site, the rebuild, and the first month of SEO work. A second site, such as sanswellness.com, would be quoted separately.</li>
+      <li lang="zh"><b>网站费用涵盖 sansgroup.com.my 的完整重建：</b>整站迁移、网站重建，以及第一个月的 SEO 工作。第二个网站（例如 sanswellness.com）另行报价。</li>
       <li lang="en"><b>Not included:</b> advertising spend (Google or Meta), domain registration, photography and video production, printing of QR standees and signage, and any third-party licence you already hold. Each can be quoted on request.</li>
       <li lang="zh"><b>不包含：</b>广告投放费用（Google 或 Meta）、域名注册、摄影与视频制作、二维码展架与招牌印刷，以及你已持有的第三方授权。以上均可另行报价。</li>
       <li lang="en"><b>What we do not promise here:</b> no ranking guarantee, no traffic figure, no percentage lift. We do not publish numbers we cannot stand behind, and any figure quoted in a meeting will come with the account it came from.</li>
