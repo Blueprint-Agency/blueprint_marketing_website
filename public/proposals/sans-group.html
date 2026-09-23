@@ -377,12 +377,20 @@ em{font-style:italic;font-weight:800}
 .st-what{display:block;margin-top:18px;font-size:17px;font-weight:500;color:var(--ink)}
 .st-note{display:block;margin-top:5px;font-size:14.5px;line-height:1.45;color:var(--ink-mute)}
 
-/* Booking under the timeline, full width: its two lines sit side by side
-   rather than stretching one name and one figure across the page. */
-@media (min-width:720px){
-  .plan-opt .lines{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+/* ---------- content output ----------
+   What the six months of SEO produce, as four counts. Figures machine-set
+   like every other figure here; four across on a desktop, two by two
+   below 720px. */
+.out{margin-top:56px}
+.out-lead{max-width:66ch;color:var(--ink-soft);margin:12px 0 0}
+.out-grid{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:16px;grid-template-columns:1fr 1fr}
+@media (min-width:720px){.out-grid{grid-template-columns:repeat(4,1fr)}}
+.out-grid li{background:var(--paper);border:1px solid var(--line-strong);padding:22px 20px 20px}
+.out-n{
+  display:block;font-family:var(--mono);font-variant-numeric:tabular-nums;
+  font-size:2.6rem;font-weight:600;letter-spacing:-.035em;line-height:1;color:var(--ink);
 }
-.plan-opt .plan-fits{min-height:0}
+.out-k{display:block;margin-top:10px;font-size:14.5px;line-height:1.4;color:var(--ink-mute)}
 
 /* ---------- demo cards ----------
    The cover is the top of each site's real home page, cropped to the hero
@@ -687,24 +695,19 @@ em{font-style:italic;font-weight:800}
         </ol>
       </article>
 
-      <!-- ---- per branch ---- -->
-      <article class="plan plan-opt">
-        <h3 class="plan-name" lang="en">Booking &amp; AI reviews</h3>
-        <h3 class="plan-name" lang="zh">预约与 AI 评论</h3>
-        <p class="plan-fits" lang="en">Optional. The two services that run inside each branch. Five branch minimum.</p>
-        <p class="plan-fits" lang="zh">可选。这两项是在每家分店里运作的服务。最少五家分店起。</p>
+    </div>
 
-        <ul class="lines">
-          <li>
-            <span class="l-name"><span lang="en">Booking system</span><span lang="zh">预约系统</span><small><span lang="en">Customer end and admin panel together</span><span lang="zh">顾客端与后台管理一套</span></small></span>
-            <span class="l-amt">RM 250<small><span lang="en">/ branch / month</span><span lang="zh">／分店／月</span></small></span>
-          </li>
-          <li>
-            <span class="l-name"><span lang="en">AI review system</span><span lang="zh">AI 评论系统</span><small><span lang="en">One QR code and one dashboard per branch</span><span lang="zh">每家分店一个二维码、一个后台</span></small></span>
-            <span class="l-amt">RM 99<small><span lang="en">/ branch / month</span><span lang="zh">／分店／月</span></small></span>
-          </li>
-        </ul>
-      </article>
+    <div class="out">
+      <h3 class="h3" lang="en">Content output, 6 months</h3>
+      <h3 class="h3" lang="zh">内容产出，六个月</h3>
+      <p class="out-lead" lang="en">10 pieces a month. Every piece goes live in English, Bahasa Malaysia and Chinese at the same time.</p>
+      <p class="out-lead" lang="zh">每月 10 篇内容。每一篇同时以英文、马来文与中文上线。</p>
+      <ul class="out-grid">
+        <li><span class="out-n">60</span><span class="out-k"><span lang="en">content pieces</span><span lang="zh">篇内容</span></span></li>
+        <li><span class="out-n">180</span><span class="out-k"><span lang="en">URLs (EN · BM · CN)</span><span lang="zh">个网址（英 · 马 · 中）</span></span></li>
+        <li><span class="out-n">41</span><span class="out-k"><span lang="en">site pages</span><span lang="zh">个网站页面</span></span></li>
+        <li><span class="out-n">19</span><span class="out-k"><span lang="en">blog articles</span><span lang="zh">篇博客文章</span></span></li>
+      </ul>
     </div>
 
   </div>
