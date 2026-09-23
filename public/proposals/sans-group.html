@@ -358,8 +358,9 @@ em{font-style:italic;font-weight:800}
    phone, month label left and figure right, one month to a row. */
 .tl{
   list-style:none;margin:44px 0 0;padding:0;
-  display:grid;grid-template-columns:1fr;border-top:2px solid var(--ink);
+  display:grid;grid-template-columns:1fr;border-block:2px solid var(--ink);
 }
+.tl li:last-child{border-bottom:0}
 .tl li{
   display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:baseline;
   padding:16px 0;border-bottom:1px solid var(--line);
@@ -377,13 +378,7 @@ em{font-style:italic;font-weight:800}
   }
   .tl li:last-child{border-right:0}
   .tl .tl-first{border-right-color:var(--brand-deep)}
-}
-.tl-foot{
-  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px 24px;
-  margin-top:0;padding-top:18px;border-top:2px solid var(--ink);
-}
-.tl-foot .k{font-size:16px;color:var(--ink-soft)}
-.tl-foot .v{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.9rem;font-weight:600;letter-spacing:-.035em;white-space:nowrap}
+}font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:1.9rem;font-weight:600;letter-spacing:-.035em;white-space:nowrap}
 
 /* ---------- demo cards ----------
    The cover is the top of each site's real home page, cropped to the hero
@@ -767,13 +762,8 @@ em{font-style:italic;font-weight:800}
         <span class="tl-d"><span lang="en">SEO &amp; maintenance</span><span lang="zh">SEO 与网站维护</span></span>
       </li>
     </ol>
-
-    <div class="tl-foot">
-      <span class="k"><span lang="en">Website and SEO, six months in total</span><span lang="zh">网站与 SEO，六个月合计</span></span>
-      <span class="v">RM 22,500</span>
-    </div>
-    <p class="small" style="margin-top:14px" lang="en">Booking and AI reviews are optional and, if taken, are billed on top, per branch.</p>
-    <p class="small" style="margin-top:14px" lang="zh">预约与 AI 评论为可选项目，如采用，按分店另计。</p>
+    <p class="small" style="margin-top:18px" lang="en">Booking and AI reviews are optional and, if taken, are billed on top, per branch.</p>
+    <p class="small" style="margin-top:18px" lang="zh">预约与 AI 评论为可选项目，如采用，按分店另计。</p>
   </div>
 </section>
 
