@@ -373,6 +373,7 @@ em{font-style:italic;font-weight:800}
   display:block;margin-top:12px;font-family:var(--mono);font-variant-numeric:tabular-nums;
   font-size:2.35rem;font-weight:600;letter-spacing:-.035em;line-height:1;white-space:nowrap;
 }
+.st-plus{margin-top:10px;font-size:1.6rem;color:var(--brand-text)}
 .st-amt small{font-size:15px;font-weight:400;letter-spacing:0;color:var(--ink-mute);margin-left:6px}
 .st-what{display:block;margin-top:18px;font-size:17px;font-weight:500;color:var(--ink)}
 .st-note{display:block;margin-top:5px;font-size:14.5px;line-height:1.45;color:var(--ink-mute)}
@@ -383,14 +384,10 @@ em{font-style:italic;font-weight:800}
    below 720px. */
 .out{margin-top:56px}
 .out-lead{max-width:66ch;color:var(--ink-soft);margin:12px 0 0}
-.out-grid{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:16px;grid-template-columns:1fr 1fr}
-@media (min-width:720px){.out-grid{grid-template-columns:repeat(4,1fr)}}
-.out-grid li{background:var(--paper);border:1px solid var(--line-strong);padding:22px 20px 20px}
 .out-n{
   display:block;font-family:var(--mono);font-variant-numeric:tabular-nums;
   font-size:2.6rem;font-weight:600;letter-spacing:-.035em;line-height:1;color:var(--ink);
 }
-.out-k{display:block;margin-top:10px;font-size:14.5px;line-height:1.4;color:var(--ink-mute)}
 /* The monthly figure is the one to remember, so it gets the brand ground
    and the full width; the six-month counts sit under it as its sum. */
 .out-hero{
@@ -401,7 +398,13 @@ em{font-style:italic;font-weight:800}
 .out-hero-k{display:flex;flex-direction:column;gap:6px;flex:1 1 260px}
 .out-hero-t{font-size:1.3rem;font-weight:640;letter-spacing:-.014em;line-height:1.2}
 .out-hero-s{font-size:15px;line-height:1.45;color:var(--on-brand-soft)}
-.out-hero + .out-grid{margin-top:16px}
+.out-pair{display:grid;gap:16px;grid-template-columns:1fr;margin-top:26px}
+@media (min-width:900px){.out-pair{grid-template-columns:1fr 1fr}}
+.out-pair .out-hero{margin-top:0}
+.out-hero-light{background:var(--paper);color:var(--ink);border:1px solid var(--line-strong)}
+.out-hero-light .out-n{color:var(--ink)}
+.out-hero-light .out-hero-s{color:var(--ink-mute)}
+.out-mix{max-width:66ch;margin:16px 0 0;font-size:15px;line-height:1.55;color:var(--ink-mute)}
 
 /* ---------- pillars ----------
    A glossary, so each card reads term, what it stands for, what it is,
@@ -634,26 +637,28 @@ em{font-style:italic;font-weight:800}
       <tbody>
         <tr lang="en">
           <th scope="row">Website re-design</th>
-          <td>Site migration and rebuild of sansgroup.com.my, plus the first month of SEO work
-            <span class="row-note">Design, build, copy, launch · English, Bahasa Malaysia and Chinese</span></td>
+          <td>Site migration and rebuild of sanswellness.com
+            <span class="row-note">Design, build, copy, launch · English, Bahasa Malaysia and Chinese</span>
+            <span class="row-note"><b>For one website (one brand) only</b></span></td>
           <td class="amt"><b>RM 5,000</b> <span>once</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">网站改版</th>
-          <td>sansgroup.com.my 整站迁移与重建，加上第一个月的 SEO 工作
-            <span class="row-note">设计、开发、文案、上线 · 英文、马来文、中文</span></td>
+          <td>sanswellness.com 整站迁移与重建
+            <span class="row-note">设计、开发、文案、上线 · 英文、马来文、中文</span>
+            <span class="row-note"><b>仅限一个网站（一个品牌）</b></span></td>
           <td class="amt"><b>RM 5,000</b> <span>一次性</span></td>
         </tr>
         <tr lang="en">
           <th scope="row">SEO, AEO, GEO</th>
           <td>Keeping the site ranking, current, fast and safe
-            <span class="row-note">From month 2, the second month of SEO onwards</span></td>
+            <span class="row-note">Every month of the contract, starting in month 1</span></td>
           <td class="amt"><b>RM 3,500</b> <span>monthly</span></td>
         </tr>
         <tr lang="zh">
           <th scope="row">SEO、AEO、GEO</th>
           <td>维持网站排名，内容更新，速度与安全
-            <span class="row-note">从第 2 个月起，即第二个月的 SEO 起</span></td>
+            <span class="row-note">合约期内每月，从第 1 个月开始</span></td>
           <td class="amt"><b>RM 3,500</b> <span>每月</span></td>
         </tr>
         <tr lang="en">
@@ -706,15 +711,16 @@ em{font-style:italic;font-weight:800}
         <ol class="steps">
           <li class="step step-1">
             <span class="st-when"><span lang="en">Month 1</span><span lang="zh">第 1 个月</span></span>
-            <span class="st-amt">RM 5,000</span>
-            <span class="st-what"><span lang="en">Website rebuild &amp; first month of SEO</span><span lang="zh">网站重建与第一个月 SEO</span></span>
-            <span class="st-note"><span lang="en">Site migration, rebuild, first month of SEO work</span><span lang="zh">整站迁移、网站重建、第一个月 SEO 工作</span></span>
+            <span class="st-amt">RM 5,000<small><span lang="en">website rebuild</span><span lang="zh">网站重建</span></small></span>
+            <span class="st-amt st-plus">+ RM 3,500<small><span lang="en">first month of SEO</span><span lang="zh">第一个月 SEO</span></small></span>
+            <span class="st-what"><span lang="en">Website rebuild, with SEO starting the same month</span><span lang="zh">网站重建，SEO 同月开始</span></span>
+            <span class="st-note"><span lang="en">Site migration and rebuild, plus the first month of SEO work</span><span lang="zh">整站迁移与重建，加上第一个月的 SEO 工作</span></span>
           </li>
           <li class="step">
             <span class="st-when"><span lang="en">Months 2 to 6</span><span lang="zh">第 2 至 6 个月</span></span>
             <span class="st-amt">RM 3,500<small><span lang="en">/ month</span><span lang="zh">／月</span></small></span>
             <span class="st-what"><span lang="en">SEO, AEO, GEO, CRO, web maintenance and content updates</span><span lang="zh">SEO、AEO、GEO、CRO、网站维护与内容更新</span></span>
-            <span class="st-note"><span lang="en">The second month of SEO onwards</span><span lang="zh">第二个月 SEO 起</span></span>
+            <span class="st-note"><span lang="en">The same monthly SEO work, to the end of month 6</span><span lang="zh">同样的每月 SEO 工作，直到第 6 个月结束</span></span>
           </li>
         </ol>
       </article>
@@ -726,19 +732,24 @@ em{font-style:italic;font-weight:800}
       <h3 class="h3" lang="zh">内容产出，六个月</h3>
       <p class="out-lead" lang="en">Every piece goes live in English, Bahasa Malaysia and Chinese at the same time, and every translated version is optimised for SEO, AEO and GEO.</p>
       <p class="out-lead" lang="zh">每一篇同时以英文、马来文与中文上线，每一个翻译版本都针对 SEO、AEO 与 GEO 进行优化。</p>
-      <div class="out-hero">
-        <span class="out-n">30</span>
-        <span class="out-hero-k">
-          <span class="out-hero-t"><span lang="en">published pieces, every month</span><span lang="zh">每月发布篇数</span></span>
-          <span class="out-hero-s"><span lang="en">10 pieces × 3 languages</span><span lang="zh">10 篇内容 × 3 种语言</span></span>
-        </span>
+      <div class="out-pair">
+        <div class="out-hero">
+          <span class="out-n">30</span>
+          <span class="out-hero-k">
+            <span class="out-hero-t"><span lang="en">published pieces, every month</span><span lang="zh">每月发布篇数</span></span>
+            <span class="out-hero-s"><span lang="en">10 pieces × 3 languages</span><span lang="zh">10 篇内容 × 3 种语言</span></span>
+          </span>
+        </div>
+        <div class="out-hero out-hero-light">
+          <span class="out-n">180</span>
+          <span class="out-hero-k">
+            <span class="out-hero-t"><span lang="en">published pieces in total</span><span lang="zh">合计发布篇数</span></span>
+            <span class="out-hero-s"><span lang="en">30 a month × 6 months</span><span lang="zh">每月 30 篇 × 6 个月</span></span>
+          </span>
+        </div>
       </div>
-      <ul class="out-grid">
-        <li><span class="out-n">60</span><span class="out-k"><span lang="en">content pieces</span><span lang="zh">篇内容</span></span></li>
-        <li><span class="out-n">180</span><span class="out-k"><span lang="en">URLs (EN · BM · CN)</span><span lang="zh">个网址（英 · 马 · 中）</span></span></li>
-        <li><span class="out-n">41</span><span class="out-k"><span lang="en">site pages</span><span lang="zh">个网站页面</span></span></li>
-        <li><span class="out-n">19</span><span class="out-k"><span lang="en">blog articles</span><span lang="zh">篇博客文章</span></span></li>
-      </ul>
+      <p class="out-mix" lang="en">The pieces are a mix of main pages, service pages, concern pages and blog pages.</p>
+      <p class="out-mix" lang="zh">内容包括主要页面、服务页面、健康问题页面与博客页面。</p>
     </div>
 
     <div class="out">
@@ -894,10 +905,10 @@ em{font-style:italic;font-weight:800}
     </div>
 
     <ol class="notes">
-      <li lang="en"><b>All figures are in Malaysian ringgit</b> and exclude any applicable tax. The SEO retainer begins in month 2; month 1 is covered by the website fee.</li>
-      <li lang="zh"><b>所有金额均为马币</b>，不含任何适用税项。SEO 月费从第 2 个月开始；第 1 个月已包含在网站费用内。</li>
-      <li lang="en"><b>The website fee covers a full rebuild of sansgroup.com.my:</b> migration of the entire site, the rebuild, and the first month of SEO work. A second site, such as sanswellness.com, would be quoted separately.</li>
-      <li lang="zh"><b>网站费用涵盖 sansgroup.com.my 的完整重建：</b>整站迁移、网站重建，以及第一个月的 SEO 工作。第二个网站（例如 sanswellness.com）另行报价。</li>
+      <li lang="en"><b>All figures are in Malaysian ringgit</b> and exclude any applicable tax. The SEO retainer runs every month of the contract, starting in month 1 alongside the rebuild.</li>
+      <li lang="zh"><b>所有金额均为马币</b>，不含任何适用税项。SEO 月费在合约期内每月收取，从第 1 个月与网站重建同时开始。</li>
+      <li lang="en"><b>The website fee covers one website (one brand) only: a full rebuild of sanswellness.com.</b> It covers migration of the entire site and the rebuild. SEO is charged separately, at RM 3,500 a month from month 1. A second website or brand, such as sansgroup.com.my or Happy Grains, would be quoted separately.</li>
+      <li lang="zh"><b>网站费用仅限一个网站（一个品牌）：sanswellness.com 的完整重建。</b>包括整站迁移与网站重建。SEO 另行收费，从第 1 个月起每月 RM 3,500。第二个网站或品牌（例如 sansgroup.com.my 或 Happy Grains）另行报价。</li>
       <li lang="en"><b>Not included:</b> advertising spend (Google or Meta), domain registration, photography and video production, printing of QR standees and signage, and any third-party licence you already hold. Each can be quoted on request.</li>
       <li lang="zh"><b>不包含：</b>广告投放费用（Google 或 Meta）、域名注册、摄影与视频制作、二维码展架与招牌印刷，以及你已持有的第三方授权。以上均可另行报价。</li>
       <li lang="en"><b>What we do not promise here:</b> no ranking guarantee, no traffic figure, no percentage lift. We do not publish numbers we cannot stand behind, and any figure quoted in a meeting will come with the account it came from.</li>
