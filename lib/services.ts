@@ -213,6 +213,8 @@ export const SERVICES: Service[] = [
  */
 export const SERVICE_PAGES: Record<string, string> = {
   seo: "/seo-for-local-businesses",
+  sem: "/google-ads-for-local-businesses",
+  meta: "/meta-ads-for-local-businesses",
   video: "/services/video-production",
   "web-design": "/services/web-design",
   booking: "/services/booking-system",

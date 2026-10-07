@@ -156,7 +156,7 @@ function ArtSeo() {
 }
 
 /* Google Ads — the manager you would otherwise be staring at. */
-function ArtSem() {
+export function ArtSem() {
   return (
     <Frame tone={1} caption="Google Ads Manager">
       <AppBar
@@ -204,7 +204,7 @@ function ArtSem() {
 }
 
 /* Meta — the manager on the left, what the customer sees on the right. */
-function ArtMeta() {
+export function ArtMeta() {
   return (
     <Frame tone={2} caption="Meta Ads Manager">
       <AppBar

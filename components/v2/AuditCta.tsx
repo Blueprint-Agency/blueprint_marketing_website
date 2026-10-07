@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SITE, WA, whatsapp } from "@/lib/site";
+import { SITE, whatsapp } from "@/lib/site";
 import { GoogleG } from "./Marks";
 import { Reveal } from "./SeoArt";
 
@@ -25,16 +25,38 @@ const CHECKS = [
   "Where the site loses people before they tap WhatsApp",
 ];
 
-export default function AuditCta() {
+type Props = {
+  heading?: React.ReactNode;
+  lead?: string;
+  checks?: string[];
+  /** The opening line of the WhatsApp message; the address follows it. */
+  message?: string;
+  button?: string;
+  /** The mark in the address field. Google's unless the page says otherwise. */
+  fieldIcon?: React.ReactNode;
+};
+
+export default function AuditCta({
+  heading = (
+    <>
+      Get a free website audit <em>now</em>.
+    </>
+  ),
+  lead = "Send us your website. We will tell you how many of your Google visitors already knew your name, and who is getting the rest.",
+  checks = CHECKS,
+  message = "Hi Blueprint, I'd like a free website audit. My website is: ",
+  button = "Get my free audit",
+  fieldIcon = <GoogleG size={16} />,
+}: Props) {
   const [site, setSite] = useState("");
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const url = site.trim();
-    const href = url
-      ? whatsapp(`Hi Blueprint, I'd like a free website audit. My website is: ${url}`)
-      : WA.seoAudit;
-    window.open(href, "_blank", "noopener,noreferrer");
+    window.open(
+      whatsapp(message + site.trim()),
+      "_blank",
+      "noopener,noreferrer",
+    );
   }
 
   return (
@@ -46,12 +68,9 @@ export default function AuditCta() {
             Free, for your business
           </p>
           <h2 className="h2" id="audit-h">
-            Get a free website audit <em>now</em>.
+            {heading}
           </h2>
-          <p className="audit-lead">
-            Send us your website. We will tell you how many of your Google
-            visitors already knew your name, and who is getting the rest.
-          </p>
+          <p className="audit-lead">{lead}</p>
 
           <form
             className="audit-form"
@@ -62,7 +81,7 @@ export default function AuditCta() {
           >
             <label className="audit-field">
               <span className="sr-only">Your website address</span>
-              <GoogleG size={16} />
+              {fieldIcon}
               <input
                 name="text"
                 type="text"
@@ -74,7 +93,7 @@ export default function AuditCta() {
               />
             </label>
             <button className="btn btn-act audit-btn" type="submit">
-              Get my free audit
+              {button}
             </button>
           </form>
           <p className="audit-note">
@@ -93,7 +112,7 @@ export default function AuditCta() {
             <span className="audit-scan-line" />
           </div>
           <ul className="audit-checks">
-            {CHECKS.map((c, i) => (
+            {checks.map((c, i) => (
               <li
                 className="audit-check"
                 key={c}

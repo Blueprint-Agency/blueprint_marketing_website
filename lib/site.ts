@@ -75,6 +75,14 @@ export const WA = {
   seo: whatsapp(
     "Hi Blueprint, I'd like you to look at how my business shows up on Google.",
   ),
+  /** /google-ads-for-local-businesses. Names the account, not a result. */
+  googleAds: whatsapp(
+    "Hi Blueprint, I'd like you to look at my Google Ads.",
+  ),
+  /** /meta-ads-for-local-businesses. Names the ads, not a result. */
+  metaAds: whatsapp(
+    "Hi Blueprint, I'd like you to look at my Facebook and Instagram ads.",
+  ),
   /**
    * The free website audit on /seo-for-local-businesses. The offer is the user's own
    * (2026-10-07), so this one may name it.
