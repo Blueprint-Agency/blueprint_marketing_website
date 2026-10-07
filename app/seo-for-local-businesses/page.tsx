@@ -61,12 +61,6 @@ export const metadata: Metadata = {
   },
 };
 
-const ASSURANCES = [
-  "Measured on revenue",
-  "English, Malay and Chinese",
-  "Reported outlet by outlet",
-];
-
 const SEARCHES: { who: string; query: string; body: string; you?: boolean }[] = [
   {
     who: "Knows you",
@@ -202,11 +196,6 @@ export default function SeoPage() {
                   How we measure it
                 </a>
               </div>
-              <ul className="svc-assure">
-                {ASSURANCES.map((a) => (
-                  <li key={a}>{a}</li>
-                ))}
-              </ul>
             </div>
             <HeroReport />
           </div>
