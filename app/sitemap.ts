@@ -14,6 +14,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
        a service that gets a page of its own gets a line here too, or the
        nav links to something the sitemap says does not exist. */
     {
+      url: `${SITE.url}/seo-for-local-businesses`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE.url}/services/video-production`,
       lastModified: new Date(),
       changeFrequency: "monthly",

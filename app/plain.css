@@ -8568,3 +8568,1307 @@ html {
   margin-top: 34px;
   max-width: 62ch;
 }
+
+/* ============================================================
+   /seo-for-local-businesses
+   The drawings and diagrams live in components/v2/SeoArt.tsx.
+
+   MOTION CONTRACT, same as JobArt: no class means no JavaScript and
+   everything is drawn in its finished state; `.is-armed` holds the
+   starting frame; `.is-in` plays. Never gate on :not(.is-in).
+   ============================================================ */
+
+/* ---------- hero: copy and report side by side ---------- */
+.v2 .seo-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  .v2 .seo-hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 64px;
+  }
+}
+/* The hero band inverts the tokens to white on black. The report is a
+   paper interface on a gradient tile, so it takes the paper tokens back. */
+.v2 .seo-hero-art {
+  --paper: #fcfcfd;
+  --paper-sunk: #f4f5f7;
+  --ink: #0b0c0e;
+  --ink-soft: #494e56;
+  --ink-mute: #5f646c;
+  --line: #e4e6ea;
+  --line-strong: #d2d6dc;
+  --sa-aspect: 16 / 12;
+  container-type: inline-size;
+  max-width: 560px;
+}
+.v2 .seo-rep-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6em;
+  padding-bottom: 0.7em;
+  border-bottom: 1px solid var(--line);
+}
+.v2 .seo-rep {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+  gap: 0.85em;
+  padding-block: 0.3em;
+}
+.v2 .seo-rep-row {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr);
+  align-items: center;
+  gap: 0.8em;
+}
+.v2 .seo-rep-label {
+  font-weight: 650;
+  color: var(--ink-soft);
+}
+.v2 .seo-rep-track {
+  height: 0.75em;
+  border-radius: 999px;
+  background: var(--paper-sunk);
+  overflow: hidden;
+}
+.v2 .seo-rep-fill {
+  display: block;
+  height: 100%;
+  width: var(--w);
+  border-radius: inherit;
+  background: var(--line-strong);
+  transform-origin: left;
+}
+.v2 .seo-rep-row.is-hot {
+  margin-top: 0.4em;
+  padding: 0.6em 0.7em;
+  border-radius: 0.6em;
+  background: rgba(30, 79, 224, 0.07);
+  outline: 1px solid rgba(30, 79, 224, 0.25);
+}
+.v2 .seo-rep-row.is-hot .seo-rep-label {
+  color: var(--brand-text);
+  font-weight: 800;
+}
+.v2 .seo-rep-row.is-hot .seo-rep-fill {
+  background: linear-gradient(90deg, var(--brand), var(--violet));
+}
+.v2 .seo-rep-ok {
+  border-color: rgba(14, 124, 67, 0.35);
+  color: var(--act-text);
+}
+.v2 .seo-hero-art.is-armed .seo-rep-fill {
+  transform: scaleX(0);
+}
+.v2 .seo-hero-art.is-in .seo-rep-fill {
+  animation: seo-grow 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.25s + var(--i) * 0.16s);
+}
+.v2 .seo-hero-art.is-in .seo-rep-row.is-hot {
+  animation: seo-glow 2.8s ease-in-out 1.4s infinite;
+}
+@keyframes seo-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes seo-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(30, 79, 224, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 0.35em rgba(30, 79, 224, 0.12);
+  }
+}
+
+/* ---------- the difference: copy and ladder ---------- */
+.v2 .seo-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  .v2 .seo-split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 72px;
+  }
+}
+
+/* Six rungs, the braces to the right of them. The braces are grid
+   items spanning the rungs they describe, so they cannot drift out of
+   line with them at any width. */
+.v2 .seo-ladder {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-rows: repeat(6, auto);
+  column-gap: 10px;
+  row-gap: 8px;
+}
+.v2 .seo-rungs {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  display: grid;
+  grid-template-rows: subgrid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v2 .seo-rung {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "n name"
+    "n note";
+  column-gap: 14px;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+.v2 .seo-rung-n {
+  grid-area: n;
+  color: var(--ink-mute);
+}
+.v2 .seo-rung-name {
+  grid-area: name;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.v2 .seo-rung-note {
+  grid-area: note;
+  font-size: 0.875rem;
+  color: var(--ink-mute);
+}
+.v2 .seo-rung.is-easy {
+  background: var(--paper-sunk);
+}
+.v2 .seo-rung.is-easy .seo-rung-name {
+  color: var(--ink-soft);
+}
+.v2 .seo-rung.is-money {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--brand), var(--violet));
+  color: var(--on-brand);
+}
+.v2 .seo-rung.is-money .seo-rung-n,
+.v2 .seo-rung.is-money .seo-rung-note {
+  color: var(--on-brand-soft);
+}
+.v2 .seo-rung.is-money .seo-rung-name {
+  font-size: 1.125rem;
+}
+
+.v2 .seo-brace {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  border-left: 2px solid var(--line-strong);
+}
+.v2 .seo-brace span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink-mute);
+}
+.v2 .seo-brace-them {
+  grid-column: 2;
+  grid-row: 1 / 4;
+}
+.v2 .seo-brace-us {
+  grid-column: 3;
+  grid-row: 1 / -1;
+  border-left-color: var(--brand);
+}
+.v2 .seo-brace-us span {
+  color: var(--brand-text);
+}
+
+.v2 .seo-ladder.is-armed .seo-rung,
+.v2 .seo-ladder.is-armed .seo-brace {
+  opacity: 0;
+}
+.v2 .seo-ladder.is-in .seo-rung {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.1s + var(--i) * 0.14s);
+}
+.v2 .seo-ladder.is-in .seo-brace-them {
+  animation: seo-brace 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+.v2 .seo-ladder.is-in .seo-brace-us {
+  animation: seo-brace 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.1s both;
+}
+.v2 .seo-ladder.is-in .seo-rung.is-money {
+  animation:
+    sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both,
+    seo-money 3s ease-in-out 1.8s infinite;
+}
+@keyframes seo-brace {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes seo-money {
+  0%,
+  100% {
+    box-shadow: 0 10px 30px -18px rgba(30, 79, 224, 0.6);
+  }
+  50% {
+    box-shadow: 0 16px 40px -14px rgba(108, 75, 240, 0.75);
+  }
+}
+
+/* ---------- three searches ---------- */
+.v2 .seo-searches {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+@media (min-width: 900px) {
+  .v2 .seo-searches {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+.v2 .seo-who {
+  margin-bottom: 14px;
+}
+.v2 .seo-search.is-new {
+  border-color: rgba(30, 79, 224, 0.35);
+}
+.v2 .seo-search.is-new .seo-who {
+  color: var(--brand-text);
+}
+
+.v2 .seo-typed-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--paper);
+  box-shadow: 0 6px 18px -12px rgba(6, 12, 40, 0.35);
+}
+.v2 .seo-typed-q {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  border-right: 2px solid transparent;
+}
+.v2 .seo-typed.is-armed .seo-typed-q {
+  width: 0;
+}
+.v2 .seo-typed.is-in .seo-typed-q {
+  width: calc(var(--n) * 1ch + 2px);
+  animation:
+    seo-type calc(var(--n) * 0.06s) steps(var(--n)) 0.2s both,
+    seo-caret 0.9s step-end infinite;
+}
+@keyframes seo-type {
+  from {
+    width: 0;
+  }
+  to {
+    width: calc(var(--n) * 1ch + 2px);
+  }
+}
+@keyframes seo-caret {
+  50% {
+    border-right-color: var(--brand);
+  }
+}
+
+/* ---------- the path ----------
+   Vertical on a phone, horizontal from 900px. A dot runs the rail
+   from the search to the money and starts again. */
+.v2 .seo-path {
+  position: relative;
+  margin-top: 44px;
+  --node: 40px;
+  --gap: 18px;
+}
+.v2 .seo-path-track {
+  position: relative;
+}
+.v2 .seo-path-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v2 .seo-path-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--node) minmax(0, 1fr);
+  grid-template-areas:
+    "node title"
+    "node body";
+  column-gap: 16px;
+  align-items: start;
+}
+.v2 .seo-path-node {
+  grid-area: node;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  border-radius: 999px;
+  border: 1px solid rgba(30, 79, 224, 0.35);
+  background: var(--paper);
+  color: var(--brand-text);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.v2 .seo-path-title {
+  grid-area: title;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  padding-top: 8px;
+}
+.v2 .seo-path-body {
+  grid-area: body;
+  margin-top: 4px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.v2 .seo-path-step.is-money .seo-path-node {
+  border: 0;
+  background: linear-gradient(135deg, var(--brand), var(--violet));
+  color: var(--on-brand);
+}
+.v2 .seo-path-step.is-money .seo-path-title {
+  color: var(--brand-text);
+}
+
+.v2 .seo-path-rail {
+  position: absolute;
+  z-index: 0;
+  left: calc(var(--node) / 2 - 1px);
+  top: calc(var(--node) / 2);
+  height: var(--rail-h, 0px);
+  width: 2px;
+  background: linear-gradient(var(--line-strong), var(--brand));
+}
+.v2 .seo-path-dot {
+  position: absolute;
+  left: -4px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--brand);
+  box-shadow: 0 0 0 5px rgba(30, 79, 224, 0.15);
+  opacity: 0;
+}
+
+/* The owner bands: who is responsible for which stretch. On a phone
+   they stack as a key; from 900px they sit under the steps they span. */
+.v2 .seo-path-owners {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 30px;
+}
+.v2 .seo-owner-band {
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 650;
+}
+.v2 .seo-owner-band.is-a {
+  background: rgba(30, 79, 224, 0.08);
+  color: var(--brand-text);
+}
+.v2 .seo-owner-band.is-b {
+  background: rgba(108, 75, 240, 0.09);
+  color: var(--brand-text);
+}
+.v2 .seo-owner-band.is-c {
+  background: var(--paper-sunk);
+  color: var(--ink-soft);
+}
+.v2 .seo-owner-band.is-d {
+  background: linear-gradient(135deg, var(--brand), var(--violet));
+  color: var(--on-brand);
+}
+
+@media (min-width: 900px) {
+  .v2 .seo-path-steps {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--gap);
+  }
+  .v2 .seo-path-step {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "node"
+      "title"
+      "body";
+  }
+  .v2 .seo-path-title {
+    padding-top: 16px;
+  }
+  /* From the first node's centre to the last's. Each column is
+     (100% - 5 gaps) / 6 wide, and the last node sits at the start of
+     the last column. */
+  .v2 .seo-path-rail {
+    left: calc(var(--node) / 2);
+    width: calc(5 * ((100% - 5 * var(--gap)) / 6 + var(--gap)));
+    top: calc(var(--node) / 2 - 1px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--line-strong), var(--brand));
+  }
+  .v2 .seo-path-dot {
+    top: -4px;
+    left: 0;
+  }
+  .v2 .seo-path.is-in .seo-path-dot {
+    animation: seo-run-x 4.2s cubic-bezier(0.65, 0, 0.35, 1) 0.9s infinite;
+  }
+  .v2 .seo-path-owners {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: var(--gap);
+  }
+  /* Spans match the steps each one owns: 1-2, 3-4, 5, 6. */
+  .v2 .seo-owner-band.is-a,
+  .v2 .seo-owner-band.is-b {
+    grid-column: span 2;
+  }
+}
+/* On a phone the rail is drawn per step instead: a segment from each
+   node down to the next, so it always ends on the last node whatever
+   the copy wraps to. The travelling dot is a desktop-only detail. */
+@media (max-width: 899px) {
+  .v2 .seo-path-rail {
+    display: none;
+  }
+  .v2 .seo-path-step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--node) / 2 - 1px);
+    top: var(--node);
+    bottom: -22px;
+    width: 2px;
+    background: var(--line-strong);
+  }
+}
+@keyframes seo-run-x {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+.v2 .seo-path.is-armed .seo-path-step,
+.v2 .seo-path.is-armed .seo-owner-band {
+  opacity: 0;
+}
+.v2 .seo-path.is-in .seo-path-step {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.1s + var(--i) * 0.12s);
+}
+.v2 .seo-path.is-in .seo-owner-band {
+  animation: sa-fade 0.6s ease-out 0.9s both;
+}
+
+/* ---------- three jobs: the AI answer and the tap ---------- */
+.v2 .seo-ai {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9em;
+  height: 100%;
+}
+.v2 .seo-ai-ask {
+  align-self: flex-end;
+  max-width: 82%;
+  padding: 0.55em 0.8em;
+  border-radius: 1em 1em 0.25em 1em;
+  background: var(--paper-sunk);
+  font-weight: 600;
+}
+.v2 .seo-ai-ans {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.6em;
+  align-items: start;
+}
+.v2 .seo-ai-spark {
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 999px;
+  background: conic-gradient(from 0deg, var(--brand), var(--violet), var(--cyan), var(--brand));
+}
+.v2 .seo-ai-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+}
+.v2 .seo-ai-name {
+  align-self: flex-start;
+  padding: 0.1em 0.4em;
+  border-radius: 0.3em;
+  background: rgba(30, 79, 224, 0.1);
+  color: var(--brand-text);
+  font-weight: 800;
+}
+.v2 .seo-ai-src {
+  align-self: flex-start;
+  font-size: 0.8em;
+  padding: 0.15em 0.5em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-mute);
+}
+.v2 .seo-ai-pick {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+  padding: 0.6em 0.7em;
+  border-radius: 0.6em;
+  border: 1px solid rgba(30, 79, 224, 0.25);
+  background: rgba(30, 79, 224, 0.04);
+}
+.v2 .seo-ai-other {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+  padding: 0 0.7em;
+  opacity: 0.6;
+}
+.v2 .seo-ai-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: 0.5em 0.5em 0.5em 0.9em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-mute);
+}
+/* In the 340px desktop column the answer has room for one pick, not
+   the filler under it. */
+@container (max-width: 440px) {
+  .v2 .seo-ai-other {
+    display: none;
+  }
+  .v2 .seo-ai-ans .seo-ai-lines > .sa-line {
+    display: none;
+  }
+}
+.v2 .seo-ai-send {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 999px;
+  background: var(--ink);
+}
+.v2 .jb-art.is-armed .seo-ai-ask,
+.v2 .jb-art.is-armed .seo-ai-ans {
+  opacity: 0;
+}
+.v2 .jb-art.is-in .seo-ai-ask {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+.v2 .jb-art.is-in .seo-ai-ans {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+}
+.v2 .jb-art.is-in .seo-ai-spark {
+  animation: seo-spin 3s linear infinite;
+}
+@keyframes seo-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.v2 .seo-phone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  height: 100%;
+}
+.v2 .seo-phone-img {
+  display: block;
+  flex: 1;
+  min-height: 3em;
+  border-radius: 0.5em;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.55), transparent 45%),
+    linear-gradient(135deg, #f3d9cf, #e8c4d8 55%, #cfd7f3);
+}
+.v2 .seo-phone-h {
+  font-size: 1.15em;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.v2 .seo-phone-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em;
+  padding-top: 0.6em;
+  border-top: 1px solid var(--line);
+}
+.v2 .seo-phone-cta {
+  position: relative;
+  display: inline-flex;
+}
+.v2 .seo-tap {
+  position: absolute;
+  left: 70%;
+  top: 50%;
+  width: 1.4em;
+  height: 1.4em;
+  margin: -0.7em 0 0 -0.7em;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  opacity: 0;
+}
+.v2 .seo-tapped {
+  padding: 0.2em 0.6em;
+  border-radius: 999px;
+  background: rgba(14, 124, 67, 0.1);
+  color: var(--act-text);
+  font-size: 0.85em;
+  font-weight: 700;
+}
+.v2 .jb-art.is-armed .seo-tapped {
+  opacity: 0;
+}
+.v2 .jb-art.is-in .seo-tap {
+  animation: seo-tap 3.2s ease-out 0.8s infinite;
+}
+.v2 .jb-art.is-in .seo-tapped {
+  animation: seo-tapped 3.2s ease-out 0.8s infinite;
+}
+@keyframes seo-tap {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  12% {
+    opacity: 0.8;
+    transform: scale(0.8);
+  }
+  30% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes seo-tapped {
+  0%,
+  18% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  28%,
+  85% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---------- the site map ---------- */
+.v2 .seo-tree {
+  position: relative;
+  margin-top: 44px;
+  padding: 24px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0) 0 0 / 18px 18px,
+    var(--paper-sunk);
+}
+.v2 .seo-tree-root {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  margin: 0 auto;
+  padding: 12px 18px;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.v2 .seo-tree-url {
+  font-size: 0.875rem;
+}
+.v2 .seo-langs {
+  display: inline-flex;
+  gap: 4px;
+}
+.v2 .seo-lang {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
+}
+.v2 .seo-tree.is-in .seo-lang {
+  animation: seo-lang 4.5s ease-in-out infinite;
+}
+.v2 .seo-tree.is-in .seo-lang:nth-child(2) {
+  animation-delay: 1.5s;
+}
+.v2 .seo-tree.is-in .seo-lang:nth-child(3) {
+  animation-delay: 3s;
+}
+@keyframes seo-lang {
+  0%,
+  33% {
+    background: var(--brand);
+    color: #fff;
+  }
+  34%,
+  100% {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+.v2 .seo-tree-cols {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 14px;
+  margin-top: 34px;
+}
+.v2 .seo-tree-cols::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -34px;
+  height: 17px;
+  width: 2px;
+  background: var(--line-strong);
+}
+.v2 .seo-tree-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.v2 .seo-tree-head {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--paper);
+  border: 1px solid rgba(30, 79, 224, 0.35);
+  color: var(--brand-text);
+}
+.v2 .seo-tree-page {
+  position: relative;
+  margin-left: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (min-width: 900px) {
+  .v2 .seo-tree {
+    padding: 36px;
+  }
+  .v2 .seo-tree-cols {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .v2 .seo-tree-cols::after {
+    content: "";
+    position: absolute;
+    top: -17px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 2px;
+    background: var(--line-strong);
+  }
+  .v2 .seo-tree-col::before {
+    content: "";
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    width: 2px;
+    height: 17px;
+    background: var(--line-strong);
+  }
+}
+.v2 .seo-tree.is-armed .seo-tree-head,
+.v2 .seo-tree.is-armed .seo-tree-page {
+  opacity: 0;
+}
+.v2 .seo-tree.is-in .seo-tree-head {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.2s + var(--c) * 0.12s);
+}
+.v2 .seo-tree.is-in .seo-tree-page {
+  animation: sa-item 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.55s + var(--i) * 0.1s);
+}
+
+/* ---------- the page list ---------- */
+.v2 .seo-pages {
+  margin: 40px 0 0;
+}
+.v2 .seo-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+.v2 .seo-page:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.v2 .seo-page dd {
+  margin: 0;
+}
+@media (min-width: 768px) {
+  .v2 .seo-page {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .seo-hero-art *,
+  .v2 .seo-ladder *,
+  .v2 .seo-typed *,
+  .v2 .seo-path *,
+  .v2 .seo-tree *,
+  .v2 .jb-art .seo-ai *,
+  .v2 .jb-art .seo-phone * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .v2 .seo-ladder .seo-brace span {
+    transform: rotate(180deg) !important;
+  }
+  .v2 .seo-typed .seo-typed-q {
+    width: auto !important;
+  }
+  .v2 .seo-tap,
+  .v2 .seo-path-dot {
+    display: none;
+  }
+}
+
+/* ============================================================
+   /seo-for-local-businesses: the free audit band (components/v2/AuditCta.tsx)
+
+   The one deep-navy band in the middle of the page. It inverts the
+   world's tokens the way .svc-open does, so everything inside reads
+   var(--ink) / var(--line) and flips with it. The green stays the
+   WhatsApp button and nothing else.
+   ============================================================ */
+
+.v2 .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.v2 .audit {
+  --ink: var(--on-brand);
+  --ink-soft: var(--on-brand-soft);
+  --ink-mute: var(--on-brand-mute);
+  --line: var(--on-brand-line);
+
+  position: relative;
+  overflow: hidden;
+  padding-block: 88px;
+  color: var(--ink);
+  background:
+    radial-gradient(60% 80% at 85% 20%, rgba(108, 75, 240, 0.45), transparent 70%),
+    radial-gradient(50% 70% at 10% 100%, rgba(37, 201, 232, 0.22), transparent 70%),
+    var(--brand-deep);
+}
+/* A faint drawn grid, the same idea as the hero's mesh, kept under the
+   copy's contrast by fading it out towards the left. */
+.v2 .audit::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(90deg, transparent 10%, #000 70%);
+  pointer-events: none;
+}
+@media (min-width: 768px) {
+  .v2 .audit {
+    padding-block: 112px;
+  }
+}
+
+.v2 .audit-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 1000px) {
+  .v2 .audit-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 72px;
+  }
+}
+
+.v2 .audit-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+}
+.v2 .audit-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--act);
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  animation: audit-ping 2.2s ease-out infinite;
+}
+@keyframes audit-ping {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px rgba(37, 211, 102, 0);
+  }
+}
+
+.v2 .audit .h2 {
+  max-width: 16ch;
+}
+.v2 .audit .h2 em {
+  color: var(--cyan);
+}
+.v2 .audit-lead {
+  margin: 20px 0 0;
+  max-width: 46ch;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* The field and the button read as one control: a single white pill
+   with the button seated inside it. Below 560px they stack, because a
+   phone-width pill would leave the address field too short to type in. */
+.v2 .audit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 30px;
+  max-width: 560px;
+}
+.v2 .audit-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--brand-deep);
+  box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.6);
+}
+.v2 .audit-field input {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 1rem;
+  color: #0b0c0e;
+}
+.v2 .audit-field input::placeholder {
+  color: #8a9099;
+}
+.v2 .audit-field:focus-within {
+  outline: 2px solid var(--act);
+  outline-offset: 2px;
+}
+.v2 .audit-btn {
+  justify-content: center;
+  padding-block: 15px;
+  font-weight: 700;
+}
+@media (min-width: 560px) {
+  .v2 .audit-form {
+    flex-direction: row;
+    gap: 0;
+    padding: 6px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7);
+  }
+  .v2 .audit-field {
+    box-shadow: none;
+    border-radius: 10px;
+  }
+  .v2 .audit-field:focus-within {
+    outline-offset: -2px;
+  }
+  .v2 .audit-btn {
+    flex: none;
+    padding-block: 13px;
+  }
+}
+.v2 .audit-note {
+  margin: 14px 0 0;
+  font-size: 0.875rem;
+  color: var(--ink-mute);
+}
+
+/* ---------- the audit card ---------- */
+.v2 .audit-card {
+  position: relative;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+  max-width: 520px;
+}
+.v2 .audit-card-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.v2 .audit-card-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.v2 .audit-card-url {
+  margin-left: 10px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+/* A light sweeping down the card while the checks land. */
+.v2 .audit-scan {
+  position: absolute;
+  inset: 52px 18px 18px;
+  overflow: hidden;
+  pointer-events: none;
+}
+.v2 .audit-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60px;
+  background: linear-gradient(transparent, rgba(37, 201, 232, 0.22), transparent);
+  border-bottom: 1px solid rgba(37, 201, 232, 0.6);
+  opacity: 0;
+}
+.v2 .audit-card.is-in .audit-scan-line {
+  animation: audit-scan 3.6s ease-in-out 0.2s infinite;
+}
+@keyframes audit-scan {
+  0% {
+    top: -60px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.v2 .audit-checks {
+  list-style: none;
+  margin: 0;
+  padding: 18px 0 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.v2 .audit-check {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.v2 .audit-tick {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 999px;
+  background: var(--act);
+}
+.v2 .audit-tick::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 4px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--act-ink);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.v2 .audit-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.v2 .audit-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.v2 .audit-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--cyan), var(--act));
+  transform-origin: left;
+}
+.v2 .audit-done {
+  font-size: 0.75rem;
+  color: var(--act);
+}
+
+/* Held, then played: the checks tick in one by one as the bar fills. */
+.v2 .audit-card.is-armed .audit-check,
+.v2 .audit-card.is-armed .audit-done {
+  opacity: 0;
+}
+.v2 .audit-card.is-armed .audit-bar-fill {
+  transform: scaleX(0);
+}
+.v2 .audit-card.is-in .audit-check {
+  animation: sa-item 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.4s + var(--i) * 0.45s);
+}
+.v2 .audit-card.is-in .audit-tick {
+  animation: sa-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.6s + var(--i) * 0.45s);
+}
+.v2 .audit-card.is-in .audit-bar-fill {
+  animation: seo-grow 2.2s cubic-bezier(0.45, 0, 0.2, 1) 0.4s both;
+}
+.v2 .audit-card.is-in .audit-done {
+  animation: sa-fade 0.4s ease-out 2.6s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .audit-dot,
+  .v2 .audit-card *,
+  .v2 .audit-card.is-in * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .v2 .audit-tick::after {
+    transform: rotate(45deg) !important;
+  }
+  .v2 .audit-scan {
+    display: none;
+  }
+}

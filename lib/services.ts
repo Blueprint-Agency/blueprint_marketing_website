@@ -212,6 +212,7 @@ export const SERVICES: Service[] = [
  * about whether a service had a page.
  */
 export const SERVICE_PAGES: Record<string, string> = {
+  seo: "/seo-for-local-businesses",
   video: "/services/video-production",
   "web-design": "/services/web-design",
   booking: "/services/booking-system",

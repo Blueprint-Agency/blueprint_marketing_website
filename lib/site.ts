@@ -68,6 +68,21 @@ export const WA = {
     "Hi Blueprint, I'd like to talk about rebuilding my website.",
   ),
   /**
+   * /seo-for-local-businesses. Asks for a look at her search traffic, which is the
+   * first thing the page says we check. No audit, price or result is
+   * promised on her behalf.
+   */
+  seo: whatsapp(
+    "Hi Blueprint, I'd like you to look at how my business shows up on Google.",
+  ),
+  /**
+   * The free website audit on /seo-for-local-businesses. The offer is the user's own
+   * (2026-10-07), so this one may name it.
+   */
+  seoAudit: whatsapp(
+    "Hi Blueprint, I'd like a free website audit. My website is: ",
+  ),
+  /**
    * /services/booking-system. The only CTA on the site that follows a
    * published price, so it names the demo rather than an open-ended
    * conversation — a reader who has just read a price list and tapped
