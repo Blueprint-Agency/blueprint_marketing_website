@@ -36,25 +36,25 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: "We get Malaysian businesses more customers",
+    default: "We get local businesses more customers",
     template: "%s · Blueprint",
   },
   description:
-    "Blueprint runs the marketing that brings customers to Malaysian businesses, and builds the booking, CRM and WhatsApp systems that catch them when they arrive.",
+    "Blueprint runs the marketing that brings customers to local businesses, and builds the booking, CRM and WhatsApp systems that catch them when they arrive.",
   openGraph: {
     type: "website",
     locale: "en_MY",
     url: SITE.url,
     siteName: "Blueprint",
-    title: "We get Malaysian businesses more customers",
+    title: "We get local businesses more customers",
     description:
-      "Marketing that brings people in, and the systems that stop you losing them once they arrive. For Malaysian businesses.",
+      "Marketing that brings people in, and the systems that stop you losing them once they arrive. For local businesses.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "We get Malaysian businesses more customers",
+    title: "We get local businesses more customers",
     description:
-      "Marketing that brings people in, and the systems that catch them. For Malaysian businesses.",
+      "Marketing that brings people in, and the systems that catch them. For local businesses.",
   },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
@@ -73,7 +73,7 @@ export const viewport: Viewport = {
 const CONTRACT = `<!--
   IMPECCABLE DIRECTION CONTRACT: "PLAIN"
 
-  THESIS: We get Malaysian businesses more customers, and here are six real
+  THESIS: We get local businesses more customers, and here are six real
   ones you can open in a new tab. Refuses a governing metaphor entirely
   (the user re-rolled two fully-worked ones and steered "simple and direct,
   no analogies"), and refuses the agency default it would otherwise fall

@@ -177,7 +177,7 @@ export default function HomePage() {
           overlayOpacity={0.4}
           background={<InteractiveGrid className="seh-grid" />}
           kicker="Digital marketing & growth systems"
-          titleTop="We get Malaysian businesses"
+          titleTop="We get local businesses"
           titleBottom={<em>more customers.</em>}
           scrollToExpand="Scroll"
         />

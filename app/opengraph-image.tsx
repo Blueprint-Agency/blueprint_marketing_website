@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { SITE } from "@/lib/site";
 
-export const alt = "Blueprint. We get Malaysian businesses more customers.";
+export const alt = "Blueprint. We get local businesses more customers.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -79,7 +79,7 @@ export default function OpengraphImage() {
               maxWidth: 940,
             }}
           >
-            We get Malaysian businesses more customers.
+            We get local businesses more customers.
           </div>
           <div
             style={{
