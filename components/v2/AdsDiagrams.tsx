@@ -80,7 +80,7 @@ export function BudgetFlow() {
           io.disconnect();
         }
       },
-      { threshold: 0.4 },
+      { threshold: 0.2 },
     );
     io.observe(el);
     return () => {

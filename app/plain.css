@@ -10732,3 +10732,51 @@ html {
     transition: none;
   }
 }
+
+/* ============================================================
+   Service pages (SEO, Google Ads, Meta Ads): phone fixes, from a
+   390px pass over the live pages on 2026-10-07.
+   ============================================================ */
+
+/* The two hero actions stack on a phone. At their natural widths they
+   read as two different things; full width they read as a choice. */
+@media (max-width: 520px) {
+  .v2 .seo-hero .svc-actions .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+/* Site map labels wrap rather than end in an ellipsis in the two-column
+   phone layout: "/facial-bang..." hides the one word that matters. */
+@media (max-width: 899px) {
+  .v2 .seo-tree-page {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Before / After: a 40px tap target. */
+.v2 .bf-toggle button {
+  min-height: 40px;
+}
+
+/* The Meta hero phone needs a taller tile on a phone, or it draws at
+   about 120px wide and the feed is texture. */
+@media (max-width: 640px) {
+  .v2 .mh {
+    --sa-aspect: 1 / 1.1;
+  }
+}
+
+/* The fatigue chart scales down as one SVG, text included. Its labels
+   are set larger in viewBox units on a phone so they land near 11px. */
+@media (max-width: 640px) {
+  .v2 .fc-swap text,
+  .v2 .fc-label {
+    font-size: 26px;
+  }
+  .v2 .fc-line {
+    stroke-width: 6;
+  }
+}
