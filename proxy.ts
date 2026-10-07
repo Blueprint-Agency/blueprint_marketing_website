@@ -56,11 +56,16 @@ import { NextResponse, type NextRequest } from "next/server";
  * A file under public/proposals with no entry here is locked with no way
  * in. That is the intended default: a new document should not be readable
  * until someone has decided what unlocks it.
+ *
+ * The fallback is optional. A document without one opens only with its env
+ * variable, and shows "no passcode is configured" until that is set. Weil
+ * Hotel is the first to work this way, so its passcode is not in the repo.
  */
-const DOCUMENTS: Record<string, { env: string; fallback: string }> = {
+const DOCUMENTS: Record<string, { env: string; fallback?: string }> = {
   "bangkok-thai": { env: "PROPOSAL_PASSCODE", fallback: "bangkokthai" },
   "jna-real-estate": { env: "PROPOSAL_PASSCODE_JNA", fallback: "jnareels" },
   "sans-group": { env: "PROPOSAL_PASSCODE_SANS", fallback: "sanswellness" },
+  "weil-hotel": { env: "PROPOSAL_PASSCODE_WEIL" },
 };
 
 /** /proposals/bangkok-thai and /proposals/bangkok-thai.html are one document. */
@@ -156,6 +161,12 @@ export async function proxy(req: NextRequest) {
   }
 
   const passcode = process.env[doc.env] || doc.fallback;
+  if (!passcode) {
+    return new NextResponse(lockedPage(false, false), {
+      status: 401,
+      headers: { "content-type": "text/html; charset=utf-8" },
+    });
+  }
   const expected = await token(slug, passcode);
   const COOKIE = cookieName(slug);
 

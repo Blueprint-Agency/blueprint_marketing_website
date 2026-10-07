@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en-MY" data-lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Proposal · WEIL Hotel × Blueprint</title>
+<meta name="description" content="Corporate AI training for WEIL Hotel: the two-day Claude Mastery workshop, the 12 month service engagement it comes with, post-workshop support and future session pricing." />
+<meta name="robots" content="noindex, nofollow" />
+
+<!-- Fonts. Degrades to the system stack if this document is opened offline. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700;1,800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   WEIL HOTEL · CORPORATE AI TRAINING PROPOSAL
+   Blueprint's "Plain" system, as in sans-group.html: near-white
+   paper, near-black ink, hairline rules, one reserved brand blue,
+   figures in mono. Self-contained. Prints to A4.
+   ============================================================ */
+
+:root{
+  --paper:#fcfcfd;
+  --paper-sunk:#f4f5f7;
+  --ink:#0b0c0e;
+  --ink-soft:#494e56;
+  --ink-mute:#5f646c;
+  --line:#e4e6ea;
+  --line-strong:#d2d6dc;
+
+  --brand:#1e4fe0;
+  --brand-deep:#0a1b45;
+  --brand-lift:#3b7dff;
+  --brand-text:#1741c4;
+
+  --on-brand:#ffffff;
+  --on-brand-soft:rgba(255,255,255,.82);
+  --on-brand-mute:rgba(255,255,255,.62);
+  --on-brand-line:rgba(255,255,255,.16);
+
+  --shell:1080px;
+  --gut:26px;
+
+  --sans:"Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+
+/* ---------- bilingual ----------
+   Same mechanism as the Sans proposal: every translated string is a
+   lang="en" / lang="zh" sibling pair and the root attribute decides which
+   set is painted. Figures are not duplicated. */
+[data-lang="en"] [lang="zh"]{display:none !important}
+[data-lang="zh"] [lang="en"]{display:none !important}
+[lang="zh"]{
+  font-family:"Schibsted Grotesk","PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans SC",sans-serif;
+  line-height:1.75;
+}
+[lang="zh"].h1,[lang="zh"].h2,[lang="zh"].h3{line-height:1.25;letter-spacing:-.01em}
+[lang="zh"] em{font-style:normal;font-weight:800}
+
+.lang-switch{display:inline-flex;border:1px solid var(--on-brand-line);padding:2px}
+.lang-btn{
+  appearance:none;border:0;background:none;cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  color:var(--on-brand-mute);padding:6px 12px;
+}
+.lang-btn[aria-pressed="true"]{background:var(--on-brand);color:#000}
+
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper);-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+::selection{background:var(--ink);color:var(--paper)}
+a{color:inherit}
+
+.shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:var(--gut)}
+.band{padding-block:76px}
+.band-sunk{background:var(--paper-sunk);border-block:1px solid var(--line)}
+@media (min-width:768px){.band{padding-block:104px}}
+
+/* ---------- type ---------- */
+.h1{font-size:clamp(2.6rem,6.4vw,4.4rem);line-height:1.0;letter-spacing:-.028em;font-weight:640;margin:0}
+.h2{font-size:clamp(1.9rem,3.8vw,3rem);line-height:1.04;letter-spacing:-.024em;font-weight:640;margin:0}
+.h3{font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.14;letter-spacing:-.016em;font-weight:640;margin:0}
+em{font-style:italic;font-weight:800}
+.lead{font-size:clamp(1.06rem,1.6vw,1.24rem);line-height:1.55;color:var(--ink-soft);max-width:60ch;margin:26px 0 0}
+.lead strong{color:var(--ink);font-weight:640}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+/* ---------- cover ---------- */
+.cover{
+  background:#000;color:var(--on-brand);padding-block:96px 84px;
+  position:relative;overflow:hidden;border-bottom:1px solid var(--ink);
+}
+.cover::before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to right,rgba(255,255,255,.05) 1px,transparent 1px) 0 0/40px 40px,
+    linear-gradient(to bottom,rgba(255,255,255,.05) 1px,transparent 1px) 0 0/40px 40px;
+  -webkit-mask-image:radial-gradient(120% 90% at 18% 6%,#000 0%,rgba(0,0,0,.55) 42%,transparent 78%);
+  mask-image:radial-gradient(120% 90% at 18% 6%,#000 0%,rgba(0,0,0,.55) 42%,transparent 78%);
+  pointer-events:none;
+}
+.cover::after{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(680px 380px at 22% 8%,rgba(30,79,224,.42),transparent 62%),
+    radial-gradient(520px 340px at 86% 26%,rgba(37,201,232,.20),transparent 66%),
+    linear-gradient(180deg,rgba(0,0,0,0) 42%,#000 96%);
+  pointer-events:none;
+}
+.cover .shell{position:relative;z-index:2}
+.cover-top{
+  display:flex;flex-wrap:wrap;gap:16px 28px;align-items:baseline;justify-content:space-between;
+  padding-bottom:26px;margin-bottom:54px;border-bottom:1px solid var(--on-brand-line);
+}
+.mark{font-weight:800;letter-spacing:-.03em;font-size:1.22rem}
+.mark span{color:var(--brand-lift)}
+.cover-head-right{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.cover-meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-brand-mute)}
+.cover .h1{max-width:26ch}
+.cover-lead{font-size:clamp(1.1rem,1.9vw,1.4rem);color:var(--on-brand-mute);max-width:56ch;margin:30px 0 0;line-height:1.5}
+.cover-lead strong{color:var(--on-brand);font-weight:600}
+
+/* The three facts a reader wants before anything else. */
+.cover-facts{
+  list-style:none;margin:46px 0 0;padding:22px 0 0;border-top:1px solid var(--on-brand-line);
+  display:grid;gap:20px 28px;grid-template-columns:1fr 1fr;
+}
+@media (min-width:720px){.cover-facts{grid-template-columns:repeat(4,1fr)}}
+.cf-k{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-brand-mute)}
+.cf-v{display:block;margin-top:6px;font-size:1.12rem;font-weight:600;letter-spacing:-.01em}
+
+/* ---------- section head ---------- */
+.sec-head{display:flex;gap:22px;align-items:flex-start}
+.sec-no{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--brand-text);flex:none;padding-top:.9em}
+.sec-head .h2{max-width:24ch}
+.sec-head .h2-wide{max-width:none}
+.ul{text-decoration:underline;text-decoration-thickness:.055em;text-underline-offset:.14em;text-decoration-color:var(--brand)}
+
+.sub{margin-top:64px}
+.sub-lead{max-width:66ch;color:var(--ink-soft);margin:12px 0 0}
+
+/* ---------- workshop facts ---------- */
+.facts{
+  list-style:none;margin:44px 0 0;padding:0;
+  display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--ink);
+}
+@media (min-width:900px){.facts{grid-template-columns:repeat(4,1fr)}}
+.facts li{padding:20px 18px 20px 0;border-bottom:1px solid var(--line)}
+.f-k{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.f-v{display:block;margin-top:8px;font-size:1.3rem;font-weight:640;letter-spacing:-.016em;line-height:1.2}
+.f-s{display:block;margin-top:4px;font-size:14.5px;color:var(--ink-mute);line-height:1.45}
+
+.chips{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.chips li{padding:6px 12px;border:1px solid var(--line-strong);background:var(--paper);font-size:14.5px;color:var(--ink-soft)}
+
+.incl{display:grid;gap:16px;grid-template-columns:1fr;margin-top:26px}
+@media (min-width:720px){.incl{grid-template-columns:1fr 1fr}}
+.incl-card{padding:22px 24px;background:var(--brand-deep);color:var(--on-brand)}
+.incl-card b{display:block;font-size:1.15rem;font-weight:640;letter-spacing:-.012em}
+.incl-card span{display:block;margin-top:6px;font-size:15px;line-height:1.5;color:var(--on-brand-soft)}
+
+/* ---------- capabilities ---------- */
+.caps{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:640px){.caps{grid-template-columns:1fr 1fr}}
+@media (min-width:900px){.caps{grid-template-columns:repeat(3,1fr)}}
+.caps li{background:var(--paper);border:1px solid var(--line-strong);padding:22px 22px 20px}
+.cap-t{display:block;font-size:1.2rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.cap-d{display:block;margin-top:8px;font-size:15.5px;line-height:1.55;color:var(--ink-soft)}
+
+/* ---------- agenda ---------- */
+.days{display:grid;gap:24px;grid-template-columns:1fr;margin-top:26px}
+@media (min-width:900px){.days{grid-template-columns:1fr 1fr;gap:26px}}
+.day{background:var(--paper);border:1px solid var(--line-strong);padding:26px 26px 18px}
+.day-when{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-text)}
+.day-t{display:block;margin-top:8px;font-size:1.45rem;font-weight:700;letter-spacing:-.022em;line-height:1.2}
+.mods{list-style:none;margin:18px 0 0;padding:0;border-top:1px solid var(--line)}
+.mods li{display:flex;gap:14px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.45}
+.mods li:last-child{border-bottom:0}
+.m-no{flex:none;width:2.2em;font-family:var(--mono);font-size:12px;color:var(--ink-mute)}
+.m-name{flex:1 1 auto;color:var(--ink)}
+.m-min{flex:none;font-family:var(--mono);font-size:12.5px;color:var(--ink-mute);white-space:nowrap}
+.mods .cap-row .m-name{color:var(--ink-mute);font-style:italic}
+
+/* ---------- trainers ---------- */
+.people{display:grid;gap:16px;grid-template-columns:1fr;margin-top:26px}
+@media (min-width:720px){.people{grid-template-columns:1fr 1fr}}
+.person{border-top:2px solid var(--ink);padding-top:18px}
+.p-name{display:block;font-size:1.3rem;font-weight:700;letter-spacing:-.02em}
+.p-role{display:block;margin-top:4px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-text)}
+.p-bio{margin:12px 0 0;font-size:15.5px;line-height:1.55;color:var(--ink-soft)}
+.p-edu{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--ink-mute)}
+
+/* ---------- workshop fee ---------- */
+.fee{margin-top:48px;background:var(--paper);border:2px solid var(--ink);padding:34px 32px 30px}
+.fee-row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 28px}
+.fee-was{font-family:var(--mono);font-size:1.5rem;color:var(--ink-mute);text-decoration:line-through;text-decoration-thickness:2px;white-space:nowrap}
+.fee-now{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:clamp(3rem,7vw,4.6rem);font-weight:600;letter-spacing:-.04em;line-height:.95;white-space:nowrap}
+.fee-save{align-self:center;padding:6px 12px;background:var(--brand);color:var(--on-brand);font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
+.fee-excl{display:inline-flex;align-items:center;gap:10px;margin:0 0 22px;padding:8px 14px;border:1px solid var(--ink);font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.fee-excl::before{content:"";width:8px;height:8px;background:var(--brand)}
+[lang="zh"].fee-excl{letter-spacing:.06em}
+.fee-what{margin:20px 0 0;font-size:1.1rem;font-weight:500;color:var(--ink)}
+.fee-lines{list-style:none;margin:22px 0 0;padding:0;border-top:1px solid var(--line)}
+.fee-lines li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:16px;color:var(--ink-soft)}
+.fee-lines li b{font-weight:500;color:var(--ink);text-align:right}
+
+.cond{margin-top:22px;padding:24px 26px;background:var(--brand-deep);color:var(--on-brand)}
+.cond-k{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-brand-mute)}
+.cond-t{display:block;margin-top:8px;font-size:1.3rem;font-weight:640;letter-spacing:-.014em;line-height:1.3}
+.cond-s{display:block;margin-top:8px;font-size:15px;line-height:1.5;color:var(--on-brand-soft)}
+
+/* ---------- services ---------- */
+.deck{display:grid;gap:24px;grid-template-columns:1fr;margin-top:48px}
+@media (min-width:900px){.deck{grid-template-columns:1fr 1fr;gap:26px}}
+.plan{background:var(--paper);border:1px solid var(--line-strong);padding:30px 28px 28px;display:flex;flex-direction:column}
+.plan-tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-text)}
+.plan-name{font-size:1.6rem;font-weight:700;letter-spacing:-.022em;margin:10px 0 0;line-height:1.2}
+.plan-fits{font-size:16px;color:var(--ink-soft);margin:12px 0 0;line-height:1.55}
+.plan-list{list-style:none;margin:22px 0 0;padding:0;border-top:1px solid var(--line)}
+.plan-list li{padding:13px 0;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.5;color:var(--ink-soft)}
+.plan-list li b{display:block;color:var(--ink);font-weight:640;font-size:16px}
+.plan-price{
+  margin-top:auto;padding-top:22px;display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+}
+.plan-price-in{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;width:100%;
+  padding-top:16px;border-top:2px solid var(--ink);
+}
+.plan-price .k{font-size:15px;color:var(--ink-mute)}
+.plan-price .v{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:600;white-space:nowrap}
+
+/* The four quarters, as a rail. */
+.qs{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.qs li{position:relative;padding-top:18px;border-top:3px solid var(--brand)}
+.qs li::before{
+  content:"";position:absolute;top:-9px;left:0;width:15px;height:15px;border-radius:50%;
+  background:var(--paper);border:3px solid var(--brand);
+}
+.q-k{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--brand-text);font-weight:600}
+.q-v{display:block;margin-top:2px;font-size:13.5px;color:var(--ink-mute)}
+.eg-k{margin:24px 0 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+
+.either{margin:22px 0 0;max-width:66ch;font-size:15px;line-height:1.55;color:var(--ink-mute)}
+
+/* ---------- support ---------- */
+.cmp{display:grid;gap:24px;grid-template-columns:1fr;margin-top:48px}
+@media (min-width:900px){.cmp{grid-template-columns:1fr 1fr;gap:26px}}
+.cmp-card{padding:30px 28px 28px;border:1px solid var(--line-strong);background:var(--paper);display:flex;flex-direction:column}
+.cmp-card.on{background:var(--brand-deep);color:var(--on-brand);border-color:var(--brand-deep)}
+.cmp-k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.cmp-card.on .cmp-k{color:var(--on-brand-mute)}
+.cmp-v{display:block;margin-top:14px;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:2.6rem;font-weight:600;letter-spacing:-.035em;line-height:1}
+.cmp-v small{font-size:15px;font-weight:400;letter-spacing:0;margin-left:6px;color:var(--ink-mute)}
+.cmp-card.on .cmp-v small{color:var(--on-brand-mute)}
+.cmp-t{display:block;margin-top:14px;font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
+.cmp-s{display:block;margin-top:8px;font-size:15px;line-height:1.55;color:var(--ink-mute)}
+.cmp-card.on .cmp-s{color:var(--on-brand-soft)}
+
+.scope{display:grid;gap:16px;grid-template-columns:1fr;margin-top:26px}
+@media (min-width:720px){.scope{grid-template-columns:1fr 1fr}}
+.scope-col{border-top:2px solid var(--ink);padding-top:16px}
+.scope-col.no{border-top-color:var(--line-strong)}
+.scope-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.scope-col ul{margin:10px 0 0;padding-left:1.1em;font-size:15.5px;line-height:1.55;color:var(--ink-soft)}
+.scope-col li{padding:3px 0}
+
+/* ---------- future sessions ---------- */
+.bonus{display:grid;gap:24px;grid-template-columns:1fr;margin-top:48px}
+@media (min-width:900px){.bonus{grid-template-columns:1fr 1fr;gap:26px}}
+.b-card{background:var(--paper);border:1px solid var(--line-strong);padding:30px 28px 28px;display:flex;flex-direction:column}
+.b-card.lead-card{border:2px solid var(--ink)}
+.b-no{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-text)}
+.b-t{margin:10px 0 0;font-size:1.45rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.b-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-top:20px}
+.b-now{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:2.6rem;font-weight:600;letter-spacing:-.035em;line-height:1;white-space:nowrap}
+.b-was{font-family:var(--mono);font-size:1.1rem;color:var(--ink-mute);text-decoration:line-through;white-space:nowrap}
+.b-per{display:block;margin-top:8px;font-size:14.5px;color:var(--ink-mute)}
+.b-d{margin:18px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:15.5px;line-height:1.55;color:var(--ink-soft)}
+.b-d b{color:var(--ink);font-weight:640}
+
+/* ---------- notes ---------- */
+.notes{list-style:none;margin:40px 0 0;padding:0;counter-reset:n}
+.notes li{counter-increment:n;position:relative;padding:16px 0 16px 44px;border-bottom:1px solid var(--line);color:var(--ink-soft);font-size:15px}
+.notes li::before{
+  content:counter(n,decimal-leading-zero);position:absolute;left:0;top:18px;
+  font-family:var(--mono);font-size:11.5px;color:var(--brand-text);letter-spacing:.06em;
+}
+.notes li b{color:var(--ink);font-weight:640}
+
+.cta{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
+.cta a{
+  display:inline-flex;align-items:center;gap:9px;padding:13px 19px;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  transition:background .18s ease-out;
+}
+.cta a:hover{background:var(--brand)}
+.cta a::after{content:"→"}
+.cta > span{font-size:14.5px;color:var(--ink-mute)}
+
+.foot{padding-block:34px;border-top:1px solid var(--line);background:var(--paper)}
+.foot .shell{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-between;align-items:baseline}
+.foot p{margin:0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+
+/* Narrow phones: the quarter rail keeps four columns, so shrink its label. */
+@media (max-width:420px){.q-v{font-size:12px}.fee{padding:26px 22px 24px}.plan,.cmp-card,.b-card{padding:26px 22px 24px}}
+
+/* ---------- print ---------- */
+@media print{
+  @page{size:A4;margin:14mm}
+  html,body{background:#fff;font-size:10.6pt;line-height:1.5}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .band{padding-block:0}
+  .cover{padding-block:34pt 26pt}
+  .cover::before{display:none}
+  section{break-before:page}
+  .sub{margin-top:22pt}
+  .page-break{break-before:page}
+  .day,.plan,.cmp-card,.b-card,.fee,.cond,.person,.caps li,.incl-card{break-inside:avoid}
+  .lang-switch,.cta{display:none}
+  .h1{font-size:30pt}
+  .h2{font-size:16pt}
+  .h3{font-size:12.5pt}
+  .lead{font-size:11.4pt}
+  .facts{margin-top:18pt}
+  .caps,.days,.people,.incl{margin-top:12pt;gap:8pt}
+  .caps li{padding:10pt}
+  .day{padding:12pt 12pt 6pt}
+  .mods li{padding:5pt 0;font-size:9.6pt}
+  .deck,.cmp,.bonus{margin-top:18pt;gap:12pt}
+  a{text-decoration:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================ COVER ============================ -->
+<header class="cover">
+  <div class="shell">
+    <div class="cover-top">
+      <div class="mark">Blueprint<span>.</span></div>
+      <div class="cover-head-right">
+        <span class="cover-meta" lang="en">Proposal &nbsp;·&nbsp; 30 September 2026</span>
+        <span class="cover-meta" lang="zh">方案 &nbsp;·&nbsp; 2026年9月30日</span>
+        <div class="lang-switch" role="group" aria-label="Language / 语言">
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="h1" lang="en">WEIL Hotel<br />Corporate AI Training Proposal</h1>
+    <h1 class="h1" lang="zh">WEIL Hotel<br />企业 AI 培训方案</h1>
+    <p class="cover-lead" lang="en">
+      <strong>Claude Mastery for Business Productivity and Automation</strong>:
+      a two-day, hands-on workshop that takes your team from cautious to fluent.
+    </p>
+    <p class="cover-lead" lang="zh">
+      <strong>Claude Mastery：商业生产力与自动化</strong>，
+      为期两天的实操工作坊，让团队从谨慎观望到熟练运用。
+    </p>
+
+    <ul class="cover-facts">
+      <li><span class="cf-k"><span lang="en">Format</span><span lang="zh">形式</span></span><span class="cf-v"><span lang="en">2 full days</span><span lang="zh">两整天</span></span></li>
+      <li><span class="cf-k"><span lang="en">Group size</span><span lang="zh">人数</span></span><span class="cf-v"><span lang="en">6 to 15 people</span><span lang="zh">6 至 15 人</span></span></li>
+      <li><span class="cf-k"><span lang="en">Workshop fee</span><span lang="zh">工作坊费用</span></span><span class="cf-v num">RM 18,000</span></li>
+      <li><span class="cf-k"><span lang="en">Comes with</span><span lang="zh">搭配</span></span><span class="cf-v"><span lang="en">12 month service</span><span lang="zh">12 个月服务</span></span></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ============================ 01 THE WORKSHOP ============================ -->
+<section class="band sec-block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="sec-no">01</span>
+      <div>
+        <h2 class="h2" lang="en">The <em>workshop</em>.</h2>
+        <h2 class="h2" lang="zh"><em>工作坊</em>内容。</h2>
+      </div>
+    </div>
+
+    <p class="lead" lang="en">Built for whole companies starting from zero, not for technical teams. No coding and no previous AI experience needed. Participants work with Claude on their own laptops from the first hour, on <strong>real tasks from their own week</strong>, and every module is taught and then practised.</p>
+    <p class="lead" lang="zh">专为从零开始的整个公司而设计，而不是技术团队。无需编程，也无需任何 AI 经验。学员从第一个小时起就在自己的笔记本电脑上使用 Claude，处理<strong>自己日常工作中的真实任务</strong>，每个单元都是先讲解、再实操。</p>
+
+    <ul class="facts">
+      <li>
+        <span class="f-k"><span lang="en">Duration</span><span lang="zh">时长</span></span>
+        <span class="f-v"><span lang="en">2 full days</span><span lang="zh">两整天</span></span>
+        <span class="f-s"><span lang="en">8:30am to 5:30pm, both days</span><span lang="zh">两天均为上午 8:30 至下午 5:30</span></span>
+      </li>
+      <li>
+        <span class="f-k"><span lang="en">Structure</span><span lang="zh">结构</span></span>
+        <span class="f-v"><span lang="en">11 modules</span><span lang="zh">11 个单元</span></span>
+        <span class="f-s"><span lang="en">Theory and practical</span><span lang="zh">理论加实操</span></span>
+      </li>
+      <li>
+        <span class="f-k"><span lang="en">Technical level</span><span lang="zh">技术门槛</span></span>
+        <span class="f-v"><span lang="en">No coding</span><span lang="zh">无需编程</span></span>
+        <span class="f-s"><span lang="en">Laptops required</span><span lang="zh">需自备笔记本电脑</span></span>
+      </li>
+      <li>
+        <span class="f-k"><span lang="en">Group size</span><span lang="zh">人数</span></span>
+        <span class="f-v"><span lang="en">6 to 15 people</span><span lang="zh">6 至 15 人</span></span>
+        <span class="f-s"><span lang="en">From any department</span><span lang="zh">不限部门</span></span>
+      </li>
+    </ul>
+
+    <div class="incl">
+      <div class="incl-card">
+        <b lang="en">Claude Pro, free for the workshop</b><b lang="zh">工作坊期间免费使用 Claude Pro</b>
+        <span lang="en">Every participant works on the paid plan for both days.</span><span lang="zh">每位学员在两天内都使用付费版。</span>
+      </div>
+      <div class="incl-card">
+        <b lang="en">Certificate of recognition</b><b lang="zh">结业证书</b>
+        <span lang="en">Digital and physical, for everyone who completes both days.</span><span lang="zh">电子版与实体版，颁发给完成两天课程的每位学员。</span>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="h3" lang="en">Who should attend</h3>
+      <h3 class="h3" lang="zh">适合对象</h3>
+      <p class="sub-lead" lang="en">Suitable for anyone in the company, regardless of position or experience.</p>
+      <p class="sub-lead" lang="zh">适合公司内任何人，不论职位或经验。</p>
+      <ul class="chips" lang="en">
+        <li>HR</li><li>Finance</li><li>Sales</li><li>Operations</li>
+        <li>Marketing</li><li>Customer service</li><li>Procurement</li><li>Management</li>
+      </ul>
+      <ul class="chips" lang="zh">
+        <li>人力资源</li><li>财务</li><li>销售</li><li>营运</li>
+        <li>市场营销</li><li>客户服务</li><li>采购</li><li>管理层</li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="h3" lang="en">What your team can do after the two days</h3>
+      <h3 class="h3" lang="zh">两天之后，团队能做到什么</h3>
+      <ul class="caps">
+        <li>
+          <span class="cap-t" lang="en">Agentic AI</span><span class="cap-t" lang="zh">智能体 AI</span>
+          <span class="cap-d" lang="en">Claude does the work itself instead of telling you how to do it.</span><span class="cap-d" lang="zh">Claude 直接把工作做完，而不只是告诉你怎么做。</span>
+        </li>
+        <li>
+          <span class="cap-t" lang="en">Automation</span><span class="cap-t" lang="zh">自动化</span>
+          <span class="cap-d" lang="en">The work you repeat every week runs on its own, whether anyone remembers or not.</span><span class="cap-d" lang="zh">每周重复的工作自动运行，不必靠人记得。</span>
+        </li>
+        <li>
+          <span class="cap-t" lang="en">Vibe-coding</span><span class="cap-t" lang="zh">Vibe-coding</span>
+          <span class="cap-d" lang="en">You describe the tool you need in English and Claude builds it for you.</span><span class="cap-d" lang="zh">用日常语言描述你需要的工具，Claude 帮你做出来。</span>
+        </li>
+        <li>
+          <span class="cap-t" lang="en">Knowledge base</span><span class="cap-t" lang="zh">知识库</span>
+          <span class="cap-d" lang="en">Your policies, templates and past work, in one place Claude can read.</span><span class="cap-d" lang="zh">公司政策、模板与过往工作集中在一处，Claude 都能读取。</span>
+        </li>
+        <li>
+          <span class="cap-t" lang="en">MCP connections</span><span class="cap-t" lang="zh">MCP 连接</span>
+          <span class="cap-d" lang="en">Claude connects to Google Workspace, Microsoft Teams and more to work on your files.</span><span class="cap-d" lang="zh">Claude 连接 Google Workspace、Microsoft Teams 等，直接处理你的文件。</span>
+        </li>
+        <li>
+          <span class="cap-t" lang="en">And many more</span><span class="cap-t" lang="zh">还有更多</span>
+          <span class="cap-d" lang="en">Skills, Artifacts, Cowork. Eleven modules, every one of them hands-on.</span><span class="cap-d" lang="zh">Skills、Artifacts、Cowork。十一个单元，每一个都是实操。</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sub">
+      <h3 class="h3" lang="en">The two days</h3>
+      <h3 class="h3" lang="zh">两天课程</h3>
+      <div class="days">
+        <div class="day">
+          <span class="day-when"><span lang="en">Day one · Modules 1 to 6</span><span lang="zh">第一天 · 单元 1 至 6</span></span>
+          <span class="day-t"><span lang="en">Master the conversation</span><span lang="zh">掌握对话</span></span>
+          <ol class="mods">
+            <li><span class="m-no">01</span><span class="m-name"><span lang="en">Introduction to AI and Claude for productivity</span><span lang="zh">AI 与 Claude 生产力入门</span></span><span class="m-min">75 min</span></li>
+            <li><span class="m-no">02</span><span class="m-name"><span lang="en">Effective AI communication</span><span lang="zh">与 AI 有效沟通</span></span><span class="m-min">60 min</span></li>
+            <li><span class="m-no">03</span><span class="m-name"><span lang="en">Responsible AI use</span><span lang="zh">负责任地使用 AI</span></span><span class="m-min">60 min</span></li>
+            <li><span class="m-no">04</span><span class="m-name"><span lang="en">Claude Skills (Part 1): Introduction and Setup</span><span lang="zh">Claude Skills（一）：介绍与设置</span></span><span class="m-min">60 min</span></li>
+            <li><span class="m-no">05</span><span class="m-name"><span lang="en">Claude Skills (Part 2): Enhance AI Conversation</span><span lang="zh">Claude Skills（二）：提升 AI 对话</span></span><span class="m-min">45 min</span></li>
+            <li><span class="m-no">06</span><span class="m-name"><span lang="en">AI-powered business data analysis: from numbers to insights</span><span lang="zh">AI 商业数据分析：从数字到洞察</span></span><span class="m-min">90 min</span></li>
+            <li class="cap-row"><span class="m-no"></span><span class="m-name"><span lang="en">Day 1 quiz and recap with Q&amp;A</span><span lang="zh">第一天测验、复习与问答</span></span><span class="m-min">30 min</span></li>
+          </ol>
+        </div>
+        <div class="day">
+          <span class="day-when"><span lang="en">Day two · Modules 7 to 11</span><span lang="zh">第二天 · 单元 7 至 11</span></span>
+          <span class="day-t"><span lang="en">Master the system</span><span lang="zh">掌握系统</span></span>
+          <ol class="mods">
+            <li><span class="m-no">07</span><span class="m-name"><span lang="en">Claude Projects: Building a persistent workspace</span><span lang="zh">Claude Projects：建立长期工作空间</span></span><span class="m-min">75 min</span></li>
+            <li><span class="m-no">08</span><span class="m-name"><span lang="en">Claude Cowork: From chat to agentic work</span><span lang="zh">Claude Cowork：从对话到智能体工作</span></span><span class="m-min">60 min</span></li>
+            <li><span class="m-no">09</span><span class="m-name"><span lang="en">Connectors and Scheduled Tasks: Building your own automation</span><span lang="zh">连接器与定时任务：打造自己的自动化</span></span><span class="m-min">60 min</span></li>
+            <li><span class="m-no">10</span><span class="m-name"><span lang="en">No-code application building</span><span lang="zh">无代码应用开发</span></span><span class="m-min">90 min</span></li>
+            <li><span class="m-no">11</span><span class="m-name"><span lang="en">Capstone project</span><span lang="zh">结业专题</span></span><span class="m-min">100 min</span></li>
+            <li class="cap-row"><span class="m-no"></span><span class="m-name"><span lang="en">Q&amp;A, certification and closing</span><span lang="zh">问答、颁发证书与结业</span></span><span class="m-min">40 min</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub">
+      <h3 class="h3" lang="en">Delivered by</h3>
+      <h3 class="h3" lang="zh">主讲导师</h3>
+      <p class="sub-lead" lang="en">Designed and delivered by the two founding directors of Blueprint AI Training, both practising AI engineers who built and deployed AI systems within large organisations.</p>
+      <p class="sub-lead" lang="zh">由 Blueprint AI Training 的两位创办董事设计并亲自授课。两位都是在职 AI 工程师，曾在大型机构内开发并部署 AI 系统。</p>
+      <div class="people">
+        <div class="person">
+          <span class="p-name">Tey Jian Han</span>
+          <span class="p-role"><span lang="en">Co-founder &amp; Director</span><span lang="zh">联合创办人兼董事</span></span>
+          <p class="p-bio" lang="en">Leads curriculum design and delivers the Claude Mastery programme. Formerly a Senior Associate in EY's Technology Consulting practice (AI and Data), designing and building AI agents for enterprise clients. Experience also includes Tenaga Nasional Berhad.</p>
+          <p class="p-bio" lang="zh">负责课程设计并主讲 Claude Mastery 课程。曾任安永（EY）科技咨询部门（AI 与数据）高级顾问，为企业客户设计与开发 AI 智能体。亦曾任职于国家能源公司（TNB）。</p>
+          <p class="p-edu" lang="en">MSc Business Analytics, Imperial College London (Distinction) · BSc Computer Science with Management, King's College London (First Class Honours)</p>
+          <p class="p-edu" lang="zh">伦敦帝国理工学院商业分析硕士（优异）· 伦敦国王学院计算机科学与管理学士（一等荣誉）</p>
+        </div>
+        <div class="person">
+          <span class="p-name">Daniel Chua</span>
+          <span class="p-role"><span lang="en">Co-founder &amp; Director</span><span lang="zh">联合创办人兼董事</span></span>
+          <p class="p-bio" lang="en">Leads hands-on delivery and the data analysis, automation and no-code modules. Previously a Data Analyst at MoneyLion, a US-listed fintech; AI Developer at a global cryptocurrency exchange; and Growth Marketer at CoinGecko. Has run a digital marketing agency since 2019.</p>
+          <p class="p-bio" lang="zh">负责实操教学，以及数据分析、自动化与无代码单元。曾任美国上市金融科技公司 MoneyLion 数据分析师、全球加密货币交易所 AI 开发员，以及 CoinGecko 增长营销。自 2019 年起经营数码营销公司。</p>
+          <p class="p-edu" lang="en">Master's in Business Analytics, Sunway University (CGPA 3.91) · Bachelor's in Computer Science, Xiamen University (CGPA 3.87)</p>
+          <p class="p-edu" lang="zh">双威大学商业分析硕士（CGPA 3.91）· 厦门大学计算机科学学士（CGPA 3.87）</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 02 WORKSHOP FEE ============================ -->
+<section class="band band-sunk sec-block page-break">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="sec-no">02</span>
+      <div>
+        <h2 class="h2" lang="en">The workshop <em>fee</em>.</h2>
+        <h2 class="h2" lang="zh">工作坊<em>费用</em>。</h2>
+      </div>
+    </div>
+
+    <div class="fee">
+      <p class="fee-excl" lang="en">Exclusive to WEIL Hotel</p>
+      <p class="fee-excl" lang="zh">WEIL Hotel 专属价格</p>
+      <div class="fee-row">
+        <span class="fee-was">RM 21,000</span>
+        <span class="fee-now">RM 18,000</span>
+        <span class="fee-save"><span lang="en">RM 3,000 off</span><span lang="zh">减 RM 3,000</span></span>
+      </div>
+      <p class="fee-what" lang="en">An exclusive rate offered to WEIL Hotel only, for the full two-day workshop, 6 to 15 participants.</p>
+      <p class="fee-what" lang="zh">仅限 WEIL Hotel 的专属价格，适用于两天完整工作坊，6 至 15 名学员。</p>
+      <ul class="fee-lines">
+        <li><span lang="en">Programme</span><span lang="zh">课程</span><b><span lang="en">Claude Mastery, 11 modules</span><span lang="zh">Claude Mastery，11 个单元</span></b></li>
+        <li><span lang="en">Duration</span><span lang="zh">时长</span><b><span lang="en">2 full days, 8:30am to 5:30pm</span><span lang="zh">两整天，上午 8:30 至下午 5:30</span></b></li>
+        <li><span lang="en">Participants</span><span lang="zh">学员</span><b><span lang="en">6 to 15 people</span><span lang="zh">6 至 15 人</span></b></li>
+        <li><span lang="en">Included</span><span lang="zh">包含</span><b><span lang="en">Claude Pro for the workshop, certificates</span><span lang="zh">工作坊期间 Claude Pro、结业证书</span></b></li>
+      </ul>
+    </div>
+
+    <div class="cond">
+      <span class="cond-k"><span lang="en">The condition</span><span lang="zh">条件</span></span>
+      <span class="cond-t" lang="en">The RM 18,000 fee applies with a 12 month contract for at least one of our services in section 03.</span>
+      <span class="cond-t" lang="zh">RM 18,000 的费用适用于签订 12 个月合约、至少选用第 03 部分其中一项服务。</span>
+      <span class="cond-s" lang="en">Blueprint provides digital marketing as well as AI and software implementation. The training is where your team starts; the contract is how the work carries on after it.</span>
+      <span class="cond-s" lang="zh">Blueprint 提供数码营销，以及 AI 与软件实施服务。培训是团队的起点，合约让工作在培训之后持续推进。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 03 SERVICES ============================ -->
+<section class="band sec-block page-break">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="sec-no">03</span>
+      <div>
+        <h2 class="h2 h2-wide" lang="en">A <span class="ul">12 month contract</span>, with either service</h2>
+        <h2 class="h2 h2-wide" lang="zh"><span class="ul">12 个月合约</span>，任选一项服务</h2>
+      </div>
+    </div>
+
+    <div class="deck">
+      <article class="plan">
+        <span class="plan-tag"><span lang="en">Service A · Digital marketing</span><span lang="zh">服务 A · 数码营销</span></span>
+        <h3 class="plan-name">Google SEO + AEO + GEO + CRO</h3>
+        <p class="plan-fits" lang="en">Monthly work that gets WEIL Hotel found on Google and in AI assistants, and turns those visits into bookings and enquiries.</p>
+        <p class="plan-fits" lang="zh">每月持续的工作，让 WEIL Hotel 在 Google 与 AI 助手中被找到，并把访问转化为订房与询问。</p>
+        <ul class="plan-list">
+          <li><b>SEO <span lang="en">· Search Engine Optimisation</span><span lang="zh">· 搜索引擎优化</span></b><span lang="en">Rank in Google's ordinary results: technical health, page speed, site structure, keywords and internal links.</span><span lang="zh">在 Google 一般搜索结果中排名：技术健康、页面速度、网站结构、关键词与内部链接。</span></li>
+          <li><b>AEO <span lang="en">· Answer Engine Optimisation</span><span lang="zh">· 答案引擎优化</span></b><span lang="en">Be the direct answer: featured snippets, People Also Ask and voice assistants.</span><span lang="zh">成为直接答案：精选摘要、“其他人还问了”与语音助手。</span></li>
+          <li><b>GEO <span lang="en">· Generative Engine Optimisation</span><span lang="zh">· 生成式引擎优化</span></b><span lang="en">Be the hotel that comes up when guests ask ChatGPT, Gemini, Perplexity or Google's AI Overviews.</span><span lang="zh">当旅客询问 ChatGPT、Gemini、Perplexity 或 Google AI 概览时，被推荐的是你的酒店。</span></li>
+          <li><b>CRO <span lang="en">· Conversion Rate Optimisation</span><span lang="zh">· 转化率优化</span></b><span lang="en">More visitors take the next step: a direct booking, a WhatsApp message, an event enquiry.</span><span lang="zh">让更多访客采取下一步：直接订房、发 WhatsApp、活动询问。</span></li>
+        </ul>
+        <div class="plan-price"><div class="plan-price-in">
+          <span class="k" lang="en">Monthly, for 12 months</span><span class="k" lang="zh">每月，为期 12 个月</span>
+          <span class="v"><span lang="en">Quoted separately</span><span lang="zh">另行报价</span></span>
+        </div></div>
+      </article>
+
+      <article class="plan">
+        <span class="plan-tag"><span lang="en">Service B · AI and software</span><span lang="zh">服务 B · AI 与软件</span></span>
+        <h3 class="plan-name" lang="en">AI implementation</h3>
+        <h3 class="plan-name" lang="zh">AI 实施</h3>
+        <p class="plan-fits" lang="en">We build it for you. One implementation project every quarter, so four working systems over the 12 months.</p>
+        <p class="plan-fits" lang="zh">由我们为你建好。每季度一个实施项目，12 个月内共四套可运行的系统。</p>
+        <ol class="qs">
+          <li><span class="q-k">Q1</span><span class="q-v"><span lang="en">Project 1</span><span lang="zh">项目 1</span></span></li>
+          <li><span class="q-k">Q2</span><span class="q-v"><span lang="en">Project 2</span><span lang="zh">项目 2</span></span></li>
+          <li><span class="q-k">Q3</span><span class="q-v"><span lang="en">Project 3</span><span lang="zh">项目 3</span></span></li>
+          <li><span class="q-k">Q4</span><span class="q-v"><span lang="en">Project 4</span><span lang="zh">项目 4</span></span></li>
+        </ol>
+        <p class="eg-k" lang="en">What a quarter's project could be</p>
+        <p class="eg-k" lang="zh">每季项目可以是</p>
+        <ul class="plan-list">
+          <li lang="en">A guest enquiry assistant that drafts replies to WhatsApp and email questions</li>
+          <li lang="zh">旅客询问助手，为 WhatsApp 与电邮问题起草回复</li>
+          <li lang="en">Review responses drafted for Google, TripAdvisor and booking platforms</li>
+          <li lang="zh">为 Google、TripAdvisor 与订房平台起草评论回复</li>
+          <li lang="en">An automated daily occupancy and revenue report for management</li>
+          <li lang="zh">每日入住率与营收报告自动发送给管理层</li>
+          <li lang="en">An internal SOP knowledge base staff can ask questions of</li>
+          <li lang="zh">员工可直接提问的内部 SOP 知识库</li>
+        </ul>
+        <div class="plan-price"><div class="plan-price-in">
+          <span class="k" lang="en">4 projects over 12 months</span><span class="k" lang="zh">12 个月内 4 个项目</span>
+          <span class="v"><span lang="en">Quoted separately</span><span lang="zh">另行报价</span></span>
+        </div></div>
+      </article>
+    </div>
+
+    <p class="either" lang="en">Choose one service or both. Either one on a 12 month contract meets the condition for the RM 18,000 workshop fee, and each is quoted separately once we have agreed the scope. The project examples above are illustrations; each quarter's project is chosen and scoped with you at the start of that quarter.</p>
+    <p class="either" lang="zh">可选其中一项或两项。任何一项签订 12 个月合约，即符合 RM 18,000 工作坊费用的条件；每项服务在确认范围后另行报价。以上项目仅为例子，每季度的项目会在该季开始时与你共同选定并确认范围。</p>
+  </div>
+</section>
+
+<!-- ============================ 04 SUPPORT ============================ -->
+<section class="band band-sunk sec-block page-break">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="sec-no">04</span>
+      <div>
+        <h2 class="h2" lang="en">Support <em>after</em> the workshop.</h2>
+        <h2 class="h2" lang="zh">工作坊<em>之后</em>的支持。</h2>
+      </div>
+    </div>
+
+    <div class="cmp">
+      <div class="cmp-card on">
+        <span class="cmp-k"><span lang="en">With an ongoing monthly service</span><span lang="zh">持续使用每月服务</span></span>
+        <span class="cmp-v"><span lang="en">Free</span><span lang="zh">免费</span></span>
+        <span class="cmp-t" lang="en">An exclusive weekly 1-hour support session</span>
+        <span class="cmp-t" lang="zh">每周一次、每次 1 小时的专属支持会议</span>
+        <span class="cmp-s" lang="en">For as long as a monthly service with us is running. WEIL employees bring any issue with their use of Claude.</span>
+        <span class="cmp-s" lang="zh">只要与我们的每月服务仍在进行，就持续提供。WEIL 员工可提出使用 Claude 时遇到的任何问题。</span>
+      </div>
+      <div class="cmp-card">
+        <span class="cmp-k"><span lang="en">Without a monthly service</span><span lang="zh">没有每月服务</span></span>
+        <span class="cmp-v">RM 1,000<small><span lang="en">/ month</span><span lang="zh">／月</span></small></span>
+        <span class="cmp-t" lang="en">A weekly 1-hour support session, billed monthly</span>
+        <span class="cmp-t" lang="zh">每周一次、每次 1 小时的支持会议，按月计费</span>
+        <span class="cmp-s" lang="en">The same weekly consulting session, one hour every week, at a flat monthly fee.</span>
+        <span class="cmp-s" lang="zh">同样的每周咨询会议，每周一小时，按固定月费收取。</span>
+      </div>
+    </div>
+
+    <div class="scope">
+      <div class="scope-col">
+        <span class="scope-h"><span lang="en">What a session covers</span><span lang="zh">会议涵盖</span></span>
+        <ul lang="en">
+          <li>Questions about anything taught in the workshop</li>
+          <li>Prompts, Skills, Projects or automations that are not working as expected</li>
+          <li>Advice on how to approach a new task with Claude</li>
+        </ul>
+        <ul lang="zh">
+          <li>工作坊教过的任何内容</li>
+          <li>未如预期运作的提示词、Skills、Projects 或自动化</li>
+          <li>如何用 Claude 处理新任务的建议</li>
+        </ul>
+      </div>
+      <div class="scope-col no">
+        <span class="scope-h"><span lang="en">Consulting only, not implementation</span><span lang="zh">仅提供咨询，不包括实施</span></span>
+        <ul lang="en">
+          <li>We advise and show how; your team does the work</li>
+          <li>Building a system for you is implementation, covered by Service B</li>
+        </ul>
+        <ul lang="zh">
+          <li>我们提供建议与示范，由你的团队动手执行</li>
+          <li>为你建立系统属于实施工作，由服务 B 负责</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 05 FUTURE SESSIONS ============================ -->
+<section class="band sec-block page-break">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="sec-no">05</span>
+      <div>
+        <h2 class="h2" lang="en">Future sessions, at a <em>held</em> price.</h2>
+        <h2 class="h2" lang="zh">未来课程，<em>锁定</em>价格。</h2>
+      </div>
+    </div>
+
+    <p class="lead" lang="en">For the next group of WEIL staff, whether that is a second batch, another department or new hires.</p>
+    <p class="lead" lang="zh">适用于 WEIL 的下一批员工，无论是第二批学员、其他部门，还是新同事。</p>
+
+    <div class="bonus">
+      <article class="b-card lead-card">
+        <span class="b-no"><span lang="en">Bonus 01 · Referral</span><span lang="zh">优惠 01 · 推荐</span></span>
+        <h3 class="b-t" lang="en">Refer a company, get your next session at RM 12,000</h3>
+        <h3 class="b-t" lang="zh">推荐一家公司，下一场课程只需 RM 12,000</h3>
+        <div class="b-price">
+          <span class="b-now">RM 12,000</span>
+          <span class="b-was">RM 21,000</span>
+        </div>
+        <span class="b-per"><span lang="en">Next session, up to 15 people</span><span lang="zh">下一场课程，最多 15 人</span></span>
+        <p class="b-d" lang="en"><b>Every successful referral</b> earns WEIL Hotel its next session at RM 12,000, more than 40% off the list price. One referral, one discounted session.</p>
+        <p class="b-d" lang="zh"><b>每一个成功推荐</b>，WEIL Hotel 的下一场课程即以 RM 12,000 计算，比原价低超过 40%。一个推荐，换一场优惠课程。</p>
+      </article>
+      <article class="b-card">
+        <span class="b-no"><span lang="en">Bonus 02 · Ongoing client</span><span lang="zh">优惠 02 · 长期客户</span></span>
+        <h3 class="b-t" lang="en">No referral needed: every future session stays at RM 18,000</h3>
+        <h3 class="b-t" lang="zh">无需推荐：未来每场课程维持 RM 18,000</h3>
+        <div class="b-price">
+          <span class="b-now">RM 18,000</span>
+          <span class="b-was">RM 21,000</span>
+        </div>
+        <span class="b-per"><span lang="en">Each future session, 6 to 15 people</span><span lang="zh">未来每场课程，6 至 15 人</span></span>
+        <p class="b-d" lang="en">As long as WEIL Hotel has an <b>ongoing monthly service</b> with us, every upcoming session keeps today's price.</p>
+        <p class="b-d" lang="zh">只要 WEIL Hotel 与我们的<b>每月服务持续进行</b>，未来每场课程都维持今天的价格。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 06 NOTES ============================ -->
+<section class="band band-sunk sec-block">
+  <div class="shell">
+    <div class="sec-head">
+      <span class="sec-no">06</span>
+      <div>
+        <h2 class="h2" lang="en">Other notes</h2>
+        <h2 class="h2" lang="zh">其他说明</h2>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li lang="en"><b>All figures are in Malaysian ringgit</b> and exclude any applicable tax.</li>
+      <li lang="zh"><b>所有金额均为马币</b>，不含任何适用税项。</li>
+      <li lang="en"><b>The RM 18,000 workshop fee is conditional</b> on a 12 month contract for Service A, Service B, or both. Without a contract, the workshop is RM 21,000.</li>
+      <li lang="zh"><b>RM 18,000 的工作坊费用附带条件</b>：须签订服务 A、服务 B 或两者的 12 个月合约。若不签订合约，工作坊费用为 RM 21,000。</li>
+      <li lang="en"><b>Services A and B are quoted separately</b>, after a scoping conversation. Neither price is included in the workshop fee.</li>
+      <li lang="zh"><b>服务 A 与服务 B 另行报价</b>，在确认范围后提供。两者费用均不包含在工作坊费用内。</li>
+      <li lang="en"><b>A successful referral</b> is a company introduced by WEIL Hotel that goes on to book and pay for a Blueprint workshop.</li>
+      <li lang="zh"><b>成功推荐</b>指由 WEIL Hotel 介绍、并最终预订及付款参加 Blueprint 工作坊的公司。</li>
+      <li lang="en"><b>Participants bring their own laptops.</b> Claude Pro access for the two days is provided by us.</li>
+      <li lang="zh"><b>学员需自备笔记本电脑。</b>两天的 Claude Pro 使用权限由我们提供。</li>
+      <li lang="en"><b>This proposal is valid for 30 days</b> from the date on the cover. Dates, scope and payment schedule are settled in writing before work starts.</li>
+      <li lang="zh"><b>本方案自封面日期起 30 天内有效。</b>日期、范围与付款安排，在开始前以书面确认。</li>
+    </ol>
+
+    <div class="cta">
+      <a href="https://wa.me/60126286586" target="_blank" rel="noopener"><span lang="en">WhatsApp us</span><span lang="zh">WhatsApp 联系我们</span></a>
+      <span class="num">+60 12 628 6586</span>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="shell">
+    <p lang="en">Blueprint · Proposal for WEIL Hotel</p>
+    <p lang="zh">Blueprint · WEIL Hotel 方案</p>
+    <p lang="en">30 September 2026 · Valid 30 days</p>
+    <p lang="zh">2026 年 9 月 30 日 · 有效期 30 天</p>
+  </div>
+</footer>
+
+<script>
+/* One behaviour: the language switch. Every figure is in the markup. */
+(function () {
+  function setLang(lang) {
+    document.documentElement.setAttribute("data-lang", lang);
+    document.documentElement.lang = lang === "zh" ? "zh-Hans-MY" : "en-MY";
+    document.querySelectorAll(".lang-btn").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
+    });
+  }
+
+  /* ?lang=zh opens the document in Chinese. */
+  var wanted = new URLSearchParams(location.search).get("lang");
+  if (wanted === "zh" || wanted === "en") setLang(wanted);
+
+  document.querySelectorAll(".lang-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var lang = btn.dataset.lang;
+      setLang(lang);
+      var u = new URL(location.href);
+      u.searchParams.set("lang", lang);
+      history.replaceState(null, "", u);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
