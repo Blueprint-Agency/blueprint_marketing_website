@@ -5,18 +5,18 @@ import { motion, AnimatePresence } from "motion/react";
 import {
   Flower2,
   Activity,
-  Music2,
-  Bike,
-  Swords,
-  Waves,
-  Mountain,
-  HeartPulse,
-  Bone,
-  Leaf,
-  Sparkles,
-  Hand,
-  Dumbbell,
+  Timer,
+  Users,
+  BicepsFlexed,
+  Weight,
   Building2,
+  Bike,
+  Hand,
+  Flame,
+  Sparkles,
+  Leaf,
+  Dumbbell,
+  HeartPulse,
   Flower,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -45,6 +45,11 @@ import { cn } from "@/lib/utils";
  * commission, retail, multi-location. Nothing here invents one. Waitlists,
  * spot booking, loyalty points and court rental are all absent from that
  * matrix and are therefore absent from these lines.
+ *
+ * LABELS FOLLOW THE PHOTOS. On 2026-10-08 every image was viewed and each
+ * label rewritten to name what the picture actually shows (the old list
+ * captioned spin bikes "Physiotherapy" and a barbell class "Swim
+ * schools"). If an image is swapped, recheck its label in the same edit.
  */
 const FEATURES = [
   {
@@ -59,23 +64,63 @@ const FEATURES = [
   },
   {
     id: "pilates",
-    label: "Pilates & reformer",
+    label: "Pilates & mat classes",
     kind: "Timetable",
     icon: Activity,
     image:
       "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1200",
     description:
-      "Small equipment classes, with the room held as well as the slot so nothing double-books.",
+      "Small mat classes, with the room held as well as the slot so nothing double-books.",
   },
   {
-    id: "barre",
-    label: "Barre & dance",
+    id: "core",
+    label: "Core & conditioning",
     kind: "Timetable",
-    icon: Music2,
+    icon: Timer,
     image:
       "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1200",
     description:
       "Terms running beside drop-ins, plus workshops priced in tiers.",
+  },
+  {
+    id: "group",
+    label: "Group fitness",
+    kind: "Timetable",
+    icon: Users,
+    image:
+      "https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=1200",
+    description:
+      "Fixed-size classes that fill and empty fast, with QR check-in at the door.",
+  },
+  {
+    id: "strength",
+    label: "Strength & conditioning",
+    kind: "Timetable",
+    icon: BicepsFlexed,
+    image:
+      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200",
+    description:
+      "Monthly memberships alongside private 1-on-1 and 2-on-1 sessions.",
+  },
+  {
+    id: "barbell",
+    label: "Barbell classes",
+    kind: "Timetable",
+    icon: Weight,
+    image:
+      "https://images.unsplash.com/photo-1554284126-aa88f22d8b74?q=80&w=1200",
+    description:
+      "Levels and terms, with roles so an instructor sees their own classes and not the takings.",
+  },
+  {
+    id: "fitness-centres",
+    label: "Fitness centres",
+    kind: "Timetable",
+    icon: Building2,
+    image:
+      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1200",
+    description:
+      "Day passes and memberships on one schedule, across every location on the plan.",
   },
   {
     id: "spin",
@@ -83,69 +128,29 @@ const FEATURES = [
     kind: "Timetable",
     icon: Bike,
     image:
-      "https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=1200",
-    description:
-      "Fixed-size classes that fill and empty fast, with QR check-in at the door.",
-  },
-  {
-    id: "martial",
-    label: "Martial arts",
-    kind: "Timetable",
-    icon: Swords,
-    image:
-      "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200",
-    description:
-      "Monthly memberships alongside private 1-on-1 and 2-on-1 sessions.",
-  },
-  {
-    id: "swim",
-    label: "Swim schools",
-    kind: "Timetable",
-    icon: Waves,
-    image:
-      "https://images.unsplash.com/photo-1554284126-aa88f22d8b74?q=80&w=1200",
-    description:
-      "Levels and terms, with roles so an instructor sees her own classes and not the takings.",
-  },
-  {
-    id: "climbing",
-    label: "Climbing gyms",
-    kind: "Timetable",
-    icon: Mountain,
-    image:
-      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1200",
-    description:
-      "Day passes and memberships on one schedule, across every location on the plan.",
-  },
-  {
-    id: "physio",
-    label: "Physiotherapy",
-    kind: "Appointments",
-    icon: HeartPulse,
-    image:
       "https://images.unsplash.com/photo-1540496905036-5937c10647cc?q=80&w=1200",
     description:
-      "An appointment diary rather than a timetable, with packages a patient draws down over weeks.",
+      "Fixed-size rides that fill fast, sold as credit bundles or unlimited memberships.",
   },
   {
-    id: "chiro",
-    label: "Chiropractic",
+    id: "massage",
+    label: "Massage therapy",
     kind: "Appointments",
-    icon: Bone,
+    icon: Hand,
     image:
       "https://images.unsplash.com/photo-1519824145371-296894a0daa9?q=80&w=1200",
     description:
-      "Repeat visits on a plan of care, with room and practitioner booked as one thing.",
+      "An appointment diary rather than a timetable, with packages a client draws down over weeks.",
   },
   {
-    id: "tcm",
-    label: "TCM & acupuncture",
-    kind: "Appointments",
-    icon: Leaf,
+    id: "bootcamp",
+    label: "Bootcamps & HIIT",
+    kind: "Timetable",
+    icon: Flame,
     image:
       "https://images.unsplash.com/photo-1591258370814-01609b341790?q=80&w=1200",
     description:
-      "Longer one-to-one sessions, with confirmations and reminders emailed on 21 events.",
+      "Short, sharp classes on a weekly timetable, with QR check-in at the door.",
   },
   {
     id: "aesthetics",
@@ -158,34 +163,34 @@ const FEATURES = [
       "Treatment packages with a visible balance, and a retail store for what you sell alongside.",
   },
   {
-    id: "massage",
+    id: "spa",
     label: "Massage & spa",
     kind: "Appointments",
-    icon: Hand,
+    icon: Leaf,
     image:
       "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=1200",
     description:
       "Therapist and room held together, with card, FPX, DuitNow and Touch 'n Go at checkout.",
   },
   {
-    id: "pt",
-    label: "Personal training",
-    kind: "Appointments",
+    id: "gyms",
+    label: "Gyms with classes",
+    kind: "Both",
     icon: Dumbbell,
     image:
       "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1200",
     description:
-      "Blocks of sessions bought up front, with commission worked out from attendance.",
+      "One schedule carrying open access, a class timetable and personal training at once.",
   },
   {
-    id: "gyms",
-    label: "Gyms with classes",
-    kind: "Both",
-    icon: Building2,
+    id: "pt",
+    label: "Personal training",
+    kind: "Appointments",
+    icon: HeartPulse,
     image:
       "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200",
     description:
-      "One schedule carrying open access, a class timetable and personal training at once.",
+      "Blocks of sessions bought up front, with commission worked out from attendance.",
   },
   {
     id: "wellness",
