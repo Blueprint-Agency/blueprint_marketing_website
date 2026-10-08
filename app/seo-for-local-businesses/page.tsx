@@ -174,8 +174,9 @@ export default function SeoPage() {
               <Link className="back-link" href="/#services">
                 All services
               </Link>
-              <p className="eyebrow svc-eyebrow">Google SEO</p>
-              <h1 className="h1" style={{ maxWidth: "15ch" }}>
+
+
+              <h1 className="h1" style={{ maxWidth: "15ch", marginTop: 34 }}>
                 SEO measured in <em>revenue</em>, not rankings.
               </h1>
               <p className="lead svc-lead">
@@ -206,7 +207,6 @@ export default function SeoPage() {
         <section className="band" id="revenue">
           <div className="shell seo-split">
             <div>
-              <p className="eyebrow">What makes us different</p>
               <h2 className="h2" style={{ maxWidth: "16ch" }}>
                 We track the hardest number: <em>revenue</em>.
               </h2>
@@ -230,7 +230,6 @@ export default function SeoPage() {
         {/* ---------------- three searches ---------------- */}
         <section className="band band-sunk">
           <div className="shell">
-            <p className="eyebrow">Where the new customers are</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               Three searches. Your name is in only the <em>first</em>.
             </h2>
@@ -265,7 +264,6 @@ export default function SeoPage() {
         {/* ---------------- the path ---------------- */}
         <section className="band">
           <div className="shell">
-            <p className="eyebrow">The whole way there</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               From a search to money in the <em>bank</em>.
             </h2>
@@ -305,7 +303,6 @@ export default function SeoPage() {
         {/* ---------------- what gets built ---------------- */}
         <section className="band">
           <div className="shell">
-            <p className="eyebrow">What gets built</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               A page for every reason someone would <em>search</em>.
             </h2>

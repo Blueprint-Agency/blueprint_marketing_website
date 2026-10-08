@@ -116,8 +116,9 @@ export default function VideoProductionPage() {
                 descenders ("seen", "shows", "watched", "feed"). The display
                 line-heights are 0.98 and 1.04, and a true italic at weight
                 880 hangs its g / y / p below the box those leave. */}
-            <p className="eyebrow vp-eyebrow">Video production</p>
-            <h1 className="h1" style={{ maxWidth: "20ch" }}>
+
+
+            <h1 className="h1" style={{ maxWidth: "20ch", marginTop: 34 }}>
               Some businesses have to be <em>seen</em>.
             </h1>
             {/* Ten and six are counted from lib/films.ts, not rounded up:

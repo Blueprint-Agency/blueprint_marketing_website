@@ -144,8 +144,9 @@ export default function GoogleAdsPage() {
               <Link className="back-link" href="/#services">
                 All services
               </Link>
-              <p className="eyebrow svc-eyebrow">Google Ads</p>
-              <h1 className="h1" style={{ maxWidth: "20ch" }}>
+
+
+              <h1 className="h1" style={{ maxWidth: "20ch", marginTop: 34 }}>
                 Google Ads measured in <em>revenue</em>, not clicks.
               </h1>
               <p className="lead svc-lead">
@@ -174,7 +175,6 @@ export default function GoogleAdsPage() {
         <section className="band" id="revenue">
           <div className="shell seo-split">
             <div>
-              <p className="eyebrow">What makes us different</p>
               <h2 className="h2" style={{ maxWidth: "16ch" }}>
                 We track the hardest number: <em>revenue</em>.
               </h2>
@@ -206,7 +206,6 @@ export default function GoogleAdsPage() {
 
         <section className="band band-sunk">
           <div className="shell">
-            <p className="eyebrow">Where the budget goes</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               Three searches. Only one is ready to <em>book</em>.
             </h2>
@@ -237,7 +236,6 @@ export default function GoogleAdsPage() {
 
         <section className="band">
           <div className="shell">
-            <p className="eyebrow">The whole way there</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               From an ad click to money in the <em>bank</em>.
             </h2>
@@ -308,7 +306,6 @@ export default function GoogleAdsPage() {
 
         <section className="band">
           <div className="shell">
-            <p className="eyebrow">What gets built</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               An account built around what you <em>sell</em>.
             </h2>

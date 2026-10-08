@@ -212,8 +212,9 @@ export default function WebDesignPage() {
                 two lines do not say it twice in a row. It still carries the
                 branding half, because that work is real and the H1 no longer
                 mentions it. */}
-            <p className="eyebrow svc-eyebrow">Websites &amp; branding</p>
-            <h1 className="h1" style={{ maxWidth: "17ch" }}>
+
+
+            <h1 className="h1" style={{ maxWidth: "17ch", marginTop: 34 }}>
               Web design for the page people <em>decide</em> on.
             </h1>
             <p className="lead svc-lead">

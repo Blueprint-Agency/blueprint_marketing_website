@@ -175,8 +175,9 @@ export default function MetaAdsPage() {
               <Link className="back-link" href="/#services">
                 All services
               </Link>
-              <p className="eyebrow svc-eyebrow">Meta Ads</p>
-              <h1 className="h1" style={{ maxWidth: "18ch" }}>
+
+
+              <h1 className="h1" style={{ maxWidth: "18ch", marginTop: 34 }}>
                 Meta ads measured in <em>revenue</em>, not likes.
               </h1>
               <p className="lead svc-lead">
@@ -205,7 +206,6 @@ export default function MetaAdsPage() {
         <section className="band" id="revenue">
           <div className="shell seo-split">
             <div>
-              <p className="eyebrow">What makes us different</p>
               <h2 className="h2" style={{ maxWidth: "16ch" }}>
                 We track the hardest number: <em>revenue</em>.
               </h2>
@@ -237,7 +237,6 @@ export default function MetaAdsPage() {
 
         <section className="band band-sunk">
           <div className="shell">
-            <p className="eyebrow">Who sees what</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               Three audiences, three different <em>ads</em>.
             </h2>
@@ -269,7 +268,6 @@ export default function MetaAdsPage() {
         <section className="band">
           <div className="shell">
             <div className="col">
-              <p className="eyebrow">Why ads stop working</p>
               <h2 className="h2" style={{ maxWidth: "18ch" }}>
                 Every ad <em>tires</em>. We plan for it.
               </h2>
@@ -307,7 +305,6 @@ export default function MetaAdsPage() {
 
         <section className="band">
           <div className="shell">
-            <p className="eyebrow">The whole way there</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               From a scroll to money in the <em>bank</em>.
             </h2>
@@ -378,7 +375,6 @@ export default function MetaAdsPage() {
 
         <section className="band">
           <div className="shell">
-            <p className="eyebrow">What gets built</p>
             <h2 className="h2" style={{ maxWidth: "20ch" }}>
               A campaign for every stage of the <em>decision</em>.
             </h2>
