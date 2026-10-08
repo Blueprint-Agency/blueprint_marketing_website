@@ -585,6 +585,9 @@ const ART: Record<string, () => React.JSX.Element> = {
   apps: ArtApps,
   ai: ArtAi,
   software: ArtSoftware,
+  /* The merged Custom Solutions tab shows the pipeline: of the four things
+     it covers, it is the one most owners recognise first. */
+  custom: ArtCrm,
 };
 
 export default function ServiceArt({ id }: { id: string }) {

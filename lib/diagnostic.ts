@@ -270,8 +270,19 @@ export function labelFor(id: QuestionId, value: string): string {
 
 type Weights = Record<string, number>;
 
+/* The four build services merged into Custom Solutions on 2026-10-08.
+   The scoring below still speaks in the old ids, because they say what
+   the answer actually points at; they all count towards the one page. */
+const ALIAS: Record<string, string> = {
+  crm: "custom",
+  apps: "custom",
+  ai: "custom",
+  software: "custom",
+};
+
 function bump(w: Weights, id: string, n: number) {
-  w[id] = (w[id] ?? 0) + n;
+  const key = ALIAS[id] ?? id;
+  w[key] = (w[key] ?? 0) + n;
 }
 
 /**
@@ -481,7 +492,7 @@ export function diagnose(a: Answers, business?: string): Diagnosis {
   /* Every path through the engine scores at least four services, but a
      recommendation list is not a place to trust arithmetic blindly. */
   if (services.length === 0) {
-    for (const id of ["web-design", "whatsapp", "crm"]) {
+    for (const id of ["web-design", "whatsapp", "custom"]) {
       const s = byId.get(id);
       if (s) services.push(s);
     }
@@ -588,7 +599,7 @@ function buildMoves(
     const gapId = !caught.includes("booking")
       ? "booking"
       : !caught.includes("crm")
-        ? "crm"
+        ? "custom"
         : "whatsapp";
     const gap = byId.get(gapId);
     moves.push({

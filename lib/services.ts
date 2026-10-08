@@ -145,60 +145,24 @@ export const SERVICES: Service[] = [
     group: "build",
   },
   {
-    id: "crm",
-    name: "CRM & Pipelines",
-    tagline: "Nobody falls through a crack",
-    body: "A long decision needs somewhere to live. Without a pipeline, the deal that needed one more follow-up simply goes cold, and nobody notices because nobody was tracking it.",
+    /* Was four services until 2026-10-08: CRM & Pipelines, Web & Mobile
+       Apps, AI Agents & Workflows and Custom Software. The user merged them
+       into one, because an owner does not shop for "a CRM" or "an AI
+       agent", she shops for the problem, and the page sorts what can be
+       built by industry instead. The old ids are aliased to this one in
+       lib/diagnostic.ts so the questionnaire still scores them. */
+    id: "custom",
+    name: "Custom Solutions",
+    tagline: "Built around how your business actually runs",
+    body: "When the business has outgrown spreadsheets, notebooks and five apps that do not talk to each other, we build the system it needs: a CRM, a customer app, an AI agent, an internal tool, or all of them joined up.",
     does: [
-      "Pipeline built around your actual sales stages",
-      "Enquiries routed in automatically from every channel",
-      "Follow-up tasks and reminders that fire on their own",
-      "Visibility of what is in play and what is stalling",
-    ],
-    idealFor:
-      "Quotations, consultations, and anything with weeks between enquiry and sale.",
-    group: "build",
-  },
-  {
-    id: "apps",
-    name: "Web & Mobile Apps",
-    tagline: "When the off-the-shelf thing will not do",
-    body: "Sometimes the workflow the business actually needs does not exist as a product you can subscribe to. We build it.",
-    does: [
-      "Customer-facing web and mobile apps",
-      "Internal tools for the way your team works",
-      "Integration with what you already run on",
+      "CRM and pipelines built around your actual sales stages",
+      "Web and mobile apps for your customers or your team",
+      "AI agents and workflows that take the admin off your staff",
+      "Internal tools and dashboards for multi-branch operations",
     ],
     idealFor:
       "Businesses that have outgrown Excel sheets and off-the-shelf software.",
-    group: "build",
-  },
-  {
-    id: "ai",
-    name: "AI Agents & Workflows",
-    tagline: "The admin nobody wants to do",
-    body: "The repetitive work between a lead arriving and a customer being served is where staff time disappears. Much of it can be handled without a person, reliably.",
-    does: [
-      "Agents that handle enquiries, qualification and routing",
-      "Automated workflows across the tools you use",
-      "Human handover at the point it actually matters",
-    ],
-    idealFor:
-      "Owners doing admin at night that should not need doing at all.",
-    group: "build",
-  },
-  {
-    id: "software",
-    name: "Custom Software",
-    tagline: "Built around how you work",
-    body: "For the parts of the business that are genuinely yours: the process no competitor runs and no off-the-shelf product supports.",
-    does: [
-      "Internal systems and dashboards",
-      "Multi-branch and multi-team operations",
-      "Whatever the business actually needs that nothing else covers",
-    ],
-    idealFor:
-      "Established businesses with a process worth protecting.",
     group: "build",
   },
 ];
@@ -216,6 +180,7 @@ export const SERVICE_PAGES: Record<string, string> = {
   sem: "/google-ads-for-local-businesses",
   meta: "/meta-ads-for-local-businesses",
   whatsapp: "/whatsapp-automation-for-local-businesses",
+  custom: "/custom-solutions",
   video: "/services/video-production",
   "web-design": "/services/web-design",
   booking: "/services/booking-system",

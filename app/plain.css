@@ -12825,3 +12825,648 @@ html {
     animation: none !important;
   }
 }
+
+/* ============================================================
+   /custom-solutions
+   Same family as the WhatsApp page (light hero, show rather than
+   argue). Its own centrepiece is the industry explorer.
+   ============================================================ */
+
+.v2 .acc-cs {
+  --acc-a: var(--brand-deep);
+  --acc-b: var(--violet);
+}
+.v2 .cs-open {
+  background:
+    radial-gradient(50% 60% at 85% 30%, rgba(108, 75, 240, 0.1), transparent 70%),
+    radial-gradient(40% 50% at 70% 90%, rgba(30, 79, 224, 0.1), transparent 70%),
+    var(--paper);
+}
+.v2 .cs-open .h1 em {
+  color: var(--violet);
+}
+
+/* ---------- hero: today's tools, wired into one system ---------- */
+.v2 .cs-hero-art {
+  display: flex;
+  justify-content: center;
+}
+.v2 .cs-merge {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) 48px minmax(0, 1.15fr);
+  align-items: center;
+  width: 100%;
+  max-width: 540px;
+}
+.v2 .cs-cap {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.v2 .cs-today {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.v2 .cs-tool {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px dashed var(--line-strong);
+  background: var(--paper);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  transform: rotate(calc((var(--i) - 1.5) * 1.6deg));
+}
+.v2 .cs-tool b {
+  color: var(--ink);
+}
+.v2 .cs-tool i {
+  font-style: normal;
+  color: var(--ink-mute);
+}
+.v2 .cs-wires {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-block: 34px 6px;
+}
+.v2 .cs-wire {
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, var(--line-strong), var(--violet));
+  transform-origin: left;
+}
+.v2 .cs-app {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -32px rgba(6, 12, 40, 0.5);
+}
+.v2 .cs-app-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 12px;
+  background: var(--paper-sunk);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.v2 .cs-app-bar i {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line-strong);
+}
+.v2 .cs-app-bar span {
+  margin-left: 8px;
+}
+.v2 .cs-app-body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: 190px;
+}
+.v2 .cs-app-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 8px;
+  border-right: 1px solid var(--line);
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: var(--ink-mute);
+}
+.v2 .cs-app-nav span {
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+.v2 .cs-app-nav span.is-on {
+  background: rgba(108, 75, 240, 0.12);
+  color: #4a2fc4;
+}
+.v2 .cs-app-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+.v2 .cs-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.v2 .cs-kpis i {
+  height: 38px;
+  border-radius: 8px;
+  background: var(--paper-sunk);
+  border: 1px solid var(--line);
+}
+.v2 .cs-kpis i:first-child {
+  background: linear-gradient(135deg, rgba(108, 75, 240, 0.16), rgba(30, 79, 224, 0.1));
+}
+.v2 .cs-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.v2 .cs-rows i {
+  height: 14px;
+  border-radius: 4px;
+  background: var(--paper-sunk);
+}
+.v2 .cs-rows i:nth-child(2) {
+  width: 82%;
+}
+.v2 .cs-rows i:nth-child(4) {
+  width: 64%;
+}
+
+.v2 .cs-hero-art.is-armed .cs-tool,
+.v2 .cs-hero-art.is-armed .cs-app {
+  opacity: 0;
+}
+.v2 .cs-hero-art.is-armed .cs-wire {
+  transform: scaleX(0);
+}
+.v2 .cs-hero-art.is-in .cs-tool {
+  animation: cs-drop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.2s + var(--i) * 0.15s);
+}
+.v2 .cs-hero-art.is-in .cs-wire {
+  animation: seo-grow 0.6s cubic-bezier(0.45, 0, 0.2, 1) both;
+  animation-delay: calc(1s + var(--i) * 0.12s);
+}
+.v2 .cs-hero-art.is-in .cs-app {
+  animation: wa-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both;
+}
+@keyframes cs-drop {
+  from {
+    opacity: 0;
+    translate: 0 -10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (max-width: 560px) {
+  .v2 .cs-merge {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .v2 .cs-today {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .v2 .cs-today .cs-cap {
+    grid-column: 1 / -1;
+  }
+  .v2 .cs-wires {
+    flex-direction: row;
+    justify-content: center;
+    gap: 14px;
+    height: 34px;
+    padding: 0;
+  }
+  .v2 .cs-wire {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(var(--line-strong), var(--violet));
+    transform-origin: top;
+  }
+  .v2 .cs-hero-art.is-armed .cs-wire {
+    transform: scaleY(0);
+  }
+  .v2 .cs-hero-art.is-in .cs-wire {
+    animation-name: cs-grow-y;
+  }
+}
+@keyframes cs-grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ---------- the industry explorer ---------- */
+.v2 .ix {
+  margin-top: 40px;
+}
+.v2 .ix-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.v2 .ix-tabs button {
+  padding: 11px 18px;
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease-out,
+    color 0.2s ease-out,
+    border-color 0.2s ease-out;
+}
+.v2 .ix-tabs button:hover {
+  border-color: var(--ink-mute);
+}
+.v2 .ix-tabs button.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.v2 .ix-tabs button:focus-visible,
+.v2 .ix-mod:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+.v2 .ix-panel {
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--paper);
+  animation: wa-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (min-width: 768px) {
+  .v2 .ix-panel {
+    padding: 36px;
+  }
+}
+.v2 .ix-intro {
+  margin: 0 auto;
+  max-width: 62ch;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* The map: the business in the middle, its six pieces around it. On a
+   phone the pieces stack under the hub. */
+.v2 .ix-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  margin-top: 28px;
+}
+.v2 .ix-hub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  height: 128px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--brand-deep), var(--violet));
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow:
+    0 0 0 10px rgba(108, 75, 240, 0.08),
+    0 24px 50px -24px rgba(6, 12, 40, 0.6);
+}
+.v2 .ix-hub i {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+.v2 .ix-mods {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+@media (min-width: 560px) {
+  .v2 .ix-mods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.v2 .ix-mod {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper-sunk);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease-out,
+    background-color 0.2s ease-out,
+    transform 0.2s ease-out;
+  animation: wa-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.05s + var(--i) * 0.05s);
+}
+.v2 .ix-mod:hover {
+  border-color: rgba(108, 75, 240, 0.4);
+  transform: translateY(-1px);
+}
+.v2 .ix-mod.is-on {
+  border-color: var(--violet);
+  background: rgba(108, 75, 240, 0.08);
+  box-shadow: inset 0 0 0 1px var(--violet);
+}
+.v2 .ix-mod-n {
+  flex: none;
+  color: var(--ink-mute);
+}
+.v2 .ix-mod.is-on .ix-mod-n {
+  color: #4a2fc4;
+}
+
+/* From 900px the six pieces sit either side of the hub, three a side,
+   each joined to it by a short line. */
+@media (min-width: 900px) {
+  .v2 .ix-map {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 180px minmax(0, 1fr);
+    grid-template-rows: repeat(3, auto);
+    align-items: center;
+    gap: 0;
+  }
+  .v2 .ix-hub {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    justify-self: center;
+    width: 150px;
+    height: 150px;
+    font-size: 1.125rem;
+  }
+  .v2 .ix-mods {
+    display: contents;
+  }
+  .v2 .ix-mod {
+    position: relative;
+    margin-block: 6px;
+  }
+  .v2 .ix-mod:nth-child(-n + 3) {
+    grid-column: 1;
+  }
+  .v2 .ix-mod:nth-child(n + 4) {
+    grid-column: 3;
+  }
+  .v2 .ix-mod:nth-child(1),
+  .v2 .ix-mod:nth-child(4) {
+    grid-row: 1;
+  }
+  .v2 .ix-mod:nth-child(2),
+  .v2 .ix-mod:nth-child(5) {
+    grid-row: 2;
+  }
+  .v2 .ix-mod:nth-child(3),
+  .v2 .ix-mod:nth-child(6) {
+    grid-row: 3;
+  }
+  .v2 .ix-mod::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    height: 2px;
+    background: var(--line-strong);
+  }
+  .v2 .ix-mod:nth-child(-n + 3)::after {
+    right: -16px;
+  }
+  .v2 .ix-mod:nth-child(n + 4)::after {
+    left: -16px;
+  }
+  .v2 .ix-mod.is-on::after {
+    background: var(--violet);
+  }
+  .v2 .ix-mod:nth-child(-n + 3) {
+    margin-right: 15px;
+  }
+  .v2 .ix-mod:nth-child(n + 4) {
+    margin-left: 15px;
+  }
+}
+
+.v2 .ix-detail {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(108, 75, 240, 0.07), rgba(30, 79, 224, 0.04));
+  border: 1px solid rgba(108, 75, 240, 0.2);
+  animation: wa-pop 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.v2 .ix-detail .prose {
+  margin-top: 8px;
+}
+.v2 .ix-replaces {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+  margin-top: 14px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+.v2 .ix-replaces b {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b4471b;
+}
+.v2 .ix-note {
+  margin: 18px 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ---------- the four kinds ---------- */
+.v2 .cs-kinds {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+}
+@media (min-width: 760px) {
+  .v2 .cs-kinds {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+.v2 .cs-kind {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+}
+.v2 .cs-kind-art {
+  grid-column: auto;
+  margin: 0 0 10px;
+  --sa-aspect: 16 / 9;
+}
+.v2 .cs-kind .prose {
+  font-size: 0.9375rem;
+}
+.v2 .cs-eg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.v2 .cs-eg i {
+  font-style: normal;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--paper-sunk);
+  border: 1px solid var(--line);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  color: var(--ink-soft);
+}
+
+/* ---------- how a project runs: rising steps ---------- */
+.v2 .cs-steps {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+@media (min-width: 1000px) {
+  .v2 .cs-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: end;
+  }
+  /* Each step sits a little higher than the last: the project climbing. */
+  .v2 .cs-step {
+    margin-bottom: calc(var(--i) * 22px);
+  }
+}
+.v2 .cs-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.v2 .cs-step:last-child {
+  background: linear-gradient(160deg, var(--brand-deep), #2a1b6b);
+  border-color: transparent;
+  color: #fff;
+}
+.v2 .cs-step:last-child .prose {
+  color: rgba(255, 255, 255, 0.8);
+}
+.v2 .cs-step-n {
+  color: var(--violet);
+  font-size: 0.875rem;
+}
+.v2 .cs-step:last-child .cs-step-n {
+  color: var(--cyan);
+}
+.v2 .cs-step .prose {
+  font-size: 0.9375rem;
+}
+.v2 .cs-out {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+.v2 .cs-step:last-child .cs-out {
+  border-top-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+.v2 .cs-out b {
+  margin-right: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.v2 .cs-step:last-child .cs-out b {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- the consultation band ---------- */
+.v2 .cs-consult {
+  background:
+    radial-gradient(55% 80% at 90% 10%, rgba(108, 75, 240, 0.45), transparent 70%),
+    radial-gradient(40% 60% at 0% 100%, rgba(30, 79, 224, 0.3), transparent 70%),
+    #0b0c0e;
+}
+.v2 .cs-bring li::before {
+  content: "Bring " counter(try);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2 .cs-hero-art *,
+  .v2 .ix-panel,
+  .v2 .ix-mod,
+  .v2 .ix-detail {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+  }
+}
+
+/* Industry tabs on a phone: one row that swipes, rather than four rows
+   of buttons stacked above the thing they control. */
+@media (max-width: 700px) {
+  .v2 .ix-tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    margin-inline: -16px;
+    padding: 2px 16px 6px;
+    scrollbar-width: none;
+  }
+  .v2 .ix-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .v2 .ix-tabs button {
+    flex: none;
+    scroll-snap-align: start;
+  }
+}

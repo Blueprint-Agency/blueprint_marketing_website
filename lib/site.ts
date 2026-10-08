@@ -86,6 +86,14 @@ export const WA = {
   waDemo: whatsapp(
     "Hi Blueprint, I'd like to try the WhatsApp automation demo.",
   ),
+  /**
+   * /custom-solutions. The free consultation is the user's offer
+   * (2026-10-08): a call to map the process and say what is worth
+   * building and what is not.
+   */
+  customConsult: whatsapp(
+    "Hi Blueprint, I'd like a free consultation about a custom solution for my business.",
+  ),
   /** /meta-ads-for-local-businesses. Names the ads, not a result. */
   metaAds: whatsapp(
     "Hi Blueprint, I'd like you to look at my Facebook and Instagram ads.",
