@@ -8287,6 +8287,11 @@ html {
 }
 
 .v2 .pm-scroll {
+  /* The containing block for the visually hidden labels inside the table
+     (.pm-vh, .pm-caption are position: absolute). Without it they were
+     placed against the page instead of this box, sat out past the right
+     edge on a phone, and let the whole page scroll sideways (2026-10-08). */
+  position: relative;
   overflow-x: auto;
   /* A horizontal scroll inside a vertically scrolling page should not
      hand its overscroll back to the page and jump the reader sideways

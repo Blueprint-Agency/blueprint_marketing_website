@@ -56,3 +56,28 @@
 html {
   -webkit-text-size-adjust: 100%;
 }
+
+/* The page never scrolls sideways (user, 2026-10-08). On a phone, any
+   element wider than the screen let the whole page swipe left and right
+   and show white space past its edge; the carousel on the booking page
+   was the one doing it. Anything that is meant to scroll sideways, like
+   the plan table or the industry tabs, has a scroll box of its own.
+
+   `clip`, not `hidden`: hidden makes the root a scroll container, which
+   breaks the sticky nav and the pinned phone on the WhatsApp page. The
+   `hidden` on body is only for browsers too old to know clip, where it
+   propagates to the viewport and does the same job. overscroll-behavior
+   stops the sideways rubber-band on a swipe that starts on a scroll box. */
+body {
+  overflow-x: hidden;
+}
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+html,
+body {
+  overscroll-behavior-x: none;
+}
