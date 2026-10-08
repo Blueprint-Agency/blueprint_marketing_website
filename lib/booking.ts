@@ -30,41 +30,26 @@
    ============================================================ */
 
 /**
- * What a studio owner is actually living with, named before anything is
- * sold. Rezerv opens its home page on the same device ("Struggling to
- * manage your fitness business efficiently?") and it is the right one:
- * the design system already has a rule for it, The Enemy-Named-In-The-
- * Heading Rule in DESIGN.v2.md.
+ * The manual work a studio owner is living with, named before anything is
+ * sold. Shown as one callout and a grid of icon tiles rather than five
+ * paragraphs, at the user's direction on 2026-10-08: the reader should
+ * recognise the list at a glance, not read it.
  *
- * Each line is a specific failure with a mechanism, not a mood. "Admin is
- * hard" is unfalsifiable and sells nothing. "A teacher takes leave, the
- * class stays open, a member books it" is a scene the reader has lived
- * through, and it names the exact feature that prevents it.
+ * Each label is still a specific chore with a mechanism, not a mood, and
+ * each one is a job the product takes over. The icon for each lives on the
+ * page (app/services/booking-system/page.tsx) so this file stays free of
+ * React imports.
  *
  * ORDER IS THE ESCALATION: one diary, then money, then people, then the
  * month end, then the second site. It ends where the price list begins.
  */
-export const PAINS: { title: string; body: string }[] = [
-  {
-    title: "The timetable exists in three places",
-    body: "A Google Sheet, an Instagram story and whatever the front desk has written down. They disagree by the end of most weeks, and the version a member acts on is whichever one she saw last.",
-  },
-  {
-    title: "Packages get tracked by hand",
-    body: "Ten-class credits, unlimited months, the friend who paid for half a package in cash. Somebody is keeping that in a spreadsheet, and the expiries are the part that quietly goes uncollected.",
-  },
-  {
-    title: "Leave does not reach the schedule",
-    body: "A teacher tells you on WhatsApp that she is away on Thursday. The Thursday class stays open, a member books it, and you find out when she arrives.",
-  },
-  {
-    title: "Payroll is a monthly reconstruction",
-    body: "Hours, headcounts and commission worked out from attendance sheets after the fact, every month, by the person who can least afford the evening.",
-  },
-  {
-    title: "The second studio starts it all again",
-    body: "A new timetable, a second set of spreadsheets, and no single number that tells you how the business is doing rather than how one room is doing.",
-  },
+export const PAINS: { id: string; label: string }[] = [
+  { id: "timetable", label: "Updating the timetable in three places" },
+  { id: "packages", label: "Tracking packages in a spreadsheet" },
+  { id: "expiry", label: "Chasing expired credits" },
+  { id: "leave", label: "Closing classes when a teacher is on leave" },
+  { id: "payroll", label: "Working out payroll from attendance sheets" },
+  { id: "second", label: "Starting over for the second studio" },
 ];
 
 /* ============================================================

@@ -68,9 +68,13 @@ export default function Pricing({ ctaHref }: { ctaHref: string }) {
     >
       <div className="shell">
         <div className="col">
-          <p className="eyebrow">What it costs</p>
+          {/* User's wording, 2026-10-08. It holds on COMPETITORS in
+              lib/pricing.ts: the entry price is the lowest in that table.
+              If a plan price or a competitor's changes, recheck this line
+              and the sentence over the comparison on the page. "cost" has
+              no descender, per the display rule. */}
           <h2 className="h2" id="pricing-h" style={{ maxWidth: "20ch" }}>
-            Your second studio should not double the <em>bill</em>.
+            Highest value, at a fraction of the <em>cost</em>.
           </h2>
           <p className="prose" style={{ marginTop: 22 }}>
             No per-booking fee, no cut of what you sell, no charge per member.

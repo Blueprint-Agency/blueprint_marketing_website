@@ -1,13 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  ArrowRight,
+  Building2,
+  Calculator,
+  CalendarDays,
+  Check,
+  FileSpreadsheet,
+  Hourglass,
+  MessageCircle,
+  type LucideIcon,
+} from "lucide-react";
 import { CTASection } from "@/components/ui/hero-dithering-card";
-import BookingTour from "@/components/v2/BookingTour";
 import { Nav, Footer } from "@/components/v2/Chrome";
 import Compare from "@/components/v2/Compare";
 import Pricing from "@/components/v2/Pricing";
 import FeatureCarousel from "@/components/ui/feature-carousel";
-import JourneyTimeline from "@/components/v2/JourneyTimeline";
-import { BOOKING_FAQ, PAINS, SCREENS } from "@/lib/booking";
+import ScrollHighlight from "@/components/v2/ScrollHighlight";
+import TwoSystems from "@/components/v2/TwoSystems";
+import BookingHero from "@/components/v2/BookingHero";
+import { BOOKING_FAQ, PAINS } from "@/lib/booking";
 import { PLANS, ringgit } from "@/lib/pricing";
 import { SITE, WA } from "@/lib/site";
 
@@ -30,14 +42,14 @@ import { SITE, WA } from "@/lib/site";
  *  1. THE OPENING. One claim, two actions. Unchanged in kind from the two
  *     sibling service pages so a reader arriving from the nav lands
  *     somewhere recognisably part of the same set.
- *  2. THE PROBLEM, named before anything is sold. Five specific failures a
- *     studio owner has lived through, each one naming its own mechanism.
+ *  2. THE PROBLEM, named before anything is sold. One callout and six
+ *     icon tiles, each a chore a studio owner does by hand today.
  *     This is DESIGN.v2.md's Enemy-Named-In-The-Heading Rule, and it is
  *     the device Rezerv's own home page opens on.
- *  3. THE PRODUCT, SHOWN. Four screens, drawn, one at a time. This is the
- *     proof slot the two sibling pages fill with client screenshots, and
- *     it is the slot this page was missing entirely. See BookingArt.tsx
- *     for why these are drawings rather than captures.
+ *  3. THE PRODUCT, SHOWN. The two systems it is made of, the members'
+ *     booking site and the admin system, drawn side by side. This is the
+ *     proof slot the two sibling pages fill with client screenshots. See
+ *     TwoSystems.tsx, and BookingArt.tsx for why these are drawings.
  *  4. THE ARGUMENT. What it replaces, and why a studio's calendar being
  *     the business means this is not admin software.
  *  5. A MID-PAGE ACTION. The page is long enough to be entered mid-scroll,
@@ -59,7 +71,7 @@ import { SITE, WA } from "@/lib/site";
  * on the home page says so in the user's own words. That rule is about
  * services quoted per business. This is a product with one price list for
  * everyone, and the distinction only holds while it stays visible, which
- * is what the eyebrow and the lead are doing. See the header of
+ * is what the lead is doing. See the header of
  * lib/pricing.ts.
  *
  * EVERY FIGURE ON THIS PAGE IS A PROPOSAL EXCEPT GROUP, which the user
@@ -104,6 +116,25 @@ export const metadata: Metadata = {
  * minutes". The first two are about a self-serve trial that does not
  * exist, and the third is a timeline nothing on record supports.
  */
+/**
+ * One icon per entry in PAINS, keyed by its id, plus where its tile sits in
+ * the scatter: a tilt (deg), a vertical offset (px, desktop only), a float
+ * duration and delay (s) so no two tiles bob in step, and a tint.
+ * Hand-placed rather than random so the server and client render the same
+ * thing and the scatter never lands two tiles on top of each other.
+ */
+const PAIN_ART: Record<
+  string,
+  { icon: LucideIcon; tilt: number; dy: number; dur: number; delay: number; tint: string }
+> = {
+  timetable: { icon: CalendarDays, tilt: -4, dy: 10, dur: 6.2, delay: 0, tint: "brand" },
+  packages: { icon: FileSpreadsheet, tilt: 3, dy: -18, dur: 7.1, delay: -2.4, tint: "act" },
+  expiry: { icon: Hourglass, tilt: -2, dy: 22, dur: 5.6, delay: -1.1, tint: "warm" },
+  leave: { icon: MessageCircle, tilt: 5, dy: -6, dur: 6.8, delay: -3.3, tint: "act" },
+  payroll: { icon: Calculator, tilt: -5, dy: 16, dur: 7.4, delay: -0.6, tint: "violet" },
+  second: { icon: Building2, tilt: 2, dy: -14, dur: 6.0, delay: -4.2, tint: "brand" },
+};
+
 const ASSURANCES = [
   "One published price list",
   "No per-booking or per-member fee",
@@ -121,83 +152,105 @@ export default function BookingSystemPage() {
 
       <main id="main">
         {/* ---------------- the opening ----------------
-            Same dark ground and same shape as the two sibling service
-            pages. */}
-        <section className="svc-open">
-          <div className="shell">
-            <Link className="back-link" href="/#services">
-              All services
-            </Link>
+            Light, with the product shown working on the right. Modelled
+            on the WhatsApp automation page's hero (user, 2026-10-08): the
+            systems pages are the other half of the site and are allowed
+            to look it, where the marketing pages keep the black .svc-open.
+            The drawing is components/v2/BookingHero.tsx. */}
+        <section className="bkh-open">
+          <div className="shell bkh-grid">
+            <div>
+              <Link className="back-link" href="/#services">
+                All services
+              </Link>
+              {/* No descenders in the italic phrase. The display
+                  line-heights are 0.98 and 1.04 and a true italic at this
+                  weight hangs its g / y / p below the box they leave. */}
+              <h1 className="h1" style={{ maxWidth: "16ch", marginTop: 34 }}>
+                Your calendar <em>is</em> the business.
+              </h1>
+              <p className="lead" style={{ marginTop: 22, maxWidth: "44ch" }}>
+                Reserve Today runs the classes, the credits, the memberships, the
+                staff leave, the payroll and the shop, on your own address, at a
+                price you can read before you talk to anybody.
+              </p>
+              <div className="cta-row bkh-actions">
+                <a
+                  className="btn btn-act"
+                  href={WA.booking}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Book a demo
+                </a>
+                <a className="btn btn-line" href="#pricing">
+                  See the price
+                </a>
+              </div>
 
-            {/* No descenders in the italic phrase. The display
-                line-heights are 0.98 and 1.04 and a true italic at this
-                weight hangs its g / y / p below the box they leave. */}
-            <p className="eyebrow svc-eyebrow">Booking systems</p>
-            <h1 className="h1" style={{ maxWidth: "16ch" }}>
-              Your calendar <em>is</em> the business.
-            </h1>
-            <p className="lead svc-lead">
-              Reserve Today runs the classes, the credits, the memberships, the
-              staff leave, the payroll and the shop, on your own address, at a
-              price you can read before you talk to anybody.
-            </p>
-            <div className="cta-row svc-actions">
-              <a
-                className="btn btn-act"
-                href={WA.booking}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Book a demo
-              </a>
-              <a className="btn btn-ghost-dark" href="#pricing">
-                See the price
-              </a>
+              <ul className="bkh-assure">
+                {ASSURANCES.map((a) => (
+                  <li key={a}>
+                    <Check size={15} strokeWidth={3} aria-hidden="true" />
+                    {a}
+                  </li>
+                ))}
+              </ul>
             </div>
-
-            <ul className="svc-assure">
-              {ASSURANCES.map((a) => (
-                <li key={a}>{a}</li>
-              ))}
-            </ul>
+            <BookingHero />
           </div>
         </section>
 
         {/* ---------------- the problem ----------------
-            Named before anything is sold. Five rows on hairlines with a
-            mono ordinal, which is the numbered-list device the home page's
-            "Why Blueprint" band and the web design page's three jobs both
-            use. Reused rather than reinvented, so the three pages read as
-            one site. */}
-        <section className="band band-sunk">
+            Named before anything is sold, as one callout and a scatter of
+            floating icon tiles: the work, visibly all over the place. Was five numbered rows of prose until 2026-10-08,
+            simplified at the user's direction so the list reads at a
+            glance. "manual" carries the italic and has no descender, per
+            the display rule. */}
+        <section className="band band-sunk pn-band">
           <div className="shell">
             <div className="col">
-              <p className="eyebrow">Before the software</p>
-              <h2 className="h2" style={{ maxWidth: "19ch" }}>
-                None of this is a <em>software</em> problem yet.
+              <h2 className="h2">
+                Tired of doing all{" "}
+                <ScrollHighlight>
+                  the <em>manual</em> work
+                </ScrollHighlight>
+                ?
               </h2>
               <p className="prose" style={{ marginTop: 22 }}>
-                It is five separate small failures, and every one of them is
-                survivable on its own. What they have in common is that each
-                needs a person to notice it, and the person is you.
+                Every one of these needs a person to remember it, and the
+                person is you.
               </p>
             </div>
 
-            <ol className="pn">
-              {PAINS.map((p, i) => (
-                <li className="pn-item" key={p.title}>
-                  <span className="pn-n mono" aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="h3">{p.title}</h3>
-                    <p className="prose" style={{ marginTop: 8 }}>
-                      {p.body}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <ul className="pn">
+              {PAINS.map((p) => {
+                const art = PAIN_ART[p.id];
+                const Icon = art.icon;
+                return (
+                  <li
+                    className="pn-item"
+                    key={p.id}
+                    data-tint={art.tint}
+                    style={
+                      {
+                        "--tilt": `${art.tilt}deg`,
+                        "--dy": `${art.dy}px`,
+                        "--dur": `${art.dur}s`,
+                        "--delay": `${art.delay}s`,
+                      } as React.CSSProperties
+                    }
+                  >
+                    <div className="pn-card">
+                      <span className="pn-icon" aria-hidden="true">
+                        <Icon size={22} strokeWidth={1.75} />
+                      </span>
+                      <span className="pn-label">{p.label}</span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </section>
 
@@ -225,7 +278,6 @@ export default function BookingSystemPage() {
         <section className="band" id="who">
           <div className="shell">
             <div className="col">
-              <p className="eyebrow">Who runs it</p>
               {/* "local" carries the italic, and it is the word that earns
                   it: it is the half of the sentence a Singapore or US
                   platform cannot say back. It is also descender-free, which
@@ -261,82 +313,36 @@ export default function BookingSystemPage() {
         </section>
 
         {/* ---------------- the product ----------------
-            The proof slot. Four screens, drawn, one at a time.
-
-            Paper, not the dark ground the web design page gives its
-            screenshots: those are captures of lit screens and need dark to
-            read as lit. These are drawings whose own frames carry a brand
-            gradient, and a dark band behind them would put two saturated
-            grounds against each other with a paper interface floating
-            between. Paper is also what the home page puts ServiceTabs on,
-            and this is the same component. */}
+            The proof slot. The two systems the product is made of, side
+            by side: the booking site members use and the admin system the
+            team runs on. Replaced the four-screen tour on 2026-10-08 at
+            the user's direction. See components/v2/TwoSystems.tsx for
+            where every feature named in it is on record. */}
         <section className="band band-sunk" id="tour">
           <div className="shell">
-            <div className="col">
-              <p className="eyebrow">What you would be running</p>
-              {/* Was "One system, and four screens of it." until the
-                  section above was retitled "One system for your local
-                  business". Two headings two sections apart both opening on
-                  the same two words reads as a template rather than as an
-                  argument, and the one above is the user's own wording, so
-                  this is the one that moves. "screens" carries no
-                  descender, per the display rule. */}
-              <h2 className="h2" style={{ maxWidth: "20ch" }}>
-                The whole of it, on four <em>screens</em>.
+            <div className="col ts-head">
+              {/* "and" carries the italic: it is the point of the section,
+                  and it has no descender, per the display rule. */}
+              <h2 className="h2">
+                Built for your members <em>and</em> your team.
               </h2>
               <p className="prose" style={{ marginTop: 22 }}>
-                The owner&rsquo;s week, what a member sees, the leave that
-                closes a class, and the month end that is already worked out.
-                They are one product and they only work because they are.
+                Two systems on one platform. Your customers get a booking site
+                of their own, and you get the admin system that runs everything
+                behind it.
               </p>
             </div>
 
-            <BookingTour screens={SCREENS} eyebrow="The four screens" />
+            <TwoSystems />
 
             {/* Required, and not a disclaimer bolted on. DESIGN.v2.md: "Do
                 label any illustrated content as an illustration in plain
                 0.875rem type adjacent to it." */}
             <p className="small svt-note">
-              These four screens are drawn here rather than captured from a
-              live account. The names and figures in them are invented; no
-              studio&rsquo;s members, balances or takings appear on this page.
-            </p>
-          </div>
-        </section>
-
-        {/* ---------------- what a member does ----------------
-            Six steps, and the section that answers the question actually
-            deciding the purchase. Everything above this is addressed to
-            the owner and describes what she operates; none of it says
-            whether her members will use the thing. An owner who has
-            watched one booking system go unused by the people it was
-            bought for is buying adoption, not features.
-
-            Every step maps to a row in MATRIX. See the note over JOURNEY
-            in lib/booking.ts, and check against the matrix before adding
-            a seventh: this is the shape of section where a page invents
-            the feature the story wants. */}
-        <section className="band" id="journey">
-          <div className="shell">
-            <div className="col">
-              <p className="eyebrow">The other side of it</p>
-              <h2 className="h2" style={{ maxWidth: "22ch" }}>
-                Your member never finds out what any of this is <em>called</em>.
-              </h2>
-              <p className="prose" style={{ marginTop: 22 }}>
-                She sees six things, and this is all of them. The test of a
-                booking system is not whether you can operate it. It is
-                whether she gets to the end of this without messaging you.
-              </p>
-            </div>
-
-            <JourneyTimeline />
-
-            <p className="prose jn-close">
-              Not one of those six needs anybody at the studio to be awake.
-              That is the whole of what is being bought, and it is the reason
-              every part of it sits on the cheapest plan rather than being
-              held back for the expensive one.
+              Both screens are drawn here rather than captured from a live
+              account, and the names in them are invented. Leave, payroll and
+              some admin tools depend on the plan; the price list below shows
+              which.
             </p>
           </div>
         </section>
@@ -344,26 +350,77 @@ export default function BookingSystemPage() {
         {/* ---------------- the mid-page action ----------------
             The Repeated Action Rule. A page this long is entered
             mid-scroll, and the reader must not have to travel back to the
-            top to act. Different sentence, same destination. */}
-        <section className="midcta">
+            top to act. Different sentence, same destination.
+
+            Redesigned on 2026-10-08 as a contained brand card rather than
+            the shared .midcta strip, which the home page still uses. The
+            three checks are what the demo is run against, taken from the
+            sentence this card always carried; nothing here promises a
+            duration, a price or a response time, because none is on
+            record. The week grid on the right is decoration, aria-hidden. */}
+        <section className="bkcta-band">
           <div className="shell">
-            <div className="midcta-row">
-              <div>
-                <h2 className="h3">Want to see it against your own timetable?</h2>
-                <p className="small" style={{ marginTop: 6, maxWidth: "56ch" }}>
+            <div className="bkcta">
+              <div className="bkcta-copy">
+                <h2 className="bkcta-h">
+                  Want to see it against your own <em>timetable</em>?
+                </h2>
+                <p className="bkcta-p">
                   A demo runs on your actual week rather than an empty account,
-                  which is the only way to find out whether it holds your class
-                  types, your packages and your teachers.
+                  so you can see it hold everything you already run.
                 </p>
+                <ul className="bkcta-checks">
+                  {["Your class types", "Your packages", "Your teachers"].map(
+                    (c) => (
+                      <li key={c}>
+                        <Check size={15} strokeWidth={3} aria-hidden="true" />
+                        {c}
+                      </li>
+                    ),
+                  )}
+                </ul>
+                <div className="bkcta-actions">
+                  <a
+                    className="btn btn-act"
+                    href={WA.booking}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Book a demo
+                    <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+                  </a>
+                  <a className="btn btn-ghost-dark" href="#pricing">
+                    See the price
+                  </a>
+                </div>
               </div>
-              <a
-                className="btn btn-act"
-                href={WA.booking}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Book a demo
-              </a>
+
+              <div className="bkcta-art" aria-hidden="true">
+                <div className="bkcta-week">
+                  {["Mon", "Tue", "Wed", "Thu", "Fri"].map((d) => (
+                    <span className="bkcta-day" key={d}>
+                      {d}
+                    </span>
+                  ))}
+                  {[
+                    ["Vinyasa", "07:00", 1],
+                    ["Reformer", "09:30", 0],
+                    ["Vinyasa", "07:00", 0],
+                    ["Reformer", "09:30", 2],
+                    ["Flow", "07:00", 0],
+                    ["Hatha", "18:30", 0],
+                    ["Yin", "19:00", 2],
+                    ["Private", "12:15", 1],
+                    ["Barre", "18:30", 0],
+                    ["Flow", "18:30", 1],
+                  ].map(([n, t, k], i) => (
+                    <span className={`bkcta-slot k${k}`} key={i}>
+                      <b>{t}</b>
+                      {n}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -375,13 +432,12 @@ export default function BookingSystemPage() {
         <section className="band">
           <div className="shell">
             <div className="col">
-              <p className="eyebrow">How the category bills</p>
               <h2 className="h2" style={{ maxWidth: "21ch" }}>
                 Most of them charge you again for the second <em>room</em>.
               </h2>
               <p className="prose" style={{ marginTop: 22 }}>
-                We are not the cheapest way to book one studio, and the table
-                says so. What is different is what happens on the day you open
+                We start lower than every platform in this table. What is
+                different is what happens on the day you open
                 the second one: here a location is an allowance the plan
                 already covers, and almost everywhere else it is a multiplier.
               </p>
