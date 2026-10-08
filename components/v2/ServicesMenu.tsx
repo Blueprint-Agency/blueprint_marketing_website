@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import { SERVICES, SERVICE_PAGES, serviceHref } from "@/lib/services";
+import { SERVICES, serviceHref } from "@/lib/services";
 
 /**
  * The nav's Services menu.
@@ -171,13 +171,11 @@ export default function ServicesMenu() {
                         href={href}
                         onClick={() => onPick(href)}
                       >
+                        {/* The "Page" flag that used to sit beside a name
+                            came out on 2026-10-08 at the user's request:
+                            every service now has a page of its own, so the
+                            mark no longer told one row from another. */}
                         <span className="nav-menu-name">{s.name}</span>
-                        {/* The one mark in the panel, and it earns its place:
-                            it says this row leads to a page of its own rather
-                            than to a tab. Nothing else here is decorated. */}
-                        {SERVICE_PAGES[s.id] && (
-                          <span className="nav-menu-flag">Page</span>
-                        )}
                       </Link>
                     </li>
                   );

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { SERVICES, SERVICE_PAGES, serviceHref } from "@/lib/services";
+import { SERVICES, serviceHref } from "@/lib/services";
 import { WA } from "@/lib/site";
 
 /**
@@ -132,12 +132,8 @@ export default function MobileMenu() {
                         href={serviceHref(s.id)}
                         onClick={() => close()}
                       >
+                        {/* No "Page" flag: see ServicesMenu.tsx. */}
                         <span>{s.name}</span>
-                        {/* Same mark the desktop menu uses: this row leads
-                            to a page of its own rather than to a tab. */}
-                        {SERVICE_PAGES[s.id] && (
-                          <span className="nav-sheet-flag">Page</span>
-                        )}
                       </Link>
                     </li>
                   ))}
