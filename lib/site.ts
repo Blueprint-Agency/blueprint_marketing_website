@@ -79,6 +79,13 @@ export const WA = {
   googleAds: whatsapp(
     "Hi Blueprint, I'd like you to look at my Google Ads.",
   ),
+  /**
+   * /whatsapp-automation-for-local-businesses. Blueprint's own number runs
+   * the automation (user, 2026-10-08), so this message is the demo.
+   */
+  waDemo: whatsapp(
+    "Hi Blueprint, I'd like to try the WhatsApp automation demo.",
+  ),
   /** /meta-ads-for-local-businesses. Names the ads, not a result. */
   metaAds: whatsapp(
     "Hi Blueprint, I'd like you to look at my Facebook and Instagram ads.",
