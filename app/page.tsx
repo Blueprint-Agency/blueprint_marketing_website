@@ -176,7 +176,6 @@ export default function HomePage() {
           mediaAlt=""
           overlayOpacity={0.4}
           background={<InteractiveGrid className="seh-grid" />}
-          kicker="Digital marketing & growth systems"
           titleTop="We get local businesses"
           titleBottom={<em>more customers.</em>}
           scrollToExpand="Scroll"
