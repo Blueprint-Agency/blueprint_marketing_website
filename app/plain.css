@@ -4942,7 +4942,11 @@ html {
   pointer-events: none;
 }
 
+/* Each band is pinned to its own row. Without this the grid placed them by
+   order, so dropping the kicker (2026-11-20) slid the headline up into the
+   kicker's auto-height top row and the foot into the centre. */
 .v2 .seh-kicker {
+  grid-row: 1;
   position: relative;
   z-index: 2;
   align-self: start;
@@ -4954,6 +4958,7 @@ html {
 }
 
 .v2 .seh-title {
+  grid-row: 2;
   position: relative;
   z-index: 2;
   align-self: center;
@@ -4969,6 +4974,7 @@ html {
 }
 
 .v2 .seh-foot {
+  grid-row: 3;
   position: relative;
   z-index: 2;
   align-self: end;
